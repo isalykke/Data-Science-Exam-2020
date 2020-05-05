@@ -1,0 +1,9 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[0] Config.pm:307> INFO - Logfile is 'Exam report.blg'
+[86] biber-darwin:322> INFO - === Tue May  5, 2020, 13:03:54
+[111] Biber.pm:415> INFO - Reading 'Exam report.bcf'
+[217] Biber.pm:943> INFO - Found 0 citekeys in bib section 0
+[222] Utils.pm:304> WARN - The file 'Exam report.bcf' does not contain any citations!
+[230] bbl.pm:652> INFO - Writing 'Exam report.bbl' with encoding 'UTF-8'
+[231] bbl.pm:755> INFO - Output to Exam report.bbl
+[231] Biber.pm:128> INFO - WARNINGS: 1
