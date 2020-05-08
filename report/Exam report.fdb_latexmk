@@ -1,12 +1,12 @@
 # Fdb version 3
-["biber Exam report"] 1588676633 "Exam report.bcf" "Exam report.bbl" "Exam report" 1588678354
-  "Exam report.bcf" 1588678353 122619 1232b16066935be8ec14657bba6e2eb0 "pdflatex"
+["biber Exam report"] 1588676633 "Exam report.bcf" "Exam report.bbl" "Exam report" 1588920935
+  "Exam report.bcf" 1588920935 122619 1232b16066935be8ec14657bba6e2eb0 "pdflatex"
   (generated)
   "Exam report.blg"
   "Exam report.bbl"
-["pdflatex"] 1588678352 "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex" "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" "Exam report" 1588678354
-  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux" 1588678353 653 529eed9bf8a4f7c649fa39ff40b6ecd6 ""
-  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex" 1588678352 1340 f68be0995147b8d275adaa88139c7959 ""
+["pdflatex"] 1588920934 "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex" "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" "Exam report" 1588920935
+  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux" 1588920935 653 529eed9bf8a4f7c649fa39ff40b6ecd6 ""
+  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex" 1588920933 1386 35ae18de59f72b58e231d4ac84f13e66 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
@@ -71,15 +71,15 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1586288259 2432462 fd0fa20e9a3cb5f8169fd0ba1c955158 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "Exam report.aux" 1588678353 653 529eed9bf8a4f7c649fa39ff40b6ecd6 "pdflatex"
+  "Exam report.aux" 1588920935 653 529eed9bf8a4f7c649fa39ff40b6ecd6 "pdflatex"
   "Exam report.bbl" 1588676634 466 f7f239c736cf01ac6ce7bd829f9b3c7b "biber Exam report"
-  "Exam report.run.xml" 1588678353 2492 4e68ee82c9e41d0323000447e853061a "pdflatex"
-  "Exam report.tex" 1588678352 1340 f68be0995147b8d275adaa88139c7959 ""
+  "Exam report.run.xml" 1588920935 2492 4e68ee82c9e41d0323000447e853061a "pdflatex"
+  "Exam report.tex" 1588920933 1386 35ae18de59f72b58e231d4ac84f13e66 ""
   (generated)
-  "Exam report.log"
   "Exam report.run.xml"
-  "Exam report.bcf"
-  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf"
   "Exam report.pdf"
-  "Exam report.aux"
+  "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf"
   "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.log"
+  "Exam report.log"
+  "Exam report.aux"
+  "Exam report.bcf"

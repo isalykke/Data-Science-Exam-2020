@@ -206,7 +206,7 @@ model = load_model('model.h5') #load the model we just saved
 
 #input the zebra image into the function we just created
 input_w, input_h = 416, 416
-photo_filename = "./images/zebra.jpg"
+photo_filename = "./images/IMG_7286.jpg"
 image, image_w, image_h = load_image_pixels(photo_filename, (input_w, input_h))
 
 #make a prediction with the model

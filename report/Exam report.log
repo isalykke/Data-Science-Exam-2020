@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  5 MAY 2020 13:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  8 MAY 2020 08:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -471,13 +471,13 @@ Package logreq Info: Writing requests to '"Exam report".run.xml'.
 Here is how much of TeX's memory you used:
  9860 strings out of 480608
  179570 string characters out of 5903631
- 910088 words of memory out of 5000000
+ 910134 words of memory out of 5000000
  25670 multiletter control sequences out of 15000+600000
  535513 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  47i,10n,49p,899b,4720s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (2 pages, 59103 bytes).
+Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (2 pages, 59823 bytes).
 PDF statistics:
  31 PDF objects out of 1000 (max. 8388607)
  21 compressed objects within 1 object stream
