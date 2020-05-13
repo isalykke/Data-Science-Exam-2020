@@ -58,21 +58,23 @@ def calcuate_box_variance(box, mean_gb):
 
     return box_variance
 
-#def gray_level_mean_variance(nomalized_gray, resize_scales):
+def gray_level_mean_variance(nomalized_gray, resize_scales, L):
     
     #test variables: #####
-    L=2
-    normalized_gray = gray #for now. actually we need to normalize gray  first
-    resize_scales = (10,20,30,40,50,70,90) 
+    #L=2
+    #normalized_gray = gray #for now. actually we need to normalize gray  first
+    #resize_scales = (10,20,30,40,50,70,90) 
     #######################
 
     resized_images = []
 
     for scale in resize_scales:
+        print(scale)
         resized_width = int(normalized_gray.shape[1] * scale /100) #calculate the downscales width and height, keeping aspect ratios constant
         resized_height = int(normalized_gray.shape[0] * scale /100)
 
         dims = (resized_width, resized_height)
+        print(dims)
 
         resized_image = cv2.resize(normalized_gray, dims, cv2.INTER_NEAREST) #resize the image using nearest neighbour
 
@@ -80,20 +82,31 @@ def calcuate_box_variance(box, mean_gb):
     
 
     #divide images into boxes of size LxL to calculate mean variances
-    for img in resized_images: #NB! why does this not work when I only run over one image?
+    for img in resized_images[0:1]: #NB! why does this not work when I only run over one image?
 
-        L_boxes = create_L_boxes(img, 2) #create roi-boxes ("L-boxes") of size LxL
+        L_boxes = create_L_boxes(img, L) #create roi-boxes ("L-boxes") of size LxL
 
-        for box in L_boxes:
+        for i, box in enumerate(L_boxes):
+            print(i)
+            Vbs = []
+
             #calculate the mean grey level, mean_gb, of the box
             box_sum = cv2.sumElems(box)
             mean_gb = (1/L**2)*box_sum[0]
+            print(f"meangb={mean_gb}")
 
             #calculate the sample variance, Vb, of the box
             box_variance = calcuate_box_variance(box, mean_gb)
             Vb = (1/(L**2-1))*box_variance
+            print(f"Vb={Vb}")
+            Vbs.append(Vb)
 
-        calculate grey lavel mean variance V
+        #calculate gray-level mean variance V, over all boxes:
+        V = (L**2/(img.shape[0]*img.shape[1]))*np.sum(Vbs)
+
+        #assign each V to a scale, S
+
+    return V
 
 #def Q_complexity(nomalized_gray):
 
