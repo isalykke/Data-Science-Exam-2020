@@ -17,8 +17,8 @@ from keras.preprocessing.image import load_img, img_to_array
 ########################## DEFINE FUNCTIONS ####################
 ###############################################################
 
-def variance_of_laplacian(image):
-    return cv2.Laplacian(image, cv2.CV_64F).var()
+def variance_of_laplacian(img):
+    return cv2.Laplacian(img, cv2.CV_64F).var()
 
 def location_scout(filename):
     if "NARS" in filename:
@@ -35,6 +35,7 @@ def label_false_positives(filename):
     return label
 
 def create_L_boxes(img, L):
+    #creates non-overlapping boxes of size LxL
     L_boxes = []
 
     #loop over pixels in image to create L-boxes:
@@ -58,6 +59,21 @@ def calcuate_box_variance(box, mean_gb):
 
     return box_variance
 
+def resize_image(img, resize_scales):
+    resized_images = []
+
+    for scale in resize_scales:
+        resized_width = int(img.shape[1] * scale /100) #calculate the downscaled width and height, keeping aspect ratios constant
+        resized_height = int(img.shape[0] * scale /100)
+
+        dims = (resized_width, resized_height)
+
+        resized_image = cv2.resize(img, dims, cv2.INTER_NEAREST) #resize the image using nearest neighbour
+
+        resized_images.append(resized_image) #add to list
+    
+    return resized_images
+
 def gray_level_mean_variance(nomalized_gray, resize_scales, L):
     
     #test variables: #####
@@ -66,25 +82,12 @@ def gray_level_mean_variance(nomalized_gray, resize_scales, L):
     #resize_scales = (10,20,30,40,50,70,90) 
     #######################
 
-    resized_images = []
-
-    for scale in resize_scales:
-        print(scale)
-        resized_width = int(normalized_gray.shape[1] * scale /100) #calculate the downscales width and height, keeping aspect ratios constant
-        resized_height = int(normalized_gray.shape[0] * scale /100)
-
-        dims = (resized_width, resized_height)
-        print(dims)
-
-        resized_image = cv2.resize(normalized_gray, dims, cv2.INTER_NEAREST) #resize the image using nearest neighbour
-
-        resized_images.append(resized_image) #add to list
-    
+    resized_images = resize_image(normalized_gray, resize_scales)
 
     #divide images into boxes of size LxL to calculate mean variances
-    for img in resized_images[0:1]: #NB! why does this not work when I only run over one image?
+    for img in resized_images[2]: #NB! why does this not work when I only run over one image?
 
-        L_boxes = create_L_boxes(img, L) #create roi-boxes ("L-boxes") of size LxL
+        L_boxes = create_L_boxes(img, L) #creates roi-boxes ("L-boxes") of size LxL
 
         for i, box in enumerate(L_boxes):
             print(i)
@@ -92,17 +95,17 @@ def gray_level_mean_variance(nomalized_gray, resize_scales, L):
 
             #calculate the mean grey level, mean_gb, of the box
             box_sum = cv2.sumElems(box)
-            mean_gb = (1/L**2)*box_sum[0]
-            print(f"meangb={mean_gb}")
+            mean_gb = (1/L**2)*box_sum[0] #eq 2
+            print(f"mean gb={mean_gb}")
 
-            #calculate the sample variance, Vb, of the box
+            #calculate the sample variance of the gray level, Vb, of the box
             box_variance = calcuate_box_variance(box, mean_gb)
-            Vb = (1/(L**2-1))*box_variance
+            Vb = (1/(L**2-1))*box_variance #eq 1
             print(f"Vb={Vb}")
             Vbs.append(Vb)
 
         #calculate gray-level mean variance V, over all boxes:
-        V = (L**2/(img.shape[0]*img.shape[1]))*np.sum(Vbs)
+        V = (L**2/(img.shape[0]*img.shape[1]))*np.sum(Vbs) #eq 3
 
         #assign each V to a scale, S
 
@@ -134,13 +137,13 @@ def extract_meta_data(IMAGE_FOLDER):
 
         #normalized_gray = cv2.normalize(gray, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-        fm = variance_of_laplacian(gray) #calculate blurriness score
+        blur = variance_of_laplacian(gray) #calculate blurriness score
 
         location = location_scout(filename)
 
         label = label_false_positives(filename)
 
-        img_tupple = (filename, fm, location, shape[0], shape[1], size, label)
+        img_tupple = (filename, shape[0], shape[1], size, blur, location, label)
 
         metadata.append(img_tupple)
     
