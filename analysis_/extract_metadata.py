@@ -38,7 +38,7 @@ def label_false_positives(filename):
     
     #test variables: #####
     L=2
-    normalized_gray = gray #for now, we need to normalize this first
+    normalized_gray = gray #for now. actually we need to normalize gray this first
     resize_scales = (10,20,30,40,50,70,90) 
     #######################
 
@@ -55,12 +55,19 @@ def label_false_positives(filename):
         resized_images.append(resized_image) #add to list
     
 
-    for img in resized_images:
+    #divide images into boxes of size LxL to calculate mean variance
+    for img in resized_images[6]: #why does this not work when I only run over one image?
 
-        devide into LxL box
+        roi_boxes = []
 
-            for each box:
-                calculate mean_gb
+        for r in range(0, img.shape[0], L):
+            for c in range(0, img.shape[1], L):
+                roi_box = img[r:r+L,c:c+L]
+                roi_boxes.append(roi_box)
+
+        for box in roi_boxes:
+                mean_gb = 1/(L^2)*sum()
+                
                 calculate Vb
         calculate grey lavel mean variance V
 
@@ -125,7 +132,7 @@ for subdir, dirs, files in os.walk(rootdir):
 from matplotlib import pyplot 
 data = pyplot.imread("./images/NARS-13_000074.JPG_4966.0_867_5247.0_1156.0.jpg")
 	# plot the image
-pyplot.imshow(resized_images[6])
+pyplot.imshow(resized_images[0])
 
 
 image = cv2.imread("./images/NARS-13_002067.JPG_4830.0_3294_5009.0_3409.0.jpg")
