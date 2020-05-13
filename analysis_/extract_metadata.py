@@ -34,11 +34,35 @@ def label_false_positives(filename):
         label = "0"
     return label
 
-#def gray_level_mean_variance(nomalized_gray, resize_scales, L):
+def create_L_boxes(img, L):
+    L_boxes = []
+
+    #loop over pixels in image to create L-boxes:
+    for r in range(0, img.shape[0], L):
+        for c in range(0, img.shape[1], L):
+            L_box = img[r:r+L,c:c+L]
+            L_boxes.append(L_box)
+
+    return L_boxes
+
+def calcuate_box_variance(box, mean_gb):
+    gi_variance =[]
+
+    for gi in box.flat:
+
+        variance = (gi - mean_gb)**2
+
+        gi_variance.append(variance)
+
+    box_variance = np.sum(gi_variance)
+
+    return box_variance
+
+#def gray_level_mean_variance(nomalized_gray, resize_scales):
     
     #test variables: #####
     L=2
-    normalized_gray = gray #for now. actually we need to normalize gray this first
+    normalized_gray = gray #for now. actually we need to normalize gray  first
     resize_scales = (10,20,30,40,50,70,90) 
     #######################
 
@@ -50,25 +74,25 @@ def label_false_positives(filename):
 
         dims = (resized_width, resized_height)
 
-        resized_image = cv2.resize(normalized_gray, dims, cv2.INTER_NEAREST) #resize the image
+        resized_image = cv2.resize(normalized_gray, dims, cv2.INTER_NEAREST) #resize the image using nearest neighbour
 
         resized_images.append(resized_image) #add to list
     
 
-    #divide images into boxes of size LxL to calculate mean variance
-    for img in resized_images[6]: #why does this not work when I only run over one image?
+    #divide images into boxes of size LxL to calculate mean variances
+    for img in resized_images: #NB! why does this not work when I only run over one image?
 
-        roi_boxes = []
+        L_boxes = create_L_boxes(img, 2) #create roi-boxes ("L-boxes") of size LxL
 
-        for r in range(0, img.shape[0], L):
-            for c in range(0, img.shape[1], L):
-                roi_box = img[r:r+L,c:c+L]
-                roi_boxes.append(roi_box)
+        for box in L_boxes:
+            #calculate the mean grey level, mean_gb, of the box
+            box_sum = cv2.sumElems(box)
+            mean_gb = (1/L**2)*box_sum[0]
 
-        for box in roi_boxes:
-                mean_gb = 1/(L^2)*sum()
-                
-                calculate Vb
+            #calculate the sample variance, Vb, of the box
+            box_variance = calcuate_box_variance(box, mean_gb)
+            Vb = (1/(L**2-1))*box_variance
+
         calculate grey lavel mean variance V
 
 #def Q_complexity(nomalized_gray):
@@ -95,7 +119,7 @@ def extract_meta_data(IMAGE_FOLDER):
 
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to gray scale image (2 dims)
 
-        normalized_gray = cv2.normalize(gray, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        #normalized_gray = cv2.normalize(gray, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
         fm = variance_of_laplacian(gray) #calculate blurriness score
 
