@@ -12,13 +12,12 @@ from imutils import paths
 import cv2
 import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
+from scipy.integrate import quad
+import pandas as pd
 
 ###############################################################
 ########################## DEFINE FUNCTIONS ####################
 ###############################################################
-
-def variance_of_laplacian(img):
-    return cv2.Laplacian(img, cv2.CV_64F).var()
 
 def location_scout(filename):
     if "NARS" in filename:
@@ -69,7 +68,7 @@ def resize_image(img, resize_scales, L):
         #making sure the image can be devided into LxL boxes
         if resized_width%L == 1:
             resized_width += -1
-        elif resized_height%L == 1:
+        if resized_height%L == 1:
             resized_height += -1
         
         dims = (resized_height, resized_width)
@@ -80,14 +79,14 @@ def resize_image(img, resize_scales, L):
     
     return resized_images
 
-def gray_level_mean_variance(nomalized_gray, resize_scales, L):
+def gray_level_mean_variance(normalized_gray, resize_scales, L):
 
     V_of_S = []
 
     resized_images = resize_image(normalized_gray, resize_scales, L)
 
     #divide images into L_boxes and calculate mean variances
-    for i, img in enumerate(resized_images): #NB! why does this not work when I only run over one image?
+    for img in resized_images: #NB! why does this not work when I only run over one image?
 
         L_boxes = create_L_boxes(img, L) #creates roi-boxes ("L-boxes") of size LxL
 
@@ -109,14 +108,18 @@ def gray_level_mean_variance(nomalized_gray, resize_scales, L):
         #calculate gray-level mean variance V, over all boxes:
         V = (L**2/(img.shape[0]*img.shape[1]))*np.sum(Vbs) #eq 3
 
-        V_of_S.append((V,resize_scales[i])) #eq 4?
+        S = L*normalized_gray.shape[0]/img.shape[0] #eq 4?
+
+        V_of_S.append((V,S)) 
 
     return V_of_S
 
 def Q_complexity(glmv):
 
+    Smax = max([i[1] for i in glmv])
+    Smin = min([i[1] for i in glmv])
 
-
+    Q = 1/(Smax-Smin)*quad(integrand, Smin, Smax)               #https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
 
 
 
@@ -142,38 +145,46 @@ def extract_meta_data(img_folder):
 
         glmv = gray_level_mean_variance(normalized_gray, (5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95), 2)
 
-        complexity = Q_complexity(glmv)
+        #complexity = Q_complexity(glmv)
 
-        blur = variance_of_laplacian(normalized_gray) #calculate blurriness score
+        blur = cv2.Laplacian(gray, cv2.CV_64F).var() #calculate blurriness score
 
         location = location_scout(filename)
 
         label = label_false_positives(filename)
 
-        img_tupple = (filename, shape[0], shape[1], size, complexity, blur, location, label)
+        img_tupple = (filename, shape[0], shape[1], size, blur, location, label)
 
         metadata.append(img_tupple)
     
     return(metadata)
 
 ###############################################################
-########################## RUN SCRIPT ####################
+########################## RUN SCRIPT ######################
 ###############################################################
 
 IMAGE_FOLDER = "./images/"
 my_metadata = extract_meta_data(IMAGE_FOLDER)
 
-my_metadata
+#convert to csv file 
+metadata = pd.DataFrame(my_metadata, columns = ["filename", "height", "width", "size", "blur", "location", "label"])
+metadata.to_csv('metadata.csv')
 
 
-""" maybe use this for cycling through directories:
+
 import os
-rootdir = 'C:/Users/sid/Desktop/test'
+rootdir = '/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis_ '
 
 for subdir, dirs, files in os.walk(rootdir):
+    print(subdir)
     for file in files:
-        print(os.path.join(subdir, file)) """
+        print("hi")
+        print(os.path.join(subdir, file))
 
+
+###############################################################
+########################## PLOT IMAGES ####################
+###############################################################
 
 
 from matplotlib import pyplot 
@@ -181,17 +192,13 @@ data = pyplot.imread("./images/NARS-13_000074.JPG_4966.0_867_5247.0_1156.0.jpg")
 # plot the image
 pyplot.imshow(im)
 
-
-
 image = cv2.imread("./images/NARS-13_000074.JPG_4966.0_867_5247.0_1156.0.jpg")
 cv2_imshow(normalized_gray)
 
 
 
-import cv2
 from IPython import display
 from PIL import Image
-
 def cv2_imshow(a):
     """A replacement for cv2.imshow() for use in Jupyter notebooks.
     Args:
@@ -208,9 +215,4 @@ def cv2_imshow(a):
             a = cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
     display.display(Image.fromarray(a))
 
-
-    
-#test variables: #####
-#L=2
-#resize_scales = (10,20,30,40,50,70,90) 
-#######################
+resize_scales = (5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95)
