@@ -14,6 +14,9 @@ import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
 from scipy.integrate import quad
 import pandas as pd
+import sympy as sym
+import math
+import os
 
 ###############################################################
 ########################## DEFINE FUNCTIONS ####################
@@ -26,8 +29,8 @@ def location_scout(filename):
         location = "THUL"
     return location
 
-def label_false_positives(filename):
-    if "false_positives" in filename:
+def label_false_positives(path):
+    if "false_pos" in path:
         label = "1"
     else:
         label = "0"
@@ -86,7 +89,7 @@ def gray_level_mean_variance(normalized_gray, resize_scales, L):
     resized_images = resize_image(normalized_gray, resize_scales, L)
 
     #divide images into L_boxes and calculate mean variances
-    for img in resized_images: #NB! why does this not work when I only run over one image?
+    for i, img in enumerate(resized_images): #NB! why does this not work when I only run over one image?
 
         L_boxes = create_L_boxes(img, L) #creates roi-boxes ("L-boxes") of size LxL
 
@@ -108,54 +111,74 @@ def gray_level_mean_variance(normalized_gray, resize_scales, L):
         #calculate gray-level mean variance V, over all boxes:
         V = (L**2/(img.shape[0]*img.shape[1]))*np.sum(Vbs) #eq 3
 
-        S = L*normalized_gray.shape[0]/img.shape[0] #eq 4?
+        S = L*normalized_gray.shape[0]/img.shape[0] #eq 4
 
-        V_of_S.append((V,S)) 
+        V_of_S.append((V,S, resize_scales[i])) 
 
     return V_of_S
 
 def Q_complexity(glmv):
 
-    Smax = max([i[1] for i in glmv])
-    Smin = min([i[1] for i in glmv])
+    v = [math.log(i[0]) for i in glmv]
+    s = [math.log(i[1]) for i in glmv]
 
-    Q = 1/(Smax-Smin)*quad(integrand, Smin, Smax)               #https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
+    #find limits for integral
+    Smax = max(s)
+    Smin = min(s)
+
+    v, s = sym.symbols("v s")
+    f = S/V
+
+    derivative = sym.diff(f, s)
+
+    interval = (1-0.25)*derivative**2
+
+    #the ramp function 
+    if interval >= 0:
+        my_expression = interval
+    else:
+        my_expression = 0
+
+    integral = quad(lambda s: my_expression, Smin, Smax)
+
+    Q = (1/(Smax-Smin))*integral[0] #eq5            #https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
+    #result = quad(lambda x: x**2, 0, 2) 
 
 
-
-def extract_meta_data(img_folder):
+def extract_meta_data(data_folder):
 
     metadata = []
 
-    for imagePath in paths.list_images(img_folder):
+    for dirpath, subdirs, files in os.walk(data_folder):
+        for file in files[1:6]:
+            path = os.path.join(dirpath,file)
+            print(path)
 
-        print(imagePath)
+            filename = file #extract filename from path
+            
+            image = cv2.imread(path) #import image
 
-        filename = imagePath.split(img_folder, 1)[1] #extract filename from path
-        
-        image = cv2.imread(imagePath) #import image
+            shape = image.shape #height, width and number of dimensions
 
-        shape = image.shape #height, width and number of dimensions
+            size =  shape[0] * shape[1] #height * width
 
-        size =  shape[0] * shape[1] #height * width
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to gray scale image (2 dims)
 
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to gray scale image (2 dims)
+            normalized_gray = cv2.normalize(gray, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-        normalized_gray = cv2.normalize(gray, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+            glmv = gray_level_mean_variance(normalized_gray, (5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95), 2)
 
-        glmv = gray_level_mean_variance(normalized_gray, (5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95), 2)
+            #complexity = Q_complexity(glmv)
 
-        #complexity = Q_complexity(glmv)
+            blur = cv2.Laplacian(gray, cv2.CV_64F).var() #calculate blurriness score
 
-        blur = cv2.Laplacian(gray, cv2.CV_64F).var() #calculate blurriness score
+            location = location_scout(filename)
 
-        location = location_scout(filename)
+            label = label_false_positives(path)
 
-        label = label_false_positives(filename)
+            img_tupple = (filename, shape[0], shape[1], size, blur, location, label)
 
-        img_tupple = (filename, shape[0], shape[1], size, blur, location, label)
-
-        metadata.append(img_tupple)
+            metadata.append(img_tupple)
     
     return(metadata)
 
@@ -163,23 +186,13 @@ def extract_meta_data(img_folder):
 ########################## RUN SCRIPT ######################
 ###############################################################
 
-IMAGE_FOLDER = "./images/"
-my_metadata = extract_meta_data(IMAGE_FOLDER)
+data_folder = "./data/"
+my_metadata = extract_meta_data(data_folder)
 
 #convert to csv file 
-metadata = pd.DataFrame(my_metadata, columns = ["filename", "height", "width", "size", "blur", "location", "label"])
+metadata = pd.DataFrame(my_metadata, columns = ["filename", "height", "width", "size", "blur", "location", "false_pos"])
 metadata.to_csv('metadata.csv')
 
-
-
-import os
-rootdir = '/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis_ '
-
-for subdir, dirs, files in os.walk(rootdir):
-    print(subdir)
-    for file in files:
-        print("hi")
-        print(os.path.join(subdir, file))
 
 
 ###############################################################
