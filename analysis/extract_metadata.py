@@ -27,6 +27,9 @@ from jax import grad
 import pandas as pd
 import math
 import os
+import re
+from scipy.interpolate import BSpline
+from scipy import interpolate
 
 ###############################################################
 ########################## DEFINE FUNCTIONS ####################
@@ -132,97 +135,67 @@ def gray_level_mean_variance(normalized_gray, resize_scales, L):
 
 def Q_complexity(glmv):
 
-    from scipy.interpolate import BSpline
-    from scipy import interpolate
-
-    x = np.array(S)
-    y = np.array(V)
-
-    t, c, k = interpolate.splrep(x=x, y=y, s= 0, k=4)
-
-
-    spl = BSpline(t, c, k)
-    spl(10)
-
-    print('''\
-    t: {}
-    c: {}
-    k: {}
-    '''.format(t, c, k))
-    N = 100
-    xmin, xmax = x.min(), x.max()
-    xx = np.linspace(xmin, xmax, N)
-    spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-    plt.plot(x, y, 'bo', label='Original points')
-    plt.plot(xx, spline(xx), 'r', label='BSpline')
-    plt.grid()
-    plt.legend(loc='best')
-    plt.show()
-
-    fig, ax = plt.subplots()
-    xx = np.linspace(10, 100, 1000)
-    #ax.plot(xx, [bspline(x, t, c ,k) for x in xx], 'r-', lw=3, label='naive')
-    ax.plot(xx, spl(xx), 'b-', lw=4, alpha=0.7, label='BSpline')
-    ax.grid(True)
-    ax.legend(loc='best')
-    plt.show()
-
+    #take log of V and S
     v = [math.log(i[0]) for i in glmv]
     s = [math.log(i[1]) for i in glmv]
 
-    spl = BSpline(s, v, k)
-
-    V = [i[0] for i in glmv]
-    S = [i[1] for i in glmv]
-
-"""     fig = plt.figure()
-    ax = plt.gca()
-    ax.scatter(S,V)
-    ax.set_yscale('log')
-    ax.set_xscale('log')
-    ax.set_xticks((1,10,100))
-    ax.set_yticks((1,10,100, 1000))
-    plt.xlabel("S")
-    plt.ylabel("V")
-    plt.title('Ordered')
-    ax.legend() 
-    #fig.savefig("ordered_norm.png")"""
-
     #find limits for integral
-    Smax = max(S)
-    Smin = min(V)
+    Smax = max(s)
+    Smin = min(s)
 
-    def my_fun(x):
-        f = (1-0.25)*(x**2)
-        return f
+    #reverse to increasing order for Bspline()
+    v.reverse()
+    s.reverse() 
+
+    #convert to arrays for splrep
+    x = np.array(s)
+    y = np.array(v)
+
+    #find vector knots for Bspline
+    t, c, k = interpolate.splrep(x=x, y=y, s= 0, k=4)
+    spl = BSpline(t, c, k)
     
-    grad_my_fun = grad(my_fun)
+    deriv = BSpline.derivative(spl)
 
-    [grad_my_fun(i) for i in S]
+    #s = [i for i in s if deriv(i)**2 <= 4]
 
-    #the ramp function 
-    if interval >= 0:
-        my_expression = interval
-    else:
-        my_expression = 0
+    integral = quad(lambda s: (1-0.25)*deriv(s)**2, Smin, Smax)
 
-    integral = quad(lambda s: my_expression, Smin, Smax)
+    Q = (1/(Smax-Smin))*integral[0] #eq5   
 
-    Q = (1/(Smax-Smin))*integral[0] #eq5            #https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
+    return Q
 
+def ICLS_complexity(img, path, compression):
+
+    uncomp_size = os.path.getsize(path)
+
+    temp_compressed = cv2.imwrite(f'temp_compres{compression}.jpg', img, [int(cv2.IMWRITE_JPEG_QUALITY), compression])
+
+    comp_size = os.path.getsize(f'temp_compres{compression}.jpg') #size of temp compressed image
+
+    os.remove(f'temp_compres{compression}.jpg') #remove the temp image from disk
+
+    CR = uncomp_size/comp_size #eq1
+
+    ICLS = 1/CR #eq2
+
+    return ICLS
 
 def extract_meta_data(data_folder):
 
     metadata = []
 
     for dirpath, _, files in os.walk(data_folder):
-        for file in files: 
+        for i,file in enumerate(files): 
             if file.endswith(".jpg"):
+
                 path = os.path.join(dirpath,file)
+                #print(f"{dirpath} {i}/{len(files)}")
                 print(path)
 
                 filename = file #extract filename from path
+
+                img_no = re.findall('[\d]+(?=.JPG)',filename)[0] #extract image number from filename
 
                 location = location_scout(filename)
 
@@ -242,11 +215,17 @@ def extract_meta_data(data_folder):
 
                 normalized_gray = cv2.normalize(gray, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-                glmv = gray_level_mean_variance(normalized_gray, (2.5,3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90), 2)
+                ICLS10 = ICLS_complexity(image, path, 10)
 
-                #complexity = Q_complexity(glmv)
+                ICLS30 = ICLS_complexity(image, path, 30)
 
-                img_tupple = (filename, shape[0], shape[1], size, ratio, blur, location, label)
+                ICLS50 = ICLS_complexity(image, path, 50)
+
+                glmv = gray_level_mean_variance(normalized_gray, (3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90), 2)
+
+                Q = Q_complexity(glmv)
+
+                img_tupple = (filename, img_no, shape[0], shape[1], size, ratio, blur, location, label, ICLS10, ICLS30, ICLS50, Q)
 
                 metadata.append(img_tupple)
     
@@ -256,34 +235,23 @@ def extract_meta_data(data_folder):
 ########################## RUN SCRIPT ######################
 ###############################################################
 
+resize_scales = (2.5,3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90)
 data_folder = "./data/"
 my_metadata = extract_meta_data(data_folder)
 
-#convert to csv file 
-metadata = pd.DataFrame(my_metadata, columns = ["filename", "height", "width", "size", "ratio", "blur", "location", "false_pos"])
+#convert to csv file and save
+metadata = pd.DataFrame(my_metadata, columns = ["filename", "img_no", "height", "width", "size", "ratio", "blur", "location", "false_pos", "ICLS10", "ICLS30", "ICLS50", "Q"])
 metadata.to_csv('metadata.csv')
-
 
 
 ###############################################################
 ########################## PLOT IMAGES ####################
 ###############################################################
 
-
-from matplotlib import pyplot as plt
-
-data = plt.imread("./images/NARS-13_000074.JPG_4966.0_867_5247.0_1156.0.jpg")
-# plot the image
-plt.imshow(im)
-
-image = cv2.imread("./images/gord.bmp")
-cv2_imshow(image)
-cv2_imshow(normalized_gray)
-
-
-
 from IPython import display
 from PIL import Image
+from matplotlib import pyplot as plt
+
 def cv2_imshow(a):
     """A replacement for cv2.imshow() for use in Jupyter notebooks.
     Args:
@@ -300,4 +268,62 @@ def cv2_imshow(a):
             a = cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
     display.display(Image.fromarray(a))
 
-resize_scales = (2.5,3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90)
+image = cv2.imread("./images/g360.bmp")
+cv2_imshow(image)
+
+imggg = Image.open("./images/g360.bmp")
+
+
+######################################plot B-splines and V(S)###########################################
+#NB you need to have created a glmv-object with the function gray_level_mean_variance() for this to work:
+
+#take log of V and S
+v = [math.log(i[0]) for i in glmv]
+s = [math.log(i[1]) for i in glmv]
+
+#reverse order for Bspline()
+v.reverse()
+s.reverse() 
+
+#convert to array for splrep
+x = np.array(s)
+y = np.array(v)
+
+#find vector knots for Bspline
+t, c, k = interpolate.splrep(x=x, y=y, s= 0, k=4)
+spl = BSpline(t, c, k)
+
+#plot the Bspline
+print('''\
+    t: {}
+    c: {}
+    k: {}
+    '''.format(t, c, k))
+N = 100
+xmin, xmax = x.min(), x.max()
+xx = np.linspace(xmin, xmax, N)
+spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+plt.plot(x, y, 'bo', label='Original points')
+plt.plot(xx, spline(xx), 'r', label='BSpline')
+plt.grid()
+plt.legend(loc='best')
+plt.show()
+
+#plot V(S)
+
+    V = [i[0] for i in glmv]
+    S = [i[1] for i in glmv]
+
+    fig = plt.figure()
+    ax = plt.gca()
+    ax.scatter(S,V)
+    ax.set_yscale('log')
+    ax.set_xscale('log')
+    ax.set_xticks((1,10,100))
+    ax.set_yticks((1,10,100, 1000))
+    plt.xlabel("S")
+    plt.ylabel("V")
+    plt.title('Ordered')
+    ax.legend() 
+    #fig.savefig("ordered_norm.png")
