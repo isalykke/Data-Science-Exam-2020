@@ -133,6 +133,9 @@ def gray_level_mean_variance(normalized_gray, resize_scales, L):
 
     return V_of_S
 
+def ramp(x):
+    return np.maximum(0, x)
+
 def Q_complexity(glmv):
 
     #take log of V and S
@@ -155,11 +158,9 @@ def Q_complexity(glmv):
     t, c, k = interpolate.splrep(x=x, y=y, s= 0, k=4)
     spl = BSpline(t, c, k)
     
-    deriv = BSpline.derivative(spl)
+    dvds = BSpline.derivative(spl)
 
-    #s = [i for i in s if deriv(i)**2 <= 4]
-
-    integral = quad(lambda s: (1-0.25)*deriv(s)**2, Smin, Smax)
+    integral = quad(lambda s: ramp(1-(0.25*dvds(s)**2)), Smin, Smax)
 
     Q = (1/(Smax-Smin))*integral[0] #eq5   
 
@@ -268,7 +269,7 @@ def cv2_imshow(a):
             a = cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
     display.display(Image.fromarray(a))
 
-image = cv2.imread("./images/g360.bmp")
+image = cv2.imread("./images/gord.bmp")
 cv2_imshow(image)
 
 imggg = Image.open("./images/g360.bmp")
