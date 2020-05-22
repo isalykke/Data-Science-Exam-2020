@@ -1,14 +1,17 @@
+% text setup
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{setspace} % for line spacing
+\usepackage{setspace} % line spacing
 %for images
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 %for math
-\usepackage{amsmath} 
+\usepackage{amsmath}
+%for links
+\usepackage{hyperref}
 %for citations
 \usepackage[backend=biber,citestyle=verbose-ibid,urldate=long,style=apa]{biblatex} 
-\addbibresource{bibliography.bib}
+\addbibresource{../bibliography.bib}
 %for footer/header set-up
 \usepackage{lastpage}
 \usepackage{fancyhdr}
@@ -23,7 +26,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%% START TITLEPAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Quantifying Characteristics of False Positives from a Flower Detection Network}
+\title{Identifying Characteristics of False Positives from a Flower Detection Network}
 \author{\parbox{\linewidth}{\centering%
 Isa Lykke Hansen\endgraf\bigskip
 Data Science Exam Paper \endgraf
@@ -43,24 +46,108 @@ MSc. Cognitive Science - AU}}
 %%%%%%%%%%%%%%%%%%%%%%%%% START DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \abstract{}
-This will soon be a paper about image classification ... I hope
+This will soon be a paper about image classification ... I hope.
 
 \section{Introduction}
+The method of using neural networks (NNs) to classify images have grown steadily in popularity over the last couple of years.These days image classification algorithms help us solve diverse tasks such as detecting oil spills, improving early cancer detection, predicting the weather and even exploring the distant corners of our universe (\cite{vestfalenAarhusHeleByen2019}),ekiciBreastCancerDiagnosis2020,abhishekWeatherForecastingModel2012,krastevRealtimeDetectionGravitational2020}).
+
+Since 2018 researches at Universitetet i Tromsø (UiT) and Aarhus University (AU) have collaborated on a project to track the plant-pollinator interaction in selected species of Arctic flowers. This is done to investigate whether climate change is shifting the active seasons of the flowers and pollinating insects. Such a shift could potentially have very serious consequences, as it is ultimately the overlap between the pollinators and flowers that determine the outcome of food crops (\cite{danmarksfrieforskningsfondAretsOriginaleIde2019}).
+
+In short, the project implements large scale surveillance of the plant-pollinator interaction by way of time-lapse images. For two years, data was gathered from several time-lapse cameras set up at various locations in the Arctic, collecting thousands of images for analysis. The idea then is to train a NN to automatically detect flowers and insects in the images. This creates the possibility for investigating changes in large areas of over long time periods with minimal equipment and manual labour.
+
+\subsection{Image Classification}
+Broadly speaking, image recognition tasks can be divided into three sub-categories (\cite{C4W3L01ObjectLocalization}):
+\begin{enumerate}
+	\item Classification
+	\item Classification with localization
+	\item Detection
+\end{enumerate}
+When searching an image for an object, X, Classification answers the simple question "is X present in the image?". Classification with localization in addition answers the question "where in the image is X located?". The exact location of X is specified by a so-called \textit{bounding box}, which is parameterized by a vector containing the x,y coordinates for the midpoint of the box, as well as the height and width of the box. Finally, Detection allows for the localization of multiple objects from several classes within a single image. The output will be an array of bounding boxes each associated with a class and a probability for that class.
+
+The images used in this paper were detections from an R-CNN trained on data from two of the locations, Narsarsuaq in southern Greenland and Thule in Northern Greenland.
 
 
+\section{Methods}
+All scripts used for analysis can be found on the \href{https://github.com/isalykke/Data-Science-Exam-2020}{Github Repository}
+X images were included in the analysis
+\subsection{Sorting Images}
+From the original XXXX images, XXXX were sorted into two groups of true- and false positives.
+X images were included in the analysis
+\subsection{Extracting Metadata}
+
+Next, metadata were extracted for all images using the script "extract_metadata.py". The script runs through the image directories and extracts image features for each image, before saving them to a .csv file for statistical data analysis (see section???) 
+Features extracted for each image were:
 
 
+In the following subsections we will go more in depth with a few of these measures.
+
+\subsubsection{The Q Complexity Measure}
+
+For the calculation of the Q complexity we attempted to implement the method described in (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). !!!However, due to time constraints we were not able to completely recreate the measures described in the paper. !!!
+
+\begin{equation}
+	V_b = \frac{1}{L^2-1}*sum_{i in b}(g_i-\overline{g}_b)^2
+	\label{eq:Q1}
+\end{equation} 
+
+\begin{equation}
+	\bar{g}_b = \frac{1}{L^2}*sum_{i in b}(g_i)
+	\label{eq:Q2}
+\end{equation} 
+
+\begin{equation}
+	V = \frac{L^2}{N'M'}*sum_{b}(V_b)
+	\label{eq:Q3}
+\end{equation} 
+
+\begin{equation}
+	S = \frac{LN}{N'}
+	\label{eq:Q4}
+\end{equation} 
+
+In addition a few changes were made in order to generalize the method. Most importantly, the scaling of the resized images was changed
+First, instead of using a predetermined array of scaling heights, as described on p. 10 we insted implemented a method that downsized the images according to a scaling factor of the original image. This method emplyed in the paper nessecitates(?) that all images be of the same dimensions. By using a scaling factor of the image size instead, the method becomes more broadly applicable, while at the same time still tilgodese the requirements of keeping the image ratio constant across various resizing ranges.
+
+In addition, as we are running over the image with a kernel of size 2x2, and our images are of varying sizes, we decided to crop the images prior to the calculation of V. In practice this consisted of cutting off one row or column of pixels on the instances where the height or width of the image did not satisfy X\%2 = 0.
+
+Secondly, since we are integrating over discrete values of S we require an interpolation for the computed values of V(S). Here we have used Bspline 
+
+\begin{equation}
+	Q = \frac{1}{s_max-s_min}*\int_{s_min}^{s_max} 1-frac{1}{4} (frac{dv}{ds})^2 ds
+	\label{eq:Q5}
+\end{equation} 
 
 
+Q complexity:
+
+I cropped th images if they were not %L
+I calculated the scale differently (more directly?)
+
+\subsubsection{The $IC_{LS}$ Complexity Measure}
+
+The $IC_{LS}$ was another measure for complexity implemented from (\cite{yuImageComplexitySpatial2013}). The $IC_{LS}$ measures the relative sizes of compressed to uncompressed size of images and employs it as a measure of complexity.
+
+Since we didn't know the original compression of the images, but were told they had been saved with standard jpg formatting we assumed, this was assumed to be roughly equivalent to jpg 95 formatting. We therefore chose 
+
+\subsection{Statistical Analysis in R}
+
+\subsubsection{Cross Validation}
+In order to find out witch model best predicted the data, we ran a series of cross validations using the R package "cvms" (CITE LUDVIG).
 
 
+\subsubsection{CNN}
+As a proof of concept a simple CNN was implemented to distinguish between positives and false positives
 
 
+\section{Results}
+We found that positives could best be distinguished from false positives with the linear model 
 
 
+\section{Discussion}
 
-
-
+Due to time constraints we were not able to\dots
+In future analysis of the data one might include more measures of \dots
+Another thing that might be interesting to investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer false positives. However, layering lsksdlk
 
 
 

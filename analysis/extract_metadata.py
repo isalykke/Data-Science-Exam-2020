@@ -236,7 +236,6 @@ def extract_meta_data(data_folder):
 ########################## RUN SCRIPT ######################
 ###############################################################
 
-resize_scales = (2.5,3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90)
 data_folder = "./data/"
 my_metadata = extract_meta_data(data_folder)
 

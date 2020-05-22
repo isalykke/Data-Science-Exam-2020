@@ -1,0 +1,98 @@
+---
+title: "Identifying Characteristics of False Positives from a Flower Detection Network"
+author: "Isa Lykke Hansen"
+date: "5/15/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis_")
+library(pacman)
+p_load(tidyverse, cvms, groupdata2, knitr)
+set.seed(1991)
+```
+
+```{r}
+metadata <- read.csv("metadata.csv")
+
+model1 <- glm(false_pos ~ size, family = "binomial", data = metadata)
+summary(model1)
+
+
+#make location a categorical variable for predition
+df_observations <- metadata %>% 
+  mutate(location_num = as.factor(ifelse(location =="NARS", 1,0)))
+
+df_observations <- arrange(df_observations, img_no) #not meaningfull, ime no != same flower
+
+#find all possible combinations of predictors
+formulas = combine_predictors("false_pos", c("size", "ratio", "blur"))
+
+#create groups automatically (not meaningful for img_no thoug)
+df_observations <- group(metadata, n = 'auto', 
+                         method = 'l_starts',
+                         starts_col = 'false_pos', 
+                         col_name = 'session') 
+
+df_observations%>% head(10) %>% kable()
+
+#find only those obs from location NARS
+df_obs_subset <-  filter(df_observations, location_num == 0)
+model <- glm(false_pos ~ blur, df_obs_subset, family = "binomial")
+
+#create folds for cvms
+data <- fold(df_observations, k = 4, cat_col = 'false_pos', 
+             id_col = 'X', num_fold_cols = 3)
+
+#cross validate on the folds
+CV <- cross_validate(data, formulas,
+                     fold_cols = c('.folds_1', '.folds_2', '.folds_3'),
+                     family = 'binomial',
+                     REML = FALSE)
+
+#arrange the models in order - best on top
+arranged = arrange(CV, desc(`Balanced Accuracy`))
+#show the whole model and only one metric
+select_definitions(arranged, additional_includes = "Balanced Accuracy")
+
+
+
+
+
+
+
+chi2 <- model$null.deviance - model$deviance
+chi2
+
+chidf <- model$df.null - model$df.residual
+chidf
+
+chi2.prob <- 1 - pchisq(chi2, chidf)
+chi2.prob
+
+
+logisticpseudoR2s <- function(logisticmodel) {
+  deviance <- logisticmodel$deviance #extract model deviance
+  nulldeviance <- logisticmodel$null.deviance #extract baseline model deviance
+  modelN <- length(logisticmodel$fitted.values) #compute sample size
+  R.l <- 1 - deviance/nulldeviance  # Hosmer and Lemeshow's R2 is computed
+  R.cs <- 1- exp(-(nulldeviance-deviance)/modelN) # Cox and Snell R2
+  R.n <- R.cs / (1 - (exp(-(nulldeviance/modelN)))) # Nagelkerke R2
+  cat("Pseudo R2 for logistic regression\n")
+  cat("Hosmer & Lemeshow's R2    ", round(R.l,3), "\n")
+  cat("Cox and Snell's R2    ", round(R.cs,3), "\n")
+  cat("Nagelkerke's R2    ", round(R.n,3), "\n")
+}
+
+logisticpseudoR2s(model)
+
+exp(1.281+(8.326e-03)) 
+
+exp(-2.681e-05)
+
+round(inv.logit(1.281+(8.326e-03)),2) 
+round(inv.logit(8.326e-03),2) 
+
+
+```
+

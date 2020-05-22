@@ -17,3 +17,7 @@
 *.pdf
 *.run.xml
 *.synctex.gz
+*.png
+*.bmp
+*.csv
+*.bib
