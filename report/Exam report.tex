@@ -2,6 +2,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{setspace} % line spacing
+%\usepackage[margin=1.5in]{geometry} %margins
 %for images
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
@@ -15,22 +16,19 @@
 %for footer/header set-up
 \usepackage{lastpage}
 \usepackage{fancyhdr}
-\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0.6pt}
 \renewcommand{\footrulewidth}{0pt}
 \fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
-\fancyhead[L]{Isa Lykke Hansen}
-\fancyhead[C]{}
-\fancyhead[R]{28/05/2020}
+% \fancyhead[L]{Isa Lykke Hansen}
+% \fancyhead[C]{}
+% \fancyhead[R]{28/05/2020}
 \pagestyle{fancy}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% START TITLEPAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Identifying Characteristics of False Positives from a Flower Detection Network}
-\author{\parbox{\linewidth}{\centering%
-Isa Lykke Hansen\endgraf\bigskip
-Data Science Exam Paper \endgraf
-MSc. Cognitive Science - AU}}
+\author{Isa Lykke Hansen}
 \date{May 28th 2020}
 
 \begin{document}
@@ -49,93 +47,144 @@ MSc. Cognitive Science - AU}}
 This will soon be a paper about image classification ... I hope.
 
 \section{Introduction}
-The method of using neural networks (NNs) to classify images have grown steadily in popularity over the last couple of years.These days image classification algorithms help us solve diverse tasks such as detecting oil spills, improving early cancer detection, predicting the weather and even exploring the distant corners of our universe (\cite{vestfalenAarhusHeleByen2019}),ekiciBreastCancerDiagnosis2020,abhishekWeatherForecastingModel2012,krastevRealtimeDetectionGravitational2020}).
+The method of using neural networks (NNs) to classify images have grown steadily in popularity over the last couple of years. These days, image classification algorithms help us solve diverse tasks such as detecting oil spills, improving early cancer detection, predicting the weather and even exploring the distant corners of our universe (\cite{vestfalenAarhusHeleByen2019,ekiciBreastCancerDiagnosis2020,abhishekWeatherForecastingModel2012,krastevRealtimeDetectionGravitational2020}).
 
 Since 2018 researches at Universitetet i Tromsø (UiT) and Aarhus University (AU) have collaborated on a project to track the plant-pollinator interaction in selected species of Arctic flowers. This is done to investigate whether climate change is shifting the active seasons of the flowers and pollinating insects. Such a shift could potentially have very serious consequences, as it is ultimately the overlap between the pollinators and flowers that determine the outcome of food crops (\cite{danmarksfrieforskningsfondAretsOriginaleIde2019}).
 
-In short, the project implements large scale surveillance of the plant-pollinator interaction by way of time-lapse images. For two years, data was gathered from several time-lapse cameras set up at various locations in the Arctic, collecting thousands of images for analysis. The idea then is to train a NN to automatically detect flowers and insects in the images. This creates the possibility for investigating changes in large areas of over long time periods with minimal equipment and manual labour.
+The project implements large scale video-surveillance of the plant-pollinator interaction by way of time-lapse images. For two years, time-lapse data was gathered from several cameras set up at various locations in the Arctic, collecting thousands of images for analysis. The idea then is to train a NN to automatically detect flowers and insects in the images. This creates the possibility for investigating changes in large areas and over long time periods with minimal amounts of equipment and manual labour.
 
-\subsection{Image Classification}
-Broadly speaking, image recognition tasks can be divided into three sub-categories (\cite{C4W3L01ObjectLocalization}):
+\subsection{Image Recognition}
+Broadly speaking, image recognition tasks can be divided into three sub-categories (\cite{C4W3L01ObjectLocalization2017}):
+
 \begin{enumerate}
-	\item Classification
-	\item Classification with localization
-	\item Detection
+	\item Classification\label{itm:1}
+	\item Classification with localization\label{itm:2}
+	\item Detection\label{itm:3}
 \end{enumerate}
-When searching an image for an object, X, Classification answers the simple question "is X present in the image?". Classification with localization in addition answers the question "where in the image is X located?". The exact location of X is specified by a so-called \textit{bounding box}, which is parameterized by a vector containing the x,y coordinates for the midpoint of the box, as well as the height and width of the box. Finally, Detection allows for the localization of multiple objects from several classes within a single image. The output will be an array of bounding boxes each associated with a class and a probability for that class.
 
-The images used in this paper were detections from an R-CNN trained on data from two of the locations, Narsarsuaq in southern Greenland and Thule in Northern Greenland.
+When searching an image for an object, X, \ref{itm:1} answers the simple question "is X present in the image?". \ref{itm:2} in addition provides information on where in the image X is located. The exact location of X is specified by a so-called \textit{bounding box}, which is parameterized by a vector containing the x,y coordinates for the midpoint of the box, as well as the height and width of the box. Finally, \ref{itm:3} allows for the localization of multiple objects from several classes within a single image. The output will be an array of bounding boxes each associated with a class and a probability for that class.
+
+\subsection{A Flower Detection Network}
+The images used in this paper were detections from a MASK R-CNN trained on data from four observation sites/periods (Narsarsuaq 2018, Narsarsuaq 2019, Thule 2018 and Ny Aalesund, Svalbard 2019). The network was trained on rectangular bounding boxes and obtained a precision of .84 and a recall of .92. 
+
+Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true- and false positive predictions from the network.
 
 
 \section{Methods}
-All scripts used for analysis can be found on the \href{https://github.com/isalykke/Data-Science-Exam-2020}{Github Repository}
-X images were included in the analysis
+All scripts used for analysis can be found on the Github repository \url{https://github.com/isalykke/Data-Science-Exam-2020}
+
 \subsection{Sorting Images}
-From the original XXXX images, XXXX were sorted into two groups of true- and false positives.
-X images were included in the analysis
-\subsection{Extracting Metadata}
+The first task consisted of manually sorting the images into true and false positives. 
+From the original set of 7.423 images, 6.687 were manually sorted into two groups of true(n = 4.346)- and false(n = 2.341) positives. The 736 images that could not clearly be defined as either true or false positives were excluded from the analysis. Example images from the two groups can be seen in in figures \ref{fig:truepos} and \ref{fig:falsepos} respectively.
 
-Next, metadata were extracted for all images using the script "extract_metadata.py". The script runs through the image directories and extracts image features for each image, before saving them to a .csv file for statistical data analysis (see section???) 
-Features extracted for each image were:
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{true_pos_example.jpg}
+	\end{center}
+	\caption{Example image from the group true positives}
+	\label{fig:truepos}
+\end{figure}
 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{false_pos_example.jpg}
+	\end{center}
+	\caption{Example image from the group false positives}
+	\label{fig:falsepos}
+\end{figure}
 
-In the following subsections we will go more in depth with a few of these measures.
+\subsection{Extracting Meta Data}
+Secondly, meta data were extracted from all images using the script "extract\_metadata.py". The script runs through the image directories and extracts image features for each image, before saving them to a .csv file for further statistical  analysis (see section \ref{R}).
+Features extracted for each image included:
 
-\subsubsection{The Q Complexity Measure}
+\begin{itemize}
+	\item Filename, location and label (true/false positive)
+	\item Simple features such as height, width, size and ratio
+	\item Complex features such as blurriness and complexity measures
+\end{itemize}
 
-For the calculation of the Q complexity we attempted to implement the method described in (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). !!!However, due to time constraints we were not able to completely recreate the measures described in the paper. !!!
+Since no one measure of complexity is accepted in the field as the standard, we calculated two different versions, in the hope that one of them would be able to explain some of the variance in our data. In sections \ref{Q} and \ref{ICLS} below we go more in depth with each of these.
+
+\subsubsection{The Q Complexity Measure}\label{Q}
+For the calculation of the Q complexity we implemented the method described in (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). In short, the method creates several resized versions of a B/W image with dimensions N*M. These are then further divided into boxes of size LxL\footnote{In theory L could be any number as long as its smaller than the dimensions of the resized image. In practice though, the best results are obtained for smaller values of L. This makes intuitive sense as less information is aggregated as L grows smaller. In this paper, as well as in the original, L was kept at 2.} and the sample variance of the gray-level for each box, b, is calculated as: 
 
 \begin{equation}
-	V_b = \frac{1}{L^2-1}*sum_{i in b}(g_i-\overline{g}_b)^2
+	V_b = \frac{1}{L^2-1}\sum_{i\,in\,b}(g_i-\bar{g}_b)^2
 	\label{eq:Q1}
 \end{equation} 
 
+where $g_i$ denotes the gray level of each pixel and
+
 \begin{equation}
-	\bar{g}_b = \frac{1}{L^2}*sum_{i in b}(g_i)
+	\bar{g}_b = \frac{1}{L^2}\sum_{i\,in\,b}(g_i)
 	\label{eq:Q2}
 \end{equation} 
 
+The sample variance for each box is then combined to find the gray-level mean variance of the resized image:
+
 \begin{equation}
-	V = \frac{L^2}{N'M'}*sum_{b}(V_b)
+	V = \frac{L^2}{N'M'}\sum_{b}(V_b)
 	\label{eq:Q3}
 \end{equation} 
 
+Where N'M' are the dimensions of the resized image. This process is repeated for all resized versions of the original image, and the associated scaling factor, S, is calculated as:
+
 \begin{equation}
-	S = \frac{LN}{N'}
+	S = \frac{LN}{N'} = \frac{LM}{M'}
 	\label{eq:Q4}
 \end{equation} 
 
-In addition a few changes were made in order to generalize the method. Most importantly, the scaling of the resized images was changed
-First, instead of using a predetermined array of scaling heights, as described on p. 10 we insted implemented a method that downsized the images according to a scaling factor of the original image. This method emplyed in the paper nessecitates(?) that all images be of the same dimensions. By using a scaling factor of the image size instead, the method becomes more broadly applicable, while at the same time still tilgodese the requirements of keeping the image ratio constant across various resizing ranges.
-
-In addition, as we are running over the image with a kernel of size 2x2, and our images are of varying sizes, we decided to crop the images prior to the calculation of V. In practice this consisted of cutting off one row or column of pixels on the instances where the height or width of the image did not satisfy X\%2 = 0.
-
-Secondly, since we are integrating over discrete values of S we require an interpolation for the computed values of V(S). Here we have used Bspline 
+Finally, the complexity measure, Q[0:1], for the B/W image is calculated as: 
 
 \begin{equation}
-	Q = \frac{1}{s_max-s_min}*\int_{s_min}^{s_max} 1-frac{1}{4} (frac{dv}{ds})^2 ds
+	Q = \frac{1}{s_{max}-s_{min}}\int_{s_{min}}^{s_{max}} \left[1-\frac{1}{4} \left(\frac{dv}{ds}\right)^2 \right]_+ds
 	\label{eq:Q5}
 \end{equation} 
 
+\paragraph{Notes on Implementation}
+Because the code used for calculating Q in the Zanette paper was unavailable, we implemented the method in python(v3.8.2), by writing the functions \textbf{gray\_level\_mean\_variance} and \textbf{Q\_complexity} which can be found in the script "extract\_metadata.py". In the sections below we elaborate on some of the choices that were made during implementation.
+\subparagraph{.}
+In the original paper a series of values for N' were chosen to match the dimensions of the original image while at the same time maintaining the aspect ratio, so that $N'/M' = N/M$. As all of our images differed in dimensions, we instead implemented a method that downsized the images according to a percentage-wise scaling factor, P, such that $N' = N*P/100$. The values of P were given by the set \{3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90\}. This we believe, makes the method more broadly applicable, while at the same time still satisfying the requirement of maintaining the aspect ratio.
+\subparagraph{.}
+In addition, as \ref{eq:Q1} requires the division of images into 2x2 boxes, and all our images were of varying sizes, we decided to crop the images prior to the calculation of $V_b$. In practice, this was done by downsizing the dimensions of the resized image by one on the instances where the height or width did not satisfy $x\,mod\,2 = 0$.
+\subparagraph{.}
+Finally, as described in the article, in order to calculate \ref{eq:Q5} we need to integrate over the derivative $dv/ds$. 
+Since we have only calculated discrete values of V(S) an interpolation function is required for the calculation of the derivative. Here we used zero-smoothed Bspline interpolation of the fourth degree\footnote{Knots and spline coefficients were automatically determined by the scipy function splrep()}. 
 
-Q complexity:
+\subsubsection{The $IC_{LS}$ Complexity Measure}\label{ICLS}
+The $IC_{LS}$ is another proposed measure of complexity described in (\cite{yuImageComplexitySpatial2013}). 
+The $IC_{LS}$ measures the compression ratio, CR, as the file sizes of an uncompressed images relative to the file size of the compressed images, such that:
 
-I cropped th images if they were not %L
-I calculated the scale differently (more directly?)
+\begin{equation}
+	CR = \frac{s(I)}{s(C(I))}
+	\label{eq:CR1}
+\end{equation} 
 
-\subsubsection{The $IC_{LS}$ Complexity Measure}
+Here, $s(I)$ denotes the file size (measured in bytes) of the uncompressed image and similarly, $s(C(I))$ is the file size of the image after compression. The lossless compression ratio of the image, $IC_{LS}$, can then be calculated as:
 
-The $IC_{LS}$ was another measure for complexity implemented from (\cite{yuImageComplexitySpatial2013}). The $IC_{LS}$ measures the relative sizes of compressed to uncompressed size of images and employs it as a measure of complexity.
+\begin{equation}
+	CR = \frac{1}{CR}
+	\label{eq:CR2}
+\end{equation} 
 
-Since we didn't know the original compression of the images, but were told they had been saved with standard jpg formatting we assumed, this was assumed to be roughly equivalent to jpg 95 formatting. We therefore chose 
+\paragraph{Notes on Implementation}
+Similar to the Q-measure, calculation of the $IC_{LS}$ was implemented in python(v3.8.2) via the function \textbf{ICLS\_complexity} defined in "extract\_metadata.py". Below are some notes on the implementation of the $IC_{LS}$.
+\subparagraph{.}
+The name "lossless compression ratio" is rather ill-fitting in our case, as the images we are investigating have already been compressed to .jpgs prior to analysis. Since we did not know the exact compression rate of the images, but were told they had been saved with standard jpg formatting, we accepted this as being roughly equivalent to lossless compression. In any case, since $IC_{LS}$ is a ratio the true size matters less than the differences between sizes. We calculated three measures of the $IC_{LS}$, namely the $IC_{LS10}$, $IC_{LS30}$ and $IC_{LS50}$ where C(I) was set to 10, 30 and 50, respectively.
 
-\subsection{Statistical Analysis in R}
+\subparagraph{.}
+The original paper uses gray-scale versions of the images for the calculation of $IC_{LS}$. Here we chose instead to use the full RGB versions of the images, as we wished to maintain as much information from the original images as possible.
+
+\subsection{Statistical Analysis in R}\label{R}
+2 of the false positives were later excluded from the analysis due to an error in the computation of their complexity, leaving the total number of images 
+
+Since ICLS measures were generally highly correlated we chose only one of these (50) to include in the analysis, since this had the lowest correlation measures with width, height, size and ratio?
 
 \subsubsection{Cross Validation}
 In order to find out witch model best predicted the data, we ran a series of cross validations using the R package "cvms" (CITE LUDVIG).
 
 
-\subsubsection{CNN}
+\subsection{CNN}
 As a proof of concept a simple CNN was implemented to distinguish between positives and false positives
 
 
@@ -144,7 +193,6 @@ We found that positives could best be distinguished from false positives with th
 
 
 \section{Discussion}
-
 Due to time constraints we were not able to\dots
 In future analysis of the data one might include more measures of \dots
 Another thing that might be interesting to investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer false positives. However, layering lsksdlk
@@ -153,8 +201,8 @@ Another thing that might be interesting to investigate is the possibility to add
 
 
 \clearpage
-\appto{\bibsetup}{\raggedright}
-\printbibliography
+%\appto{\bibsetup}{\raggedright}
+%\printbibliography
 
 \end{document}
 

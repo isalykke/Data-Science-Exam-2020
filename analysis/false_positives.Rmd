@@ -13,7 +13,24 @@ set.seed(1991)
 ```
 
 ```{r}
-metadata <- read.csv("metadata.csv")
+metadata <- read.csv("metadata.csv") 
+
+#find mean Q values for false and true positives
+Q_data <- filter(metadata, Q != "NA") %>% 
+  group_by(false_pos) %>% 
+  summarise(Q_mean = mean(Q))
+
+#assign them to the 73 imgs with missing values:
+data <- metadata %>%
+  mutate(Q = ifelse(is.na(Q) & false_pos ==1, Q_data$Q_mean[2], Q)) %>% 
+  mutate(Q = ifelse(is.na(Q) & false_pos ==0, Q_data$Q_mean[1], Q))
+
+
+
+
+#find all possible combinations of predictors
+formulas = combine_predictors("false_pos", c("size", "ratio", "blur", ))
+
 
 model1 <- glm(false_pos ~ size, family = "binomial", data = metadata)
 summary(model1)
@@ -25,8 +42,7 @@ df_observations <- metadata %>%
 
 df_observations <- arrange(df_observations, img_no) #not meaningfull, ime no != same flower
 
-#find all possible combinations of predictors
-formulas = combine_predictors("false_pos", c("size", "ratio", "blur"))
+
 
 #create groups automatically (not meaningful for img_no thoug)
 df_observations <- group(metadata, n = 'auto', 

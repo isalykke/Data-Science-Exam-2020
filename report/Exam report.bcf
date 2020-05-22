@@ -2790,8 +2790,11 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">vestfalenAarhusHeleByen2019</bcf:citekey>
+    <bcf:citekey order="1">ekiciBreastCancerDiagnosis2020</bcf:citekey>
+    <bcf:citekey order="1">abhishekWeatherForecastingModel2012</bcf:citekey>
+    <bcf:citekey order="1">krastevRealtimeDetectionGravitational2020</bcf:citekey>
     <bcf:citekey order="2">danmarksfrieforskningsfondAretsOriginaleIde2019</bcf:citekey>
-    <bcf:citekey order="3">C4W3L01ObjectLocalization</bcf:citekey>
+    <bcf:citekey order="3">C4W3L01ObjectLocalization2017</bcf:citekey>
     <bcf:citekey order="4">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
     <bcf:citekey order="5">yuImageComplexitySpatial2013</bcf:citekey>
   </bcf:section>
@@ -2829,13 +2832,4 @@
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
-  <bcf:datalist section="0"
-                name="apa/global//global/global"
-                type="entry"
-                sortingtemplatename="apa"
-                sortingnamekeytemplatename="global"
-                labelprefix=""
-                uniquenametemplatename="global"
-                labelalphanametemplatename="global">
-  </bcf:datalist>
 </bcf:controlfile>

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  22 MAY 2020 08:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  22 MAY 2020 16:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -453,22 +453,22 @@ File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 ) (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux)
 \openout1 = `"Exam report.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
  (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count403
@@ -489,7 +489,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \AtBeginShipoutBox=\box49
-Package hyperref Info: Link coloring OFF on input line 36.
+Package hyperref Info: Link coloring OFF on input line 34.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
  (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -499,9 +499,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count409
 )
-LaTeX Info: Redefining \ref on input line 36.
-LaTeX Info: Redefining \pageref on input line 36.
-LaTeX Info: Redefining \nameref on input line 36.
+LaTeX Info: Redefining \ref on input line 34.
+LaTeX Info: Redefining \pageref on input line 34.
+LaTeX Info: Redefining \nameref on input line 34.
+ (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.out) (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.out)
 \@outlinefile=\write4
 \openout4 = `"Exam report.out"'.
 
@@ -533,182 +534,105 @@ Package biblatex Info: Automatic encoding selection.
 \openout3 = `"Exam report.bcf"'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file '"Exam report".bbl' not found.
-
-No file "Exam report".bbl.
-Package biblatex Info: Reference section=0 on input line 36.
-Package biblatex Info: Reference segment=0 on input line 36.
+Package biblatex Info: ... file '"Exam report".bbl' found.
+ (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.bbl)
+Package biblatex Info: Reference section=0 on input line 34.
+Package biblatex Info: Reference segment=0 on input line 34.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 36.
-
-Overfull \hbox (12.00002pt too wide) in paragraph at lines 41--41
- [][] 
- []
-
-[1
+(lastpage)             ! on input line 34.
+ [1
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Citation 'vestfalenAarhusHeleByen2019' on page 1 undefined on input line 52.
-
-/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex:52: Too many }'s.
-l.52 ...krastevRealtimeDetectionGravitational2020}
-                                                  ).
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
-
-
-Overfull \hbox (701.55806pt too wide) in paragraph at lines 52--53
-\OT1/cmr/m/n/10.95 weather and even ex-plor-ing the dis-tant cor-ners of our uni-verse ([]),ekiciBreastCancerDiagnosis2020,abhishekWeatherForecastingModel2012,krastevRealtimeDetectionGravitational2020). 
- []
-
-
-LaTeX Warning: Citation 'danmarksfrieforskningsfondAretsOriginaleIde2019' on page 1 undefined on input line 54.
-
-
-LaTeX Warning: Citation 'C4W3L01ObjectLocalization' on page 1 undefined on input line 59.
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
 Make it at least 14.49998pt.
 We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
-
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 63.
-
-[1]
-/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex:78: Missing $ inserted.
-<inserted text> 
-                $
-l.78 ... for all images using the script "extract_
-                                                  metadata.py". The script r...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex:80: Missing $ inserted.
-<inserted text> 
-                $
-l.80 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex:80: Missing } inserted.
-<inserted text> 
-                }
-l.80 
-     
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (1007.33167pt too wide) in paragraph at lines 78--80
-\OT1/cmr/m/n/10.95 Next, meta-data were ex-tracted for all im-ages us-ing the script "extract$[]\OML/cmm/m/it/10.95 etadata:py\OT1/cmr/m/n/10.95 "\OML/cmm/m/it/10.95 :Thescriptrunsthroughtheimagedirectoriesandextractsimagefeaturesforeachimage; beforesavingthemtoa:csvfileforstatisticaldataanalysis\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 seesection\OT1/cmr/m/n/10.95 ???)\OML/cmm/m/it/10.95 Featuresextractedforeachimagewere \OT1/cmr/m/n/10.95 :
- []
-
-/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.tex:80: Too many }'s.
-\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
-                                                  \fi 
-l.80 
-     
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
-
-
-LaTeX Warning: Citation 'zanetteQuantifyingComplexityBlackandwhite2018' on page 2 undefined on input line 86.
-
-
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 87.
-
-[2]
-
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 123.
-
-[3]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 126.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 126.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 126.
-
-
-LaTeX Warning: Citation 'yuImageComplexitySpatial2013' on page 4 undefined on input line 128.
-
-
-Overfull \hbox (103.05931pt too wide) in paragraph at lines 128--129
-\OT1/cmr/m/n/10.95 The $\OML/cmm/m/it/10.95 IC[]$ \OT1/cmr/m/n/10.95 was an-other mea-sure for com-plex-ity im-ple-mented from ([]).
+[1] [2]
+<./images/true_pos_example.jpg, id=100, 311.1625pt x 287.0725pt>
+File: ./images/true_pos_example.jpg Graphic file (type jpg)
+<use ./images/true_pos_example.jpg>
+Package pdftex.def Info: ./images/true_pos_example.jpg  used on input line 82.
+(pdftex.def)             Requested size: 155.58087pt x 143.53589pt.
+<./images/false_pos_example.jpg, id=101, 220.825pt x 231.86626pt>
+File: ./images/false_pos_example.jpg Graphic file (type jpg)
+<use ./images/false_pos_example.jpg>
+Package pdftex.def Info: ./images/false_pos_example.jpg  used on input line 90.
+(pdftex.def)             Requested size: 110.41222pt x 115.93283pt.
+ [3 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/true_pos_example.jpg> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/false_pos_example.jpg>] [4]
+Overfull \hbox (46.02563pt too wide) in paragraph at lines 145--146
+\OT1/cmr/m/n/10.95 method in python(v3.8.2), by writ-ing the func-tions \OT1/cmr/bx/n/10.95 gray[]level[]mean[]variance
  []
 
 
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 151.
+Overfull \hbox (27.41167pt too wide) in paragraph at lines 145--146
+\OT1/cmr/m/n/10.95 and \OT1/cmr/bx/n/10.95 Q[]complexity \OT1/cmr/m/n/10.95 which can be found in the script "ex-tract[]metadata.py".
+ []
 
-[4]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 147.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 147.
+ [5]
 
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 155.
-
-[5]
-
-LaTeX Warning: Empty bibliography on input line 157.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 154.
 
 
-Package lastpage Warning: Rerun to get the references right on input line 159.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 154.
 
 
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 154.
+
+[6] [7] [8] 
 AED: lastpage setting LastPage
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 159.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 159.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 207.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 207.
 (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 159.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 159.
-
-
-Package rerunfilecheck Warning: File `"Exam report".out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `"Exam report".out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  43B5FDE8E568943663DC796AB68418E2;759.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                "Exam report"
-(biblatex)                and rerun LaTeX afterwards.
-
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 207.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 207.
+Package rerunfilecheck Info: File `"Exam report".out' has not changed.
+(rerunfilecheck)             Checksum: 365D87E97FA0A3372FB1BC68D520F77C;823.
 Package logreq Info: Writing requests to '"Exam report".run.xml'.
 \openout1 = `"Exam report.run.xml"'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 159.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 207.
  ) 
 Here is how much of TeX's memory you used:
- 13663 strings out of 480608
- 240218 string characters out of 5903631
- 991820 words of memory out of 5000000
- 29367 multiletter control sequences out of 15000+600000
- 540425 words of font info for 52 fonts, out of 8000000 for 9000
+ 13802 strings out of 480608
+ 243579 string characters out of 5903631
+ 994314 words of memory out of 5000000
+ 29466 multiletter control sequences out of 15000+600000
+ 541345 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 47i,11n,49p,1018b,4720s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (6 pages, 168606 bytes).
+ 47i,11n,51p,1864b,4720s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{cite.0@yuImageComplexitySpatial2013} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@zanetteQuantifyingComplexityBlackandwhite2018} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@C4W3L01ObjectLocalization2017} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@danmarksfrieforskningsfondAretsOriginaleIde2019} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@vestfalenAarhusHeleByen2019} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@krastevRealtimeDetectionGravitational2020} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@ekiciBreastCancerDiagnosis2020} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@abhishekWeatherForecastingModel2012} has been referenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (9 pages, 224438 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 92 compressed objects within 1 object stream
- 27 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 242 PDF objects out of 1000 (max. 8388607)
+ 209 compressed objects within 3 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 115 words of extra memory for PDF output out of 10000 (max. 10000000)
 
