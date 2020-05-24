@@ -2,10 +2,14 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{setspace} % line spacing
-%\usepackage[margin=1.5in]{geometry} %margins
 %for images
 \usepackage{graphicx}
-\graphicspath{ {./images/} }
+\graphicspath{{./images/}}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{rotating}
+%for tables
+\usepackage{booktabs}
 %for math
 \usepackage{amsmath}
 %for links
@@ -19,11 +23,9 @@
 \renewcommand{\headrulewidth}{0.6pt}
 \renewcommand{\footrulewidth}{0pt}
 \fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
-% \fancyhead[L]{Isa Lykke Hansen}
-% \fancyhead[C]{}
-% \fancyhead[R]{28/05/2020}
 \pagestyle{fancy}
 
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}} %for writing tilde
 
 %%%%%%%%%%%%%%%%%%%%%%%%% START TITLEPAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,9 +44,11 @@
 \end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%% START DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \abstract{}
 This will soon be a paper about image classification ... I hope.
+\clearpage
+\tableofcontents
+\clearpage
 
 \section{Introduction}
 The method of using neural networks (NNs) to classify images have grown steadily in popularity over the last couple of years. These days, image classification algorithms help us solve diverse tasks such as detecting oil spills, improving early cancer detection, predicting the weather and even exploring the distant corners of our universe (\cite{vestfalenAarhusHeleByen2019,ekiciBreastCancerDiagnosis2020,abhishekWeatherForecastingModel2012,krastevRealtimeDetectionGravitational2020}).
@@ -67,15 +71,15 @@ When searching an image for an object, X, \ref{itm:1} answers the simple questio
 \subsection{A Flower Detection Network}
 The images used in this paper were detections from a MASK R-CNN trained on data from four observation sites/periods (Narsarsuaq 2018, Narsarsuaq 2019, Thule 2018 and Ny Aalesund, Svalbard 2019). The network was trained on rectangular bounding boxes and obtained a precision of .84 and a recall of .92. 
 
-Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true- and false positive predictions from the network.
+Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true positive (TP) and false positive (FP) predictions from the network.
 
 
 \section{Methods}
 All scripts used for analysis can be found on the Github repository \url{https://github.com/isalykke/Data-Science-Exam-2020}
 
 \subsection{Sorting Images}
-The first task consisted of manually sorting the images into true and false positives. 
-From the original set of 7.423 images, 6.687 were manually sorted into two groups of true(n = 4.346)- and false(n = 2.341) positives. The 736 images that could not clearly be defined as either true or false positives were excluded from the analysis. Example images from the two groups can be seen in in figures \ref{fig:truepos} and \ref{fig:falsepos} respectively.
+The first task consisted of manually sorting the images into true- and false positives. 
+From the original set of 7.420 images, 6.685 were manually sorted into two groups of TP(n = 4.345) and FP(n = 2.340). The 735 images that could not clearly be defined as either TP or FP were excluded from the analysis. Example images from the two groups can be seen in in figures \ref{fig:truepos} and \ref{fig:falsepos} respectively.
 
 \begin{figure}
 	\begin{center}
@@ -98,15 +102,17 @@ Secondly, meta data were extracted from all images using the script "extract\_me
 Features extracted for each image included:
 
 \begin{itemize}
-	\item Filename, location and label (true/false positive)
+	\item Filename, location and label (TP/FP)
 	\item Simple features such as height, width, size and ratio
 	\item Complex features such as blurriness and complexity measures
 \end{itemize}
 
-Since no one measure of complexity is accepted in the field as the standard, we calculated two different versions, in the hope that one of them would be able to explain some of the variance in our data. In sections \ref{Q} and \ref{ICLS} below we go more in depth with each of these.
+Blurriness was calculated as variance of the Laplacian, a widely accepted standard in the field of image recognition (\cite{bansalBlurImageDetection2016}). The Laplacian filter performs edge detection, and the idea is that the sharper an image is, the more edges it will contain. In other words, in sharp images the variance of the Laplacian will be high, as there will be large differences in the gray-scale values of neighbouring pixels. Conversely, when the variance is smaller, we can interpret the image as being "blurry".
+
+For complexity, since there is no widely accepted standard measure in the field, we calculated two different versions, in the hope that they would be able to explain some of the variance in our data. In sections \ref{Q} and \ref{ICLS} below we go more in depth with each of these.
 
 \subsubsection{The Q Complexity Measure}\label{Q}
-For the calculation of the Q complexity we implemented the method described in (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). In short, the method creates several resized versions of a B/W image with dimensions N*M. These are then further divided into boxes of size LxL\footnote{In theory L could be any number as long as its smaller than the dimensions of the resized image. In practice though, the best results are obtained for smaller values of L. This makes intuitive sense as less information is aggregated as L grows smaller. In this paper, as well as in the original, L was kept at 2.} and the sample variance of the gray-level for each box, b, is calculated as: 
+For the calculation of the Q complexity we implemented the method described in (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). In short, the method creates several resized versions of a B/W image with dimensions NxM. These are then further divided into boxes of size LxL\footnote{In theory L could be any number as long as its smaller than the dimensions of the resized image. In practice though, the best results are obtained for smaller values of L. This makes intuitive sense as less information is aggregated as L grows smaller. In this paper, as well as in the original, L was kept at 2.} and the sample variance of the gray-level for each box, b, is calculated as: 
 
 \begin{equation}
 	V_b = \frac{1}{L^2-1}\sum_{i\,in\,b}(g_i-\bar{g}_b)^2
@@ -142,18 +148,18 @@ Finally, the complexity measure, Q[0:1], for the B/W image is calculated as:
 \end{equation} 
 
 \paragraph{Notes on Implementation}
-Because the code used for calculating Q in the Zanette paper was unavailable, we implemented the method in python(v3.8.2), by writing the functions \textbf{gray\_level\_mean\_variance} and \textbf{Q\_complexity} which can be found in the script "extract\_metadata.py". In the sections below we elaborate on some of the choices that were made during implementation.
+Because the code used for calculating Q in the Zanette paper was unavailable, we implemented the method in python(v3.8.2), by writing the functions \textbf{gray\_level\_mean\_variance} and \textbf{Q\_complexity} which can be found in the script 'extract\_metadata.py'. Using this method we were able to very closely replicate findings from the original paper (see Appendix \ref{A1}). In the sections below we elaborate on some of the choices that were made during implementation of the Q complexity measure.
 \subparagraph{.}
-In the original paper a series of values for N' were chosen to match the dimensions of the original image while at the same time maintaining the aspect ratio, so that $N'/M' = N/M$. As all of our images differed in dimensions, we instead implemented a method that downsized the images according to a percentage-wise scaling factor, P, such that $N' = N*P/100$. The values of P were given by the set \{3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90\}. This we believe, makes the method more broadly applicable, while at the same time still satisfying the requirement of maintaining the aspect ratio.
+In the original paper a series of values for N' were chosen to match the dimensions of the original image while at the same time maintaining the aspect ratio, so that $N'/M' = N/M$. As all of our images differed in dimensions, we instead implemented a method that downsized the images according to a percentage-wise scaling factor, P, such that $N' = N \cdot P/100$. The values of P were given by the set \{3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90\}. This we believe, makes the method more broadly applicable, while at the same time still satisfying the requirement of maintaining the aspect ratio.
 \subparagraph{.}
 In addition, as \ref{eq:Q1} requires the division of images into 2x2 boxes, and all our images were of varying sizes, we decided to crop the images prior to the calculation of $V_b$. In practice, this was done by downsizing the dimensions of the resized image by one on the instances where the height or width did not satisfy $x\,mod\,2 = 0$.
 \subparagraph{.}
 Finally, as described in the article, in order to calculate \ref{eq:Q5} we need to integrate over the derivative $dv/ds$. 
-Since we have only calculated discrete values of V(S) an interpolation function is required for the calculation of the derivative. Here we used zero-smoothed Bspline interpolation of the fourth degree\footnote{Knots and spline coefficients were automatically determined by the scipy function splrep()}. 
+Since we have only calculated discrete values of V(S) an interpolation function is required for the calculation of the derivative. Here we used zero-smoothed Bspline interpolation of the fourth degree utilizing the scipy funcitons \textbf{BSpline} and \textbf{splrep} (\cite{virtanenSciPyFundamentalAlgorithms2020}).
 
 \subsubsection{The $IC_{LS}$ Complexity Measure}\label{ICLS}
 The $IC_{LS}$ is another proposed measure of complexity described in (\cite{yuImageComplexitySpatial2013}). 
-The $IC_{LS}$ measures the compression ratio, CR, as the file sizes of an uncompressed images relative to the file size of the compressed images, such that:
+The $IC_{LS}$ measures the compression ratio, CR, as the file sizes of uncompressed images relative to the file size of the compressed images, such that:
 
 \begin{equation}
 	CR = \frac{s(I)}{s(C(I))}
@@ -168,7 +174,7 @@ Here, $s(I)$ denotes the file size (measured in bytes) of the uncompressed image
 \end{equation} 
 
 \paragraph{Notes on Implementation}
-Similar to the Q-measure, calculation of the $IC_{LS}$ was implemented in python(v3.8.2) via the function \textbf{ICLS\_complexity} defined in "extract\_metadata.py". Below are some notes on the implementation of the $IC_{LS}$.
+Similar to the Q-measure, calculation of the $IC_{LS}$ was implemented in python(v3.8.2) via the function \textbf{ICLS\_complexity} defined in 'extract\_metadata.py'. Below are some notes on the implementation of the $IC_{LS}$.
 \subparagraph{.}
 The name "lossless compression ratio" is rather ill-fitting in our case, as the images we are investigating have already been compressed to .jpgs prior to analysis. Since we did not know the exact compression rate of the images, but were told they had been saved with standard jpg formatting, we accepted this as being roughly equivalent to lossless compression. In any case, since $IC_{LS}$ is a ratio the true size matters less than the differences between sizes. We calculated three measures of the $IC_{LS}$, namely the $IC_{LS10}$, $IC_{LS30}$ and $IC_{LS50}$ where C(I) was set to 10, 30 and 50, respectively.
 
@@ -176,33 +182,122 @@ The name "lossless compression ratio" is rather ill-fitting in our case, as the 
 The original paper uses gray-scale versions of the images for the calculation of $IC_{LS}$. Here we chose instead to use the full RGB versions of the images, as we wished to maintain as much information from the original images as possible.
 
 \subsection{Statistical Analysis in R}\label{R}
-2 of the false positives were later excluded from the analysis due to an error in the computation of their complexity, leaving the total number of images 
+Meta data were extracted for a total of 6.683 images\footnote{Two of the FPs were excluded due to errors in the computation of Q}. For 73 of these (FP = 60, TP = 13), the calculation of Q resulted in NAs. In order to include as much data as possible in the model selection, in these instances we chose to assign the group average as Q.
 
-Since ICLS measures were generally highly correlated we chose only one of these (50) to include in the analysis, since this had the lowest correlation measures with width, height, size and ratio?
+\subsubsection{Model Selection}
+In order to investigate which combination of the predictors was most effective in predicting false positives from the network, we ran a model selection process to asse
 
-\subsubsection{Cross Validation}
-In order to find out witch model best predicted the data, we ran a series of cross validations using the R package "cvms" (CITE LUDVIG).
+\paragraph{Multicollinearity Checks}
+In order to decide which parameters to include in the model selection we did a multicollinearity check of all predictors, the results of which can be seen in Figure \ref{fig:multicol}, Appendix \ref{A2}.
 
+Since the three $IC_{LS}$ measures were generally highly correlated with each other (all $\rho > .6$) we chose to include only $IC_{LS50}$ in the analysis, since this parameter also had the lowest correlation with the width, height and size parameters. 
+Similarly, and perhaps unsurprisingly, the width and height parameters were also both highly correlated ($\rho > .8$) with the size parameter. For simplicity, and to lower the computational cost, both of these were therefore left out of the final model selection.
+The 6 parameters included in the final model selection process were:
+\begin{itemize}
+	\item Size
+	\item Ratio
+	\item Blurriness
+	\item $IC_{LS50}$
+	\item Q-complexity
+	\item Location 
+\end{itemize}
+
+\paragraph{Cross Validation}
+In order to find out which model best predicted the data, we ran a series of cross validations using the R packages groupdata2 (\cite{olsenGroupdata22020}) and cvms (\cite{olsenCvms2020}).
+Model formulas were determined with the function \textbf{combine\_predictors} which allows for unique combinations of all predictors. Due to computational restraints\footnote{\dots and because no-one understands what a 2+ way interaction is, anyway\dots} we only allowed for up to two-way interactions. We ran 10-folds cross validation on each of the 6.214 model combinations and extracted the best 1.000 models as ranked by a balanced accuracy measure. These were then run though a 10-folds 5 times repeated cross-validation. The top five models from this process along with their Balanced Accuracy score can be seen in Table \ref{tab:CVtop10}.
+
+\begin{table}[t]
+	\caption{hej}
+	\tiny
+	\begin{tabular}{@{}llr@{}}
+		\toprule
+		%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
+		Model & Balanced Accuracy & AUC \\ 
+		\midrule
+		$blur*location + blur*ratio + blur*size + location*ratio + Q*size + ratio*size$ & 0.823 & 0.893\\
+		$blur*location + blur*size + location*ratio + location*size + Q*size + ratio*size$ & 0.823 & 0.893\\
+		$blur*location + blur*size + location*ratio + Q*size + ratio*size$ & 0.822  & 0.893\\
+		$blur*location + blur*Q + blur*size + location*ratio + Q*size + ratio*size$ & 0.822  & 0.892\\
+		$blur*location + blur*size + location*ratio + Q*ratio + Q*size + ratio*size$ & 0.821 & 0.893\\
+		$blur*location+blur*ratio+blur*size+location*ratio+Q*size$ & 0.821 & 0.889\\
+		$blur*location+blur*ratio+blur*size+location*ratio+location*size+Q*size$ & 0.821 & 0.889\\
+		$blur*location+blur*size+location*Q+location*ratio+Q*size+ratio*size$ & 0.821  & 0.895\\
+		$blur*location+blur*Q+blur*ratio+blur*size+location*ratio+Q*size$ & 0.821  & 0.888\\
+		$blur*location+blur*ratio+blur*size+location*Q+location*ratio+Q*size$ & 0.820 & 0.890\\  
+		\bottomrule
+	\end{tabular}
+	\label{tab:CVtop10}
+\end{table}
+
+
+\begin{tabular}{@{}llr@{}} \toprule
+	%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
+	Animal & Description & Price (\$)\\ \midrule
+	Gnat & per gram & 13.65 \\
+	& each & 0.01 \\
+	Gnu & stuffed & 92.50 \\
+	Emu & stuffed & 33.33 \\
+	Armadillo & frozen & 8.99 \\ \bottomrule
+\end{tabular}
+
+\subsubsection{}
+However not there are more measures of a good model than accuracy ælkaflkdf something about being simple fewer predictors etc 
 
 \subsection{CNN}
-As a proof of concept a simple CNN was implemented to distinguish between positives and false positives
+As a proof of concept a simple CNN was implemented to distinguish between positives and FPs
 
 
 \section{Results}
-We found that positives could best be distinguished from false positives with the linear model 
+We found that positives could best be distinguished from FPs with the linear model 
 
 
 \section{Discussion}
 Due to time constraints we were not able to\dots
 In future analysis of the data one might include more measures of \dots
-Another thing that might be interesting to investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer false positives. However, layering lsksdlk
+Another thing that might be interesting to investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer FP. However, layering lsksdlk
 
+\paragraph{Serial Considerations}
+During any test/train regime such as the cross-validation performed here it is important that the is no leakage of information between the training and testing sets. This is to make sure that the model is not trained on the same data it is evaluated against, as this would lead to over-fitting. The image data presented in this article could be argued to be serially correlated (so-called \textit{autocorrelation}), as it consists of images of the same flower over time. Therefore, in principle, it is important to make sure that images containing the same flower are kept in separate folds during cross-validation. However, due to the way the original images were encoded we did not have this information available, which unfortunately causes our results to be less robust. Future studies should strive to include time-sensitive measures in the analysis so as to avoid over-fitting and increase generalisability of the results.
 
-
+\section{Conclusion}
+In this paper we investigated systematic differences between true- and false positives from a MASK R-CNN detecting flowers from time-lapse images. We implemented novel measures of complexity in python and were able to replicate results from an original paper. Using both simple and complex image features we ran large scale cross validations in order to find the model parameters that best described the variance in our data. 
 
 \clearpage
 %\appto{\bibsetup}{\raggedright}
 %\printbibliography
+
+\appendix
+\section{The Q Complexity Measure}\label{A1}
+In Figure \ref{fig:Qrecreated} below we present two example variance profiles of the images from (\cite{zanetteQuantifyingComplexityBlackandwhite2018}) recreated using the methods described in \ref{Q}. Compare these to the original variance profiles seen in Figure \ref{fig:monalisa}.
+
+\begin{figure}[h]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{m_lisa_norm.png}\label{fig:f1}}
+	\hfill
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{v_gogh_norm.png}\label{fig:f2}}
+	\caption{Variance profiles of the a) Mona Lisa and b) Van Gogh images recreated in python} 
+	\label{fig:Qrecreated}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.5]{mona_and_van.png}
+	\end{center}
+	\caption{Original variance profiles of the Mona Lisa (red) and Van Gogh (blue) images. Image is an exempt from (\cite{zanetteQuantifyingComplexityBlackandwhite2018})}
+	\label{fig:monalisa}
+\end{figure}
+
+
+\section{Multicollinearity Check}\label{A2}
+
+\begin{sidewaysfigure}
+    \centering
+	\begin{center}
+		\includegraphics[scale=0.28]{correlation_matrix.png}
+	\end{center}
+	\caption{Multicollinearity matrix for the metadata parameters}
+	\label{fig:multicol}
+\end{sidewaysfigure}
 
 \end{document}
 

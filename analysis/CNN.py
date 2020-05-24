@@ -1,6 +1,26 @@
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 
+
+
+randomizer:
+
+loop through two directories (true/false)
+
+generate random number btw 0 and 1
+if number =< 0.2: #we do a 20/80 test/train split
+    if folder = true
+        put in test_folder_true:
+    else:
+        put in test folder_false
+else put in train folder:
+    if folder = true
+        put in train_folder_true:
+    else:
+        put in train folder_false
+
+
+
 #path to images
 train_dir = 'CNN/train'
 val_dir ='CNN/valid'

@@ -2795,8 +2795,15 @@
     <bcf:citekey order="1">krastevRealtimeDetectionGravitational2020</bcf:citekey>
     <bcf:citekey order="2">danmarksfrieforskningsfondAretsOriginaleIde2019</bcf:citekey>
     <bcf:citekey order="3">C4W3L01ObjectLocalization2017</bcf:citekey>
-    <bcf:citekey order="4">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
-    <bcf:citekey order="5">yuImageComplexitySpatial2013</bcf:citekey>
+    <bcf:citekey order="4">bansalBlurImageDetection2016</bcf:citekey>
+    <bcf:citekey order="5">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="6">virtanenSciPyFundamentalAlgorithms2020</bcf:citekey>
+    <bcf:citekey order="7">yuImageComplexitySpatial2013</bcf:citekey>
+    <bcf:citekey order="8">olsenGroupdata22020</bcf:citekey>
+    <bcf:citekey order="9">olsenCvms2020</bcf:citekey>
+    <bcf:citekey order="10">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="11">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="12">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">

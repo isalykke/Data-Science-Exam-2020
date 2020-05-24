@@ -1,0 +1,55 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.1}Image Recognition}{3}{subsection.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.2}A Flower Detection Network}{4}{subsection.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Methods}{4}{section.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Sorting Images}{4}{subsection.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Extracting Meta Data}{5}{subsection.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.2.1}The Q Complexity Measure}{6}{subsubsection.2.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Notes on Implementation}{7}{section*.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subparagraph}{.}{7}{section*.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subparagraph}{.}{8}{section*.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subparagraph}{.}{8}{section*.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.2.2}The $IC_{LS}$ Complexity Measure}{8}{subsubsection.2.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Notes on Implementation}{9}{section*.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subparagraph}{.}{9}{section*.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subparagraph}{.}{9}{section*.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3}Statistical Analysis in R}{9}{subsection.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.3.1}Model Selection}{9}{subsubsection.2.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Multicollinearity Checks}{10}{section*.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Cross Validation}{10}{section*.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.3.2}}{11}{subsubsection.2.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.4}CNN}{11}{subsection.2.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Results}{11}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Discussion}{12}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Serial Considerations}{12}{section*.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Conclusion}{12}{section.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}The Q Complexity Measure}{13}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B}Multicollinearity Check}{14}{appendix.B}%
