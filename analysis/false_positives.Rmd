@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis")
 library(pacman)
-p_load(tidyverse, cvms, groupdata2, knitr, doParallel)
+p_load(tidyverse, cvms, groupdata2, knitr, doParallel, lmerTest, nlme)
 set.seed(1991)
 ```
 
@@ -27,14 +27,14 @@ data <- metadata %>%
 
 #look at multicollenearity btw variables
 multicol <- data %>% 
-  select(3:14, -false_pos)
+  select(4:14, -c(location, false_pos))
 
 X<-multicol
 library(GGally)
 ggpairs(X)
 
 #find all possible combinations of predictors
-model_formulas = combine_predictors("false_pos", c("size", "ratio", "blur", "ICLS50", "Q", "location"), max_interaction_size = 2)
+model_formulas2way = combine_predictors("false_pos", c("size", "ratio", "blur", "ICLS50", "Q"), max_interaction_size = 2)
 
 
 registerDoParallel(7)
@@ -44,31 +44,31 @@ registerDoParallel(7)
 data <- fold(data, k = 10, cat_col = 'false_pos', 
              id_col = 'X')
 
-CV <- cross_validate(data, model_formulas,
+CV2way <- cross_validate(data, model_formulas2way,
                      fold_cols = '.folds',
                      family = 'binomial',
                      REML = FALSE,
                      parallel = TRUE)
 
-write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_location_2way.csv")
+write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_2way.csv")
 
 
 
 #arrange the models in order - best on top
-arranged_BA = arrange(CV, desc(`Balanced Accuracy`))
-
-best_model_formulas = reconstruct_formulas(arranged_BA, topn = 1000)
-
-arranged_AUC = arrange(CV, desc(`AUC`))
-arranged_DR  = arrange(CV, desc(`Detection Rate`))
+arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
+arranged_AUC = arrange(CV2way, desc(`AUC`))
+arranged_DR  = arrange(CV2way, desc(`Detection Rate`))
 #show the whole model and only one metric
 select_definitions(arranged_BA, additional_includes = "Balanced Accuracy")
 select_definitions(arranged_AUC, additional_includes = "AUC")
 select_definitions(arranged_DR, additional_includes = "Detection Rate")
+
+
+best_model_formulas = reconstruct_formulas(arranged_BA, topn = 100)
 ```
 
 
-CV of best 1000 models
+CV of best 100 models
 
 
 ```{r}
@@ -77,18 +77,86 @@ data <- fold(data, k = 10, cat_col = 'false_pos',
              id_col = 'X', num_fold_cols = 5)
 
 #cross validate on the folds
-CV2 <- cross_validate(data, best_model_formulas,
+CV2way <- cross_validate(data, best_model_formulas,
                      fold_cols = c('.folds_1', '.folds_2', '.folds_3', '.folds_4', '.folds_5'),
                      family = 'binomial',
                      REML = FALSE,
                      parallel = TRUE)
 
 
-arranged_BA = arrange(CV2, desc(`Balanced Accuracy`))
-top1000 <- select_definitions(arranged_BA, additional_includes = c("Balanced Accuracy", "AUC"))
+arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
+top100 <- select_definitions(arranged_BA, additional_includes = c("Balanced Accuracy", "AUC"))
 top_10 = reconstruct_formulas(arranged_BA, topn = 10)
 
 ```
+
+model comparison
+```{r}
+model_BL <- glm(false_pos ~ 1, family = "binomial", data = data)
+model_Q <- glm(false_pos ~ Q, family = "binomial", data = data)
+model_best_cv <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = data)
+model_simple <- glm(false_pos ~ blur + Q + size + ratio, family = "binomial", data = data)
+model_cv_simple <- glm(false_pos ~ blur*size + ICLS50*Q + Q*size, family = "binomial", data = data)
+
+anova(model_BL, model_Q, model_simple, model_cv_simple, model_best_cv)
+
+summary(model_best_cv)
+AIC(model_best_cv)
+
+
+model.names <- c("1 Gender", "2 Dept", "3 Gender + Dept")
+
+
+```
+
+
+
+```{r}
+
+loc_0 <- data %>% dplyr::filter(location == "NARS")
+loc_1 <- data %>% dplyr::filter(location == "THUL")
+
+# Best model from cross-validation find this first
+#maybe by runnning all predictors once and then runnning the best ten models with 10 folds cross validation or smth
+model <- glm(false_pos ~ blur*size+ICLS50*Q+Q*size, data=loc_0, family="binomial")
+
+# Get predictions on the loc_0 data
+predictions <- data.frame(
+  "prediction" = predict(model, newdata = loc_1, type="response"), #probabilities plzzz
+  "target" = loc_1$false_pos
+)
+
+
+# Evaluate predictions
+eval <- evaluate(predictions, 
+                 target_col="target", 
+                 prediction_cols="prediction",
+                 type="binomial")
+
+
+```
+
+
+
+```{r}
+data <- mutate(data, false_pos = as.factor(false_pos))
+# Setting up the building blocks
+basic_plot <- ggplot(data,
+       aes(x = ratio,
+           y = size,
+           color = false_pos)) +
+  theme_bw() +
+  labs(x = "Independent variable",
+       y = "Dependent variable",
+       color = "False Positive")
+
+# Colored scatterplot
+basic_plot +
+  geom_point(alpha = .3, 
+             size = .9) +
+  geom_smooth(method = "lm")
+```
+
 
 
 ```{r}
