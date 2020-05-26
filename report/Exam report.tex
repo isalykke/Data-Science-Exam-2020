@@ -71,7 +71,7 @@ When searching an image for an object, X, \ref{itm:1} answers the simple questio
 \subsection{A Flower Detection Network}
 The images used in this paper were detections from a MASK R-CNN trained on data from four observation sites/periods (Narsarsuaq 2018, Narsarsuaq 2019, Thule 2018 and Ny Aalesund, Svalbard 2019). The network was trained on rectangular bounding boxes and obtained a precision of .84 and a recall of .92. 
 
-Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true positive (TP) and false positive (FP) predictions from the network.
+Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true- and false positive predictions from the network. Incorporating such knowledge into the network could potentially lead to an increase in the recall and precision.
 
 
 \section{Methods}
@@ -79,7 +79,7 @@ All scripts used for analysis can be found on the Github repository \url{https:/
 
 \subsection{Sorting Images}
 The first task consisted of manually sorting the images into true- and false positives. 
-From the original set of 7.420 images, 6.685 were manually sorted into two groups of TP(n = 4.345) and FP(n = 2.340). The 735 images that could not clearly be defined as either TP or FP were excluded from the analysis. Example images from the two groups can be seen in in figures \ref{fig:truepos} and \ref{fig:falsepos} respectively.
+From the original set of 7.420 images, 6.685 were manually sorted into two groups of true(n = 4.345) and false(n = 2.340)positives. The 735 images that could not clearly be defined as either true or false positives were excluded from the analysis. Example images from the two groups can be seen in in figures \ref{fig:truepos} and \ref{fig:falsepos} respectively.
 
 \begin{figure}
 	\begin{center}
@@ -102,7 +102,7 @@ Secondly, meta data were extracted from all images using the script "extract\_me
 Features extracted for each image included:
 
 \begin{itemize}
-	\item Filename, location and label (TP/FP)
+	\item Filename, location and label (true/false positive)
 	\item Simple features such as height, width, size and ratio
 	\item Complex features such as blurriness and complexity measures
 \end{itemize}
@@ -182,7 +182,7 @@ The name "lossless compression ratio" is rather ill-fitting in our case, as the 
 The original paper uses gray-scale versions of the images for the calculation of $IC_{LS}$. Here we chose instead to use the full RGB versions of the images, as we wished to maintain as much information from the original images as possible.
 
 \subsection{Statistical Analysis in R}\label{R}
-Meta data were extracted for a total of 6.683 images\footnote{Two of the FPs were excluded due to errors in the computation of Q}. For 73 of these (FP = 60, TP = 13), the calculation of Q resulted in NAs. In order to include as much data as possible in the model selection, in these instances we chose to assign the group average as Q.
+Meta data were extracted for a total of 6.683 images\footnote{Two of the false positives were excluded due to errors in the computation of Q}. For 73 of these (FP = 60, TP = 13), the calculation of Q resulted in NAs. In order to include as much data as possible in the model selection, in these instances we chose to assign the group average as Q.
 
 \subsection{Multicollinearity Checks}
 In order to decide which parameters to include in the model selection we did a multicollinearity check of all predictors, the results of which can be seen in Figure \ref{fig:multicol}, Appendix \ref{Amulticol}.
@@ -200,28 +200,36 @@ The 5 parameters included in the final model selection process were:
 
 \subsection{Cross-Validation}
 To evaluate which model best predicted the data, we ran a series of cross-validations using the R packages groupdata2 (\cite{olsenGroupdata22020}) and cvms (\cite{olsenCvms2020}).
-Model formulas were determined with the function \textbf{combine\_predictors} which allows for unique combinations of all predictors. Due to computational restraints we allowed for a maximum of two-way interactions. We ran a 10-folds cross-validation on each of the 1.268 model combinations and extracted the best 100 models as ranked by a Balanced Accuracy measure. These were then run though a 10-folds 5-times-repeated cross-validation. The top ten models from this process along with their Balanced Accuracy scores can be seen in Table \ref{tab:CVtop10}. The model outcome for the highest scoring model can be seen in Table \ref{tab:CVtopmodel}.
+Model formulas were determined with the function \textbf{combine\_predictors} which allows for unique combinations of all predictors. Due to computational restraints we allowed for a maximum of two-way interactions. We ran a 10-folds cross-validation on each of the 1.268 model combinations and extracted the best 100 models as ranked by a Balanced Accuracy measure. These were then run though a 10-folds 5-times-repeated cross-validation. The top ten models from this process along with their Balanced Accuracy scores can be seen in Table \ref{tab:CVtop10}. From this we chose the best model as
 
-\subsection{Model Comparison}
-Looking at the models in Table \ref{tab:CVtop10} we see that they are all rather complex, containing several combinations of predictors including interaction terms. Since model complexity is not penalized in cross-validation we did a series of model comparisons to determine if a simpler model might be more useful for explaining the difference between true- and false positives. Since we were interested in seeing the predictive power of our newly calculated complexity measures, these were also tested out as single predictors. All models included in the comparison can be seen in Table \ref{tab:comparedmodels} and results from the comparison can be seen in Table \ref{tab:modelcomparison}
+\begin{equation*}
+	\begin{aligned}
+		 false \ positives \ \mytilde \ blur*Q + blur*size + ICLS50*Q \\
+		 + ICLS50*size + Q*size + ratio*size
+	\end{aligned}
+	\label{eq:bestmodel}
+\end{equation*} 
 
+The parameter estimated for the model can be seen in Table \ref{tab:CVtopmodel} and additional model statistics can be seen in the first row of Table \ref{tab:NarsvsThul}.
 
-This also allowed ud to look at the predictive power of the complexity measures in isolation.
-
-In order to test the 
-
-However not there are more measures of a good model than accuracy ælkaflkdf something about being simple fewer predictors etc
-We also see that the best model (as predicted by the cross-validation) contains quite a lot of interaction terms, meaning that the effect of the predictors is not the same for true and false positives. In other words, there is a difference in differences between the predictive powers of the meta-data measures.
-
-\subsection{Evaluating Complex Measures}
-In order to gauge the explanatory power of the complexity image features we ran three generalised linear models with Q, $IC_{LS50}$ and blurriness as single predictors:
-
+% \subsection{Model Comparison}
+% Looking at the models in Table \ref{tab:CVtop10} we see that they are all rather complex, containing several combinations of predictors including interaction terms. Since model complexity is not penalized in cross-validation we did a series of model comparisons to determine if a simpler model might be more useful for explaining the difference between true- and false positives. Seeing that all single predictors were significant in the highest scoring cross-validated model (See Table \ref{tab:CVtopmodel}) and since we were interested in seeing the predictive power of our newly calculated complexity measures, these were also tested out as single predictors. All models included in the comparison can be seen in Table \ref{tab:comparedmodels} and results from the comparison can be seen in Table \ref{tab:modelcomparison}.
 
 
+% We also see that the best model (as predicted by the cross-validation) contains quite a lot of interaction terms, meaning that the effect of the predictors is not the same for true and false positives. In other words, there is a difference in differences between the predictive powers of the meta-data measures.
 
-\subsection{Location Independence}
-Because the goal is to classify images from various research stations, it is important that the model generalises to data from more than one location. In order to test this we ran the
+\subsection{Evaluating Predictions}\label{modeleval}
+Because the goal ultimately is to be able to classify images from various research stations, it is important that the selected model generalises to data from more than one location. As we observed systematic structural differences (see Figure \ref{fig:falsepositives}) between the false positives from location one (Narsarsuaq, n = 5681) and two (Thule, n = 1002) we suspected that the model might not generalize well across locations. In order to test this we fitted the model to a subset of the data collected at location one  and tested it against data collected at location two. The results of this comparison can be seen in the second row of Table \ref{tab:NarsvsThul}.
 
+\begin{figure}[ht]
+	\begin{center}
+		\subfloat[]{\includegraphics[width=0.4\textwidth]{FP_NARS.jpg}\label{fig:FPNARS}}
+		\hfill
+		\subfloat[]{\includegraphics[width=0.4\textwidth]{FP_THUL.jpg}\label{fig:FPTHUL}}
+		\caption{Representative examples of false positives from a) location one, Narsarsuaq and b) location two, Thule} 
+		\label{fig:falsepositives}
+	\end{center}
+\end{figure}
 
 
 \section{Results}
@@ -229,7 +237,8 @@ Because the goal is to classify images from various research stations, it is imp
 \begin{table}[ht]
 	\caption{The ten highest scoring models from cross-validation}
 	\tiny
-	\begin{tabular}{@{}llr@{}}
+	\begin{center}
+	\begin{tabular}{lr}
 		\toprule
 		%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
 		Model formula ($false \ positives \ \mytilde \ $) & Balanced Accuracy \\ 
@@ -246,91 +255,147 @@ Because the goal is to classify images from various research stations, it is imp
 		$blur*ratio+blur*size+ICLS50*Q+ICLS50*size+Q*size+ratio*size$ & 0.761 \\  
 		\bottomrule
 	\end{tabular}
+	\end{center}
 	\label{tab:CVtop10}
 \end{table}
 
 \begin{table}[ht]
 	\caption{Model coefficients for the highest scoring model}
-	\begin{tabular}{@{}llllr@{}}
+	\begin{center}
+	\begin{tabular}{lrrr}
 		\toprule
 		%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
 		Coefficient & Estimate & SE & p \\ 
 		\midrule
-		Intercept & -69.62 & 19.57 & 0.000374***\\
-		Blurriness & -0.036 & 0.016 & 0.020785*\\
-		Q & 99.61 & 38.95 &  0.010534*\\
-		Size & -0.0006 & 0.00009 & 2.77e-09***\\
-		$ICLS50$ & 100.50 & 24.19 & 3.22e-05***\\
-		Ratio & 5.028 & 0.447 &  \textless 2e-16***\\
-		Blurriness:Q & 0.115 & 0.0321 & 0.000352***\\
-		Blurriness:Size & -0.000006 & 0.00000009 & 2.76e-11***\\
-		Q:$ICLS50$ & -160.70 & 48.31 & 0.000882*** \\
-		Size:$ICLS50$ &  0.0004 & 0.0001 & 0.000241***\\
-		Q:Size &  0.0006 & 0.00003 &  \textless 2e-16*** \\
-		Size:Ratio & -0.00009 & 0.000007 & \textless 2e-16*** \\ 
+		Intercept & -69.62 & 19.57 & \textless .001***\\
+		Blurriness & -0.04 & 0.02 & 0.02*\\
+		Q & 99.61 & 38.95 &  0.01*\\
+		Size & -0.0006 & 0.00009 & \textless .001***\\
+		$ICLS50$ & 100.50 & 24.19 & \textless .001***\\
+		Ratio & 5.03 & 0.45 & \textless .001***\\
+		Blurriness:Q & 0.12 & 0.03 & \textless .001***\\
+		Blurriness:Size & -0.000006 & 0.00000009 & \textless .001***\\
+		Q:$ICLS50$ & -160.70 & 48.31 & \textless .001*** \\
+		Size:$ICLS50$ &  0.0004 & 0.0001 & \textless .001***\\
+		Q:Size &  0.0006 & 0.00003 &  \textless .001*** \\
+		Size:Ratio & -0.00009 & 0.000007 & \textless .001*** \\ 
 		\bottomrule
 	\end{tabular}
+	\end{center}
 	\label{tab:CVtopmodel}
 \end{table}
 
-\begin{table}[ht]
-	\caption{Models included in model comparison}
-	\tiny
-	\begin{tabular}{@{}lllr@{}} 
-		\toprule
-		%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
-		No & Model formula ($false \ positives \ \mytilde \ $) & Description \\ 
-		\midrule
-		1 & $1$ & Baseline \\
-		2 & $Q$ & Q complexity as single predictor \\
-		3 & $IC_{LS50}$ & $IC_{LS50}$ complexity as single predictor  \\
-		4 & $blur + Q + size + IC_{LS50} + ratio$ & Combination of all single predictors  \\
-		5 & $blur*Q + blur*size + IC_{LS50}*Q + IC_{LS50}*size + Q*size + ratio*size$ & Best model from cross-validation \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:comparedmodels}
-\end{table}
+% \begin{table}[ht]
+% 	\caption{Models included in model comparison}
+% 	\tiny
+% 	\begin{center}
+% 		\begin{tabular}{@{}lllr@{}} 
+% 			\toprule
+% 			%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
+% 			No & Model formula ($false \ positives \ \mytilde \ $) & Description \\ 
+% 			\midrule
+% 			1 & $1$ & Baseline \\
+% 			2 & $Q$ & Q complexity as single predictor \\
+% 			3 & $Q + IC_{LS50}$ & Only complexity measures \\
+% 			4 & $blur + Q + size + IC_{LS50} + ratio$ & Combination of all single predictors  \\
+% 			5 & $blur*Q$ & Reduced best model \\
+% 			5 & $blur*Q + blur*size$ & Reduced best model \\
+% 			7 & $blur*Q + blur*size + IC_{LS50}*Q$ & Reduced best model \\
+% 			8 & $blur*Q + blur*size + IC_{LS50}*Q + IC_{LS50}*size$ & Reduced best model \\
+% 			9 & $blur*Q + blur*size + IC_{LS50}*Q + IC_{LS50}*size + Q*size$ & Reduced best model \\
+% 			10 & $blur*Q + blur*size + IC_{LS50}*Q + IC_{LS50}*size + Q*size + ratio*size$ & Best model from cross-validation \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+% 	\label{tab:comparedmodels}
+% \end{table}
+
+
+% \begin{table}[ht]
+% 	\caption{Results from model comparison. Refer to Table \ref{tab:comparedmodels} for full model formulas}
+% 	\begin{center}
+% 		\begin{tabular}{rrrrrrrrr}
+% 			\hline
+% 		    & Resid. Df & Resid. Dev & AIC & BIC & log & dAIC & dBIC & weight \\ 
+% 			\hline
+% 		  1 & 6682.00 & 8652.47 & 8654.47 & 8661.28 & -4326.24 & 2702.12 & 2627.24 & 0.00 \\ 
+% 			2 & 6681.00 & 8511.75 & 8515.75 & 8529.36 & -4255.87 & 2563.40 & 2495.33 & 0.00 \\ 
+% 			3 & 6680.00 & 7639.03 & 7645.03 & 7665.45 & -3819.51 & 1692.68 & 1631.42 & 0.00 \\ 
+% 			4 & 6677.00 & 7399.00 & 7411.00 & 7451.84 & -3699.50 & 1458.65 & 1417.81 & 0.00 \\ 
+% 			5 & 6679.00 & 8486.40 & 8494.40 & 8521.63 & -4243.20 & 2542.05 & 2487.59 & 0.00 \\ 
+% 			6 & 6677.00 & 7847.44 & 7859.44 & 7900.28 & -3923.72 & 1907.09 & 1866.25 & 0.00 \\ 
+% 			7 & 6675.00 & 6904.71 & 6920.71 & 6975.16 & -3452.35 & 968.36 & 941.13 & 0.00 \\ 
+% 			8 & 6674.00 & 6903.51 & 6921.51 & 6982.78 & -3451.76 & 969.17 & 948.74 & 0.00 \\ 
+% 			9 & 6673.00 & 6107.55 & 6127.55 & 6195.62 & -3053.78 & 175.21 & 161.59 & 0.00 \\ 
+% 			10 & 6671.00 & 5928.35 & 5952.35 & 6034.03 & -2964.17 & 0.00 & 0.00 & 1.00 \\ 
+% 			 \hline
+% 		  \end{tabular}
+% 	\end{center}
+% 	\label{tab:modelcomparison}
+% \end{table}
 
 
 \begin{table}[ht]
-	\caption{Results from model comparison. Refer to Table \ref{tab:comparedmodels} for full model formulas}
-	\begin{tabular}{@{}llllr@{}}
-		\toprule
-		%\multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
-		Model & AIC & DIC & hj & asd \\ 
-		\midrule
-		1 & -69.62 & 19.57 & 0.000374***\\
-		2 & -0.036 & 0.016 & 0.020785*\\
-		3 & 99.61 & 38.95 &  0.010534*\\
-		4 & -0.0006 & 0.00009 & 2.77e-09***\\
-		5 & 100.50 & 24.19 & 3.22e-05***\\
-		6 & 5.028 & 0.447 &  \textless 2e-16***\\
-		7 & 0.115 & 0.0321 & 0.000352***\\
-		8 & -0.000006 & 0.00000009 & 2.76e-11***\\
-		9 & -160.70 & 48.31 & 0.000882*** \\
-		10 &  0.0004 & 0.0001 & 0.000241***\\
-		\bottomrule
+	\centering
+	\caption{VIF stats for the highest scoring model}
+	\begin{tabular}{lrr}
+	  \toprule
+	 & VIF & 1/VIF \\ 
+	  \midrule
+	blur & 84.63 & 0.01 \\ 
+	  Q & 6544.67 & 0.00 \\ 
+	  size & 4715.35 & 0.00 \\ 
+	  ICLS50 & 97.29 & 0.01 \\ 
+	  ratio & 9.19 & 0.11 \\ 
+	  blur:Q & 132.37 & 0.01 \\ 
+	  blur:size & 22.39 & 0.04 \\ 
+	  Q:ICLS50 & 5627.61 & 0.00 \\ 
+	  size:ICLS50 & 4126.69 & 0.00 \\ 
+	  Q:size & 157.25 & 0.01 \\ 
+	  size:ratio & 35.07 & 0.03 \\ 
+	   \bottomrule
 	\end{tabular}
-	\label{tab:modelcomparison}
+	\label{tab:vif}
 \end{table}
 
+\begin{table}[ht]
+	\centering
+	\caption{Model parameters for the best model trained on all data vs a subset of the data (see Section \ref{modeleval} for details)}
+	\begin{tabular}{lrrrr}
+	  \toprule
+	Data & Balanced Accuracy & AUC & Lower CI & Upper CI \\ 
+	  \midrule
+	All & 0.77 & 0.86 & 0.85 & 0.87 \\
+	Subset & 0.35 & 0.33 & 0.30 & 0.37 \\ 
+	   \bottomrule
+	\end{tabular}
+	\label{tab:NarsvsThul}
+\end{table}
 
+\clearpage
 \section{Discussion}
-Because of the exploratory nature of this study and due to time constraints there still remains much still reamins to be said about this data. Below we go more in detail with some of the considerations for future investigations of the data.
+Table \label{tab:CVtopmodel} displays the model coefficients for the model that best predicts the differences between true and false positives from the MASK R-CNN. We see that both blurriness(-0.036), Q(99.61)
+Because of the exploratory nature of this study and due to time constraints much still remains to be said about this data. Below we go more in detail with some considerations for future investigations of the data.
 
 First of all, the measures investigated here are far from being exhaustive. As is the case with any model, the models presented here are a simplification of reality and are only allowed to explore the model space provided via the predictors. There might be other factors not included here which are even better at explaining the differences in the network predictions. As we discovered in our model cross-validation In future analysis of the data one might include more measures of
 
-Another thing that might be interesting to investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer FP. However, layering lsksdlk
-
-\paragraph{Generalized models}
+\paragraph{Generalised models}
+As we saw in Table \ref{tab:bestmodel}, the predictive power of our model falls substantially when it is fitted to data from a new location. In order to most effectively distinguish between true- and false positives we desire a model that is able to generalise across locations. One way to solve this could be to include location as a random effect in the model, or to simply make sure that the model is trained on more
+Other factors that would be interesting to include in future models could be metadata such as the time of day, which to a certain extent could code for 
 we should also look at light conditions, time of day/year (lightning) - baybe include as random predictors
 where is the sun (lengde breddegrader/position of camera)
+Taking factors into account about where you are when images are taken!
+Differences between the false positives matter!
 
 \paragraph{Interaction Terms}
 Yous should probably write something about this here
 
 \paragraph{The Aspect of Time}
 During any test/train regime such as the cross-validation performed here it is important that the is no leakage of information between the training and testing sets. This is to make sure that the model is not trained on the same data it is evaluated against, as this would lead to over-fitting. The image data presented in this article could be argued to be serially correlated (so-called \textit{autocorrelation}), as it consists of images of the same flower over time. Therefore, in principle, it is important to make sure that images containing the same flower are kept in separate folds during cross-validation. However, due to the way the original images were encoded we did not have this information available, which unfortunately causes our results to be less robust. Future studies should strive to include time-sensitive measures in the analysis so as to avoid over-fitting and increase generalisability of the results. This could also be done by including time as a random effect in the linear model.
+
+\paragraph{Adding Anoter Layer}
+Another thing that might be interesting to do with these data is to train a CNN to distinguish between the true and false positives 
+investigate is the possibility to add the NN to the original R-CNN to see if it leads to fewer false positives. However, layering lsksdlk
 
 \section{Conclusion}
 In this paper we investigated systematic differences between true- and false positives from a MASK R-CNN detecting flowers from time-lapse images. We implemented novel measures of complexity in python and were able to replicate results from an original paper. Using both simple and complex image features we ran large scale cross validations in order to find the model parameters that best described the variance in our data. 
@@ -347,9 +412,9 @@ In Figure \ref{fig:Qrecreated} we present two example variance profiles of the i
 
 \begin{figure}[h]
 	\centering
-	\subfloat[]{\includegraphics[width=0.5\textwidth]{m_lisa_norm.png}\label{fig:f1}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{m_lisa_norm.png}\label{fig:Qmona}}
 	\hfill
-	\subfloat[]{\includegraphics[width=0.5\textwidth]{v_gogh_norm.png}\label{fig:f2}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{v_gogh_norm.png}\label{fig:QGogh}}
 	\caption{Variance profiles of the a) Mona Lisa and b) Van Gogh images recreated in python} 
 	\label{fig:Qrecreated}
 \end{figure}

@@ -5,13 +5,15 @@ date: "5/15/2020"
 output: html_document
 ---
 
+Load packages
 ```{r setup, include=FALSE}
 setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis")
 library(pacman)
-p_load(tidyverse, cvms, groupdata2, knitr, doParallel, lmerTest, nlme)
+p_load(tidyverse, cvms, groupdata2, knitr, doParallel, lmerTest, bbmle, car, GGally)
 set.seed(1991)
 ```
 
+Data wrangling
 ```{r}
 metadata <- read.csv("metadata.csv") 
 
@@ -20,70 +22,71 @@ Q_data <- filter(metadata, Q != "NA") %>%
   group_by(false_pos) %>% 
   summarise(Q_mean = mean(Q))
 
-#assign them to the 73 imgs with missing values:
+#assign the means to the 73 imgs with missing Q values:
 data <- metadata %>%
   mutate(Q = ifelse(is.na(Q) & false_pos ==1, Q_data$Q_mean[2], Q)) %>% 
   mutate(Q = ifelse(is.na(Q) & false_pos ==0, Q_data$Q_mean[1], Q))
+```
 
+Multicollinearity check
+```{r}
 #look at multicollenearity btw variables
 multicol <- data %>% 
   select(4:14, -c(location, false_pos))
 
 X<-multicol
-library(GGally)
 ggpairs(X)
 
+```
+
+Cross validation 
+```{r}
 #find all possible combinations of predictors
-model_formulas2way = combine_predictors("false_pos", c("size", "ratio", "blur", "ICLS50", "Q"), max_interaction_size = 2)
-
-
+model_formulas = combine_predictors("false_pos", c("size", "ratio", "blur", "ICLS50", "Q"), max_interaction_size = 2)
+#run CV in parallel
 registerDoParallel(7)
 
-
+cv1data <- data
 #create folds for cvms (only run once to find best models)
-data <- fold(data, k = 10, cat_col = 'false_pos', 
+cv1data <- fold(data, k = 10, cat_col = 'false_pos', 
              id_col = 'X')
 
-CV2way <- cross_validate(data, model_formulas2way,
+CV <- cross_validate(cv1data, model_formulas,
                      fold_cols = '.folds',
                      family = 'binomial',
                      REML = FALSE,
                      parallel = TRUE)
 
-write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_2way.csv")
+#write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_2way.csv")
 
 
 
 #arrange the models in order - best on top
-arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
-arranged_AUC = arrange(CV2way, desc(`AUC`))
-arranged_DR  = arrange(CV2way, desc(`Detection Rate`))
+arranged_BA = arrange(CV, desc(`Balanced Accuracy`))
+
 #show the whole model and only one metric
 select_definitions(arranged_BA, additional_includes = "Balanced Accuracy")
-select_definitions(arranged_AUC, additional_includes = "AUC")
-select_definitions(arranged_DR, additional_includes = "Detection Rate")
 
-
+#extract the model formulas of the best 100 models
 best_model_formulas = reconstruct_formulas(arranged_BA, topn = 100)
 ```
 
-
 CV of best 100 models
-
-
 ```{r}
-#create folds for cvms
-data <- fold(data, k = 10, cat_col = 'false_pos', 
+cv2data <- data
+
+#create folds for repeated cvms
+cv2data <- fold(cv2data, k = 10, cat_col = 'false_pos', 
              id_col = 'X', num_fold_cols = 5)
 
 #cross validate on the folds
-CV2way <- cross_validate(data, best_model_formulas,
+CV2way <- cross_validate(cv2data, best_model_formulas,
                      fold_cols = c('.folds_1', '.folds_2', '.folds_3', '.folds_4', '.folds_5'),
                      family = 'binomial',
                      REML = FALSE,
                      parallel = TRUE)
 
-
+#inspect the models
 arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
 top100 <- select_definitions(arranged_BA, additional_includes = c("Balanced Accuracy", "AUC"))
 top_10 = reconstruct_formulas(arranged_BA, topn = 10)
@@ -92,25 +95,41 @@ top_10 = reconstruct_formulas(arranged_BA, topn = 10)
 
 model comparison
 ```{r}
-model_BL <- glm(false_pos ~ 1, family = "binomial", data = data)
-model_Q <- glm(false_pos ~ Q, family = "binomial", data = data)
-model_best_cv <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = data)
-model_simple <- glm(false_pos ~ blur + Q + size + ratio, family = "binomial", data = data)
-model_cv_simple <- glm(false_pos ~ blur*size + ICLS50*Q + Q*size, family = "binomial", data = data)
+m <- glm(false_pos ~ 1, family = "binomial", data = data)
+m <- glm(false_pos ~ Q, family = "binomial", data = data)
+m <- glm(false_pos ~ Q + ICLS50, family = "binomial", data = data)
+m <- glm(false_pos ~ blur + Q + size + ICLS50 + ratio, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q + blur * size, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size, family = "binomial", data = data)
+m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = data)
+
 
 anova(model_BL, model_Q, model_simple, model_cv_simple, model_best_cv)
 
 summary(model_best_cv)
 AIC(model_best_cv)
 
+#from https://www.ashander.info/posts/2015/10/model-selection-glms-aic-what-to-report/
+model.names <- c("BL", "Q", "cv_best")
+summ.table <- do.call(rbind, lapply(list(m1, m2, m3), broom::glance))
 
-model.names <- c("1 Gender", "2 Dept", "3 Gender + Dept")
+table.cols <- c("df.residual", "deviance", "AIC")
+reported.table <- summ.table[table.cols]
+names(reported.table) <- c("Resid. Df", "Resid. Dev", "AIC")
+reported.table[['dAIC']] <-  with(reported.table, AIC - min(AIC))
+reported.table[['weight']] <- with(reported.table, exp(- 0.5 * dAIC) / sum(exp(- 0.5 * dAIC)))
+reported.table$AIC <- NULL
+reported.table$weight <- round(reported.table$weight, 2)
+reported.table$dAIC <- round(reported.table$dAIC, 1)
+row.names(reported.table) <- model.names
 
 
 ```
 
-
-
+Predictive chacks across locations
 ```{r}
 
 loc_0 <- data %>% dplyr::filter(location == "NARS")
@@ -133,21 +152,20 @@ eval <- evaluate(predictions,
                  prediction_cols="prediction",
                  type="binomial")
 
-
 ```
 
 
-
+Visualising interaction terms
 ```{r}
 data <- mutate(data, false_pos = as.factor(false_pos))
 # Setting up the building blocks
 basic_plot <- ggplot(data,
-       aes(x = ratio,
-           y = size,
+       aes(x = size,
+           y = ratio,
            color = false_pos)) +
   theme_bw() +
-  labs(x = "Independent variable",
-       y = "Dependent variable",
+  labs(x = "Size",
+       y = "Ratio",
        color = "False Positive")
 
 # Colored scatterplot
@@ -156,7 +174,6 @@ basic_plot +
              size = .9) +
   geom_smooth(method = "lm")
 ```
-
 
 
 ```{r}

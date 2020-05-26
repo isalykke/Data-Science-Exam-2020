@@ -22,3 +22,8 @@
 *.csv
 *.bib
 
+analysis/best model.tex
+analysis/model_coefs.tex
+analysis/Nars_vs_Thul.tex
+analysis/tablenums.tex
+analysis/vif_stats.tex

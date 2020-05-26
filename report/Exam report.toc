@@ -8,15 +8,15 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2}Methods}{4}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Sorting Images}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Sorting Images}{5}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Extracting Meta Data}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Extracting Meta Data}{6}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {2.2.1}The Q Complexity Measure}{6}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Notes on Implementation}{7}{section*.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{7}{section*.5}%
+\contentsline {subparagraph}{.}{8}{section*.5}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subparagraph}{.}{8}{section*.6}%
 \defcounter {refsection}{0}\relax 
@@ -32,30 +32,28 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3}Statistical Analysis in R}{9}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Multicollinearity Checks}{9}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Multicollinearity Checks}{10}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.5}Cross-Validation}{10}{subsection.2.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.6}Model Comparison}{11}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.6}Evaluating Predictions}{11}{subsection.2.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.7}Evaluating Complex Measures}{11}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Results}{11}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.8}Location Independence}{11}{subsection.2.8}%
+\contentsline {section}{\numberline {4}Discussion}{15}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Results}{12}{section.3}%
+\contentsline {paragraph}{Generalised models}{15}{section*.16}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Discussion}{12}{section.4}%
+\contentsline {paragraph}{Interaction Terms}{15}{section*.17}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Generalized models}{13}{section*.15}%
+\contentsline {paragraph}{The Aspect of Time}{16}{section*.18}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Interaction Terms}{14}{section*.16}%
+\contentsline {paragraph}{Adding Anoter Layer}{16}{section*.19}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{The Aspect of Time}{14}{section*.17}%
+\contentsline {section}{\numberline {5}Conclusion}{16}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Conclusion}{14}{section.5}%
+\contentsline {section}{\numberline {A}The Q Complexity Measure}{18}{appendix.A}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A}The Q Complexity Measure}{16}{appendix.A}%
+\contentsline {section}{\numberline {B}Interaction Plots}{19}{appendix.B}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B}Interaction Plots}{17}{appendix.B}%
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C}Multicollinearity Check}{21}{appendix.C}%
+\contentsline {section}{\numberline {C}Multicollinearity Check}{23}{appendix.C}%
