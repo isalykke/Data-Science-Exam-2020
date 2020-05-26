@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  26 MAY 2020 13:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  26 MAY 2020 17:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -497,11 +497,7 @@ Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footers
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count411
 \l__pdf_internal_box=\box48
-) (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux
-
-LaTeX Warning: Label `tab:CVtopmodel' multiply defined.
-
-)
+) (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux)
 \openout1 = `"Exam report.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
@@ -611,141 +607,145 @@ This may cause the page layout to be inconsistent, however.
 
  [2
 
-] [3
-
-] [4]
-<./images/true_pos_example.jpg, id=151, 311.1625pt x 287.0725pt>
-File: ./images/true_pos_example.jpg Graphic file (type jpg)
-<use ./images/true_pos_example.jpg>
-Package pdftex.def Info: ./images/true_pos_example.jpg  used on input line 86.
-(pdftex.def)             Requested size: 155.58087pt x 143.53589pt.
-<./images/false_pos_example.jpg, id=152, 220.825pt x 231.86626pt>
-File: ./images/false_pos_example.jpg Graphic file (type jpg)
-<use ./images/false_pos_example.jpg>
-Package pdftex.def Info: ./images/false_pos_example.jpg  used on input line 94.
-(pdftex.def)             Requested size: 110.41222pt x 115.93283pt.
- [5 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/true_pos_example.jpg> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/false_pos_example.jpg>] [6]
-Overfull \hbox (46.02563pt too wide) in paragraph at lines 151--152
-\OT1/cmr/m/n/10.95 method in python(v3.8.2), by writ-ing the func-tions \OT1/cmr/bx/n/10.95 gray[]level[]mean[]variance
- []
-
-
-Overfull \hbox (22.545pt too wide) in paragraph at lines 151--152
-\OT1/cmr/m/n/10.95 and \OT1/cmr/bx/n/10.95 Q[]complexity \OT1/cmr/m/n/10.95 which can be found in the script 'ex-tract[]metadata.py'.
- []
-
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 153.
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/omscmr.fd
+]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 56.
+ (/usr/local/texlive/2020/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 153.
- [7]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
+ [3
+
+] [4]
+<./images/true_pos_example.jpg, id=161, 311.1625pt x 287.0725pt>
+File: ./images/true_pos_example.jpg Graphic file (type jpg)
+<use ./images/true_pos_example.jpg>
+Package pdftex.def Info: ./images/true_pos_example.jpg  used on input line 87.
+(pdftex.def)             Requested size: 175.49881pt x 161.91153pt.
+<./images/false_pos_example.jpg, id=162, 220.825pt x 231.86626pt>
+File: ./images/false_pos_example.jpg Graphic file (type jpg)
+<use ./images/false_pos_example.jpg>
+Package pdftex.def Info: ./images/false_pos_example.jpg  used on input line 89.
+(pdftex.def)             Requested size: 175.49881pt x 184.28325pt.
+ [5 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/true_pos_example.jpg> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/false_pos_example.jpg>] [6]
+Overfull \hbox (2.35542pt too wide) in paragraph at lines 146--147
+\OT1/cmr/m/n/10.95 writ-ing the func-tions \OT1/cmr/bx/n/10.95 gray[]level[]mean[]variance \OT1/cmr/m/n/10.95 and \OT1/cmr/bx/n/10.95 Q[]complexity
+ []
+
+[7]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 160.
+(hyperref)                removing `math shift' on input line 155.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 160.
+(hyperref)                removing `subscript' on input line 155.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 160.
+(hyperref)                removing `math shift' on input line 155.
 
 [8] [9] [10]
-<./images/FP_NARS.jpg, id=239, 172.645pt x 165.61874pt>
+<./images/FP_NARS.jpg, id=252, 172.645pt x 165.61874pt>
 File: ./images/FP_NARS.jpg Graphic file (type jpg)
 <use ./images/FP_NARS.jpg>
-Package pdftex.def Info: ./images/FP_NARS.jpg  used on input line 226.
-(pdftex.def)             Requested size: 155.99762pt x 149.65189pt.
-<./images/FP_THUL.jpg, id=240, 221.82875pt x 234.8775pt>
+Package pdftex.def Info: ./images/FP_NARS.jpg  used on input line 212.
+(pdftex.def)             Requested size: 175.49881pt x 168.35774pt.
+<./images/FP_THUL.jpg, id=253, 221.82875pt x 234.8775pt>
 File: ./images/FP_THUL.jpg Graphic file (type jpg)
 <use ./images/FP_THUL.jpg>
-Package pdftex.def Info: ./images/FP_THUL.jpg  used on input line 228.
-(pdftex.def)             Requested size: 155.99762pt x 165.17291pt.
-LaTeX Font Info:    Trying to load font information for OML+cmr on input line 270.
+Package pdftex.def Info: ./images/FP_THUL.jpg  used on input line 214.
+(pdftex.def)             Requested size: 175.49881pt x 185.81998pt.
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 254.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 270.
- [11] [12 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/FP_NARS.jpg> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/FP_THUL.jpg>] [13] [14]
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 254.
+ [11] [12 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/FP_NARS.jpg> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/FP_THUL.jpg>] [13]
+Overfull \hbox (7.10483pt too wide) in paragraph at lines 297--298
+[]\OT1/cmr/m/n/10.95 We also see that the best model (as pre-dicted by the cross-validation)
+ []
 
-LaTeX Warning: Reference `tab:bestmodel' on page 15 undefined on input line 383.
+[14
 
-[15
-
-] [16] [17]
-<./images/m_lisa_norm.png, id=296, 433.62pt x 289.08pt>
-File: ./images/m_lisa_norm.png Graphic file (type png)
-<use ./images/m_lisa_norm.png>
-Package pdftex.def Info: ./images/m_lisa_norm.png  used on input line 415.
-(pdftex.def)             Requested size: 195.0pt x 130.00098pt.
-<./images/v_gogh_norm.png, id=298, 433.62pt x 289.08pt>
-File: ./images/v_gogh_norm.png Graphic file (type png)
-<use ./images/v_gogh_norm.png>
-Package pdftex.def Info: ./images/v_gogh_norm.png  used on input line 417.
-(pdftex.def)             Requested size: 195.0pt x 130.00098pt.
-<./images/mona_and_van.png, id=299, 497.86pt x 309.155pt>
-File: ./images/mona_and_van.png Graphic file (type png)
-<use ./images/mona_and_van.png>
-Package pdftex.def Info: ./images/mona_and_van.png  used on input line 424.
-(pdftex.def)             Requested size: 248.92938pt x 154.57712pt.
-<./images/interact_blur_Q.png, id=302, 793.96625pt x 438.63875pt>
-File: ./images/interact_blur_Q.png Graphic file (type png)
-<use ./images/interact_blur_Q.png>
-Package pdftex.def Info: ./images/interact_blur_Q.png  used on input line 434.
-(pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
+] [15] [16] [17]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 335.
  [18
 
+] [19]
+<./images/m_lisa_norm.png, id=337, 433.62pt x 289.08pt>
+File: ./images/m_lisa_norm.png Graphic file (type png)
+<use ./images/m_lisa_norm.png>
+Package pdftex.def Info: ./images/m_lisa_norm.png  used on input line 344.
+(pdftex.def)             Requested size: 195.0pt x 130.00098pt.
+<./images/v_gogh_norm.png, id=339, 433.62pt x 289.08pt>
+File: ./images/v_gogh_norm.png Graphic file (type png)
+<use ./images/v_gogh_norm.png>
+Package pdftex.def Info: ./images/v_gogh_norm.png  used on input line 346.
+(pdftex.def)             Requested size: 195.0pt x 130.00098pt.
+<./images/mona_and_van.png, id=340, 907.39pt x 633.36626pt>
+File: ./images/mona_and_van.png Graphic file (type png)
+<use ./images/mona_and_van.png>
+Package pdftex.def Info: ./images/mona_and_van.png  used on input line 353.
+(pdftex.def)             Requested size: 217.77805pt x 152.011pt.
+ [20
+
  </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/m_lisa_norm.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/v_gogh_norm.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/mona_and_van.png>]
-<./images/interact_blur_size.png, id=314, 793.96625pt x 438.63875pt>
+<./images/interact_blur_Q.png, id=353, 793.96625pt x 438.63875pt>
+File: ./images/interact_blur_Q.png Graphic file (type png)
+<use ./images/interact_blur_Q.png>
+Package pdftex.def Info: ./images/interact_blur_Q.png  used on input line 364.
+(pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
+<./images/interact_blur_size.png, id=354, 793.96625pt x 438.63875pt>
 File: ./images/interact_blur_size.png Graphic file (type png)
 <use ./images/interact_blur_size.png>
-Package pdftex.def Info: ./images/interact_blur_size.png  used on input line 442.
+Package pdftex.def Info: ./images/interact_blur_size.png  used on input line 372.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_Q_icls50.png, id=315, 793.96625pt x 438.63875pt>
+<./images/interact_Q_icls50.png, id=355, 793.96625pt x 438.63875pt>
 File: ./images/interact_Q_icls50.png Graphic file (type png)
 <use ./images/interact_Q_icls50.png>
-Package pdftex.def Info: ./images/interact_Q_icls50.png  used on input line 450.
+Package pdftex.def Info: ./images/interact_Q_icls50.png  used on input line 380.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_size_icls50.png, id=316, 793.96625pt x 438.63875pt>
+<./images/interact_size_icls50.png, id=356, 793.96625pt x 438.63875pt>
 File: ./images/interact_size_icls50.png Graphic file (type png)
 <use ./images/interact_size_icls50.png>
-Package pdftex.def Info: ./images/interact_size_icls50.png  used on input line 458.
+Package pdftex.def Info: ./images/interact_size_icls50.png  used on input line 388.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_Q_size.png, id=317, 793.96625pt x 438.63875pt>
+<./images/interact_Q_size.png, id=357, 793.96625pt x 438.63875pt>
 File: ./images/interact_Q_size.png Graphic file (type png)
 <use ./images/interact_Q_size.png>
-Package pdftex.def Info: ./images/interact_Q_size.png  used on input line 466.
+Package pdftex.def Info: ./images/interact_Q_size.png  used on input line 396.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_size_ratio.png, id=318, 793.96625pt x 438.63875pt>
+<./images/interact_size_ratio.png, id=358, 793.96625pt x 438.63875pt>
 File: ./images/interact_size_ratio.png Graphic file (type png)
 <use ./images/interact_size_ratio.png>
-Package pdftex.def Info: ./images/interact_size_ratio.png  used on input line 474.
+Package pdftex.def Info: ./images/interact_size_ratio.png  used on input line 404.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_Q.png>] [20 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_size.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_icls50.png>] [21 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_icls50.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_size.png>] [22 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_ratio.png>]
-<./images/correlation_matrix.png, id=351, 1927.2pt x 1082.0425pt>
+[21
+
+ </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_Q.png>] [22 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_size.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_icls50.png>] [23 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_icls50.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_size.png>] [24 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_ratio.png>]
+<./images/correlation_matrix.png, id=390, 1927.2pt x 1082.0425pt>
 File: ./images/correlation_matrix.png Graphic file (type png)
 <use ./images/correlation_matrix.png>
-Package pdftex.def Info: ./images/correlation_matrix.png  used on input line 486.
+Package pdftex.def Info: ./images/correlation_matrix.png  used on input line 416.
 (pdftex.def)             Requested size: 539.61234pt x 302.96983pt.
 
 
@@ -753,65 +753,34 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 AED: lastpage setting LastPage
-[23
+[25
 
-] [24 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/correlation_matrix.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 492.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 492.
+] [26 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/correlation_matrix.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 445.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 445.
  (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 492.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 492.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 445.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 445.
 Package rerunfilecheck Info: File `"Exam report".out' has not changed.
-(rerunfilecheck)             Checksum: B2CC2113D94B364F8D2995E276CBD8A1;1127.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
+(rerunfilecheck)             Checksum: 2CF752F60A4F56C7C489DDA8FA3B1791;1275.
 Package logreq Info: Writing requests to '"Exam report".run.xml'.
 \openout1 = `"Exam report.run.xml"'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 492.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 445.
  ) 
 Here is how much of TeX's memory you used:
- 15279 strings out of 480608
- 270748 string characters out of 5903631
- 1022341 words of memory out of 5000000
- 30863 multiletter control sequences out of 15000+600000
- 542186 words of font info for 60 fonts, out of 8000000 for 9000
+ 15333 strings out of 480608
+ 272439 string characters out of 5903631
+ 1021153 words of memory out of 5000000
+ 30910 multiletter control sequences out of 15000+600000
+ 542533 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  47i,12n,69p,1864b,4720s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{cite.0@olsenCvms2020} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@olsenGroupdata22020} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@yuImageComplexitySpatial2013} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@virtanenSciPyFundamentalAlgorithms2020} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@zanetteQuantifyingComplexityBlackandwhite2018} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@bansalBlurImageDetection2016} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@C4W3L01ObjectLocalization2017} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@danmarksfrieforskningsfondAretsOriginaleIde2019} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@vestfalenAarhusHeleByen2019} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@krastevRealtimeDetectionGravitational2020} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@ekiciBreastCancerDiagnosis2020} has been referenced but does not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@abhishekWeatherForecastingModel2012} has been referenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (25 pages, 1647003 bytes).
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (27 pages, 1665189 bytes).
 PDF statistics:
- 450 PDF objects out of 1000 (max. 8388607)
- 373 compressed objects within 4 object streams
- 96 named destinations out of 1000 (max. 500000)
- 215 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 494 PDF objects out of 1000 (max. 8388607)
+ 413 compressed objects within 5 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 231 words of extra memory for PDF output out of 10000 (max. 10000000)
 
