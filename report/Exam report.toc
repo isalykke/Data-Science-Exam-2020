@@ -2,11 +2,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.1}Image Recognition}{3}{subsection.1.1}%
+\contentsline {paragraph}{Image Recognition}{3}{section*.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.2}A Flower Detection Network}{4}{subsection.1.2}%
+\contentsline {paragraph}{A Flower Detection Network}{4}{section*.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Methods}{4}{section.2}%
+\contentsline {section}{\numberline {2}Methods}{5}{section.2}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1}Sorting Images}{5}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
@@ -14,48 +14,54 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {2.2.1}The Q Complexity Measure}{6}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Notes on Implementation}{7}{section*.3}%
+\contentsline {paragraph}{Notes on Implementation}{7}{section*.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{7}{section*.4}%
+\contentsline {subparagraph}{.}{8}{section*.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{8}{section*.5}%
+\contentsline {subparagraph}{.}{8}{section*.8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{8}{section*.6}%
+\contentsline {subparagraph}{.}{8}{section*.9}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.2}The $IC_{LS}$ Complexity Measure}{8}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2}The $IC_{LS}$ Complexity Measure}{9}{subsubsection.2.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Notes on Implementation}{8}{section*.7}%
+\contentsline {paragraph}{Notes on Implementation}{9}{section*.10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{9}{section*.8}%
+\contentsline {subparagraph}{.}{9}{section*.11}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subparagraph}{.}{9}{section*.9}%
+\contentsline {subparagraph}{.}{9}{section*.12}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Statistical Analysis in R}{9}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Statistical Analysis in R}{10}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Multicollinearity Checks}{9}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Multicollinearity Checks}{10}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.5}Cross-Validation}{10}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.5}Cross-Validation}{11}{subsection.2.5}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.6}Evaluating Predictions}{11}{subsection.2.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Results}{11}{section.3}%
+\contentsline {section}{\numberline {3}Results}{12}{section.3}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4}Discussion}{14}{section.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.1}Interpreting Results}{14}{subsection.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Further Analysis of the Data}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.2}Considerations for Future Investigations}{15}{subsection.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{One Model to Predict Them All}{15}{section*.14}%
+\contentsline {paragraph}{Making a Better Model}{15}{section*.17}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{The Aspect of Time}{16}{section*.15}%
+\contentsline {paragraph}{The Aspect of Time}{17}{section*.18}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Adding Anoter Layer}{16}{section*.16}%
+\contentsline {paragraph}{Evaluating Complexity Measures}{18}{section*.19}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Conclusion}{17}{section.5}%
+\contentsline {paragraph}{Adding Anoter Layer}{18}{section*.20}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A}The Q Complexity Measure}{20}{appendix.A}%
+\contentsline {section}{\numberline {5}Conclusion}{19}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B}Interaction Plots}{21}{appendix.B}%
+\contentsline {section}{\numberline {A}The Q Complexity Measure}{22}{appendix.A}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C}Multicollinearity Check}{25}{appendix.C}%
+\contentsline {section}{\numberline {B}Interaction Plots}{23}{appendix.B}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {C}Multicollinearity Checks}{27}{appendix.C}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {D}Python Code}{29}{appendix.D}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {E}R Code}{36}{appendix.E}%

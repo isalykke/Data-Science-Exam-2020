@@ -9,7 +9,7 @@ Load packages
 ```{r setup, include=FALSE}
 setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis")
 library(pacman)
-p_load(tidyverse, cvms, groupdata2, knitr, doParallel, lmerTest, bbmle, car, GGally)
+p_load(tidyverse, cvms, groupdata2, knitr, doParallel, lmerTest, bbmle, car, GGally, xtable)
 set.seed(1991)
 ```
 
@@ -25,7 +25,7 @@ Q_data <- filter(metadata, Q != "NA") %>%
 #assign the means to the 73 imgs with missing Q values:
 data <- metadata %>%
   mutate(Q = ifelse(is.na(Q) & false_pos ==1, Q_data$Q_mean[2], Q)) %>% 
-  mutate(Q = ifelse(is.na(Q) & false_pos ==0, Q_data$Q_mean[1], Q))
+  mutate(Q = ifelse(is.na(Q) & false_pos ==0, Q_data$Q_mean[1], Q)) 
 ```
 
 Multicollinearity check
@@ -60,7 +60,6 @@ CV <- cross_validate(cv1data, model_formulas,
 #write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_2way.csv")
 
 
-
 #arrange the models in order - best on top
 arranged_BA = arrange(CV, desc(`Balanced Accuracy`))
 
@@ -91,45 +90,49 @@ arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
 top100 <- select_definitions(arranged_BA, additional_includes = c("Balanced Accuracy", "AUC"))
 top_10 = reconstruct_formulas(arranged_BA, topn = 10)
 
+best_model <- as.data.frame(arranged_BA[1,2:9])
+print(xtable(best_model, type = "latex"), file = "best model.tex")
+
 ```
 
-model comparison
+model evaluation
 ```{r}
-m <- glm(false_pos ~ 1, family = "binomial", data = data)
-m <- glm(false_pos ~ Q, family = "binomial", data = data)
-m <- glm(false_pos ~ Q + ICLS50, family = "binomial", data = data)
-m <- glm(false_pos ~ blur + Q + size + ICLS50 + ratio, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q + blur * size, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size, family = "binomial", data = data)
-m <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = data)
+topmodel <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = data)
 
+anova(topmodel)
+summary(topmodel)
 
-anova(model_BL, model_Q, model_simple, model_cv_simple, model_best_cv)
+vif = as.data.frame(vif(topmodel))
+column <- ('1/vif' = 1/vif[,1])
+vif_stats <- cbind(vif, column)
+print(xtable(vif_stats, type = "latex"), file = "vif_stats.tex")
 
-summary(model_best_cv)
-AIC(model_best_cv)
+model_coefs <-summary.glm(topmodel)$coefficients
+model_coefs <-as.data.frame(model_coefs) %>% 
+  select(-'z value')
+model_coefs$Estimate <- round(model_coefs$Estimate, 2)
+round(model_coefs, 5)
 
-#from https://www.ashander.info/posts/2015/10/model-selection-glms-aic-what-to-report/
-model.names <- c("BL", "Q", "cv_best")
-summ.table <- do.call(rbind, lapply(list(m1, m2, m3), broom::glance))
+print(xtable(model_coefs, type = "latex"), file = "model_coefs.tex")
 
-table.cols <- c("df.residual", "deviance", "AIC")
-reported.table <- summ.table[table.cols]
-names(reported.table) <- c("Resid. Df", "Resid. Dev", "AIC")
-reported.table[['dAIC']] <-  with(reported.table, AIC - min(AIC))
-reported.table[['weight']] <- with(reported.table, exp(- 0.5 * dAIC) / sum(exp(- 0.5 * dAIC)))
-reported.table$AIC <- NULL
-reported.table$weight <- round(reported.table$weight, 2)
-reported.table$dAIC <- round(reported.table$dAIC, 1)
-row.names(reported.table) <- model.names
+logisticpseudoR2s <- function(logisticmodel) {
+  deviance <- logisticmodel$deviance #extract model deviance
+  nulldeviance <- logisticmodel$null.deviance #extract baseline model deviance
+  modelN <- length(logisticmodel$fitted.values) #compute sample size
+  R.l <- 1 - deviance/nulldeviance  # Hosmer and Lemeshow's R2 is computed
+  R.cs <- 1- exp(-(nulldeviance-deviance)/modelN) # Cox and Snell R2
+  R.n <- R.cs / (1 - (exp(-(nulldeviance/modelN)))) # Nagelkerke R2
+  cat("Pseudo R2 for logistic regression\n")
+  cat("Hosmer & Lemeshow's R2    ", round(R.l,3), "\n")
+  cat("Cox and Snell's R2    ", round(R.cs,3), "\n")
+  cat("Nagelkerke's R2    ", round(R.n,3), "\n")
+}
 
+logisticpseudoR2s(topmodel)
 
 ```
 
-Predictive chacks across locations
+Predictive checks across locations
 ```{r}
 
 loc_0 <- data %>% dplyr::filter(location == "NARS")
@@ -137,7 +140,7 @@ loc_1 <- data %>% dplyr::filter(location == "THUL")
 
 # Best model from cross-validation find this first
 #maybe by runnning all predictors once and then runnning the best ten models with 10 folds cross validation or smth
-model <- glm(false_pos ~ blur*size+ICLS50*Q+Q*size, data=loc_0, family="binomial")
+model <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size + Q * size + ratio * size, family = "binomial", data = loc_0)
 
 # Get predictions on the loc_0 data
 predictions <- data.frame(
@@ -151,6 +154,9 @@ eval <- evaluate(predictions,
                  target_col="target", 
                  prediction_cols="prediction",
                  type="binomial")
+
+Nars_vs_Thul <- as.data.frame(eval[1:9])
+print(xtable(Nars_vs_Thul, type = "latex"), file = "Nars_vs_Thul.tex")
 
 ```
 
@@ -173,63 +179,5 @@ basic_plot +
   geom_point(alpha = .3, 
              size = .9) +
   geom_smooth(method = "lm")
-```
-
-
-```{r}
-#make location a categorical variable for predition
-df_observations <- metadata %>% 
-  mutate(location_NARS = as.factor(ifelse(location =="NARS", 1,0)))
-
-df_observations <- arrange(df_observations, img_no) #not meaningfull, ime no != same flower
-
-
-#create groups automatically (not meaningful for img_no thoug)
-df_observations <- group(metadata, n = 'auto', 
-                         method = 'l_starts',
-                         starts_col = 'false_pos', 
-                         col_name = 'session') 
-
-
-df_observations%>% head(10) %>% kable()
-
-
-#find only those obs from location NARS
-df_obs_subset <-  filter(df_observations, location_num == 0)
-model <- glm(false_pos ~ blur, df_obs_subset, family = "binomial")
-
-chi2 <- model$null.deviance - model$deviance
-chi2
-
-chidf <- model$df.null - model$df.residual
-chidf
-
-chi2.prob <- 1 - pchisq(chi2, chidf)
-chi2.prob
-
-
-logisticpseudoR2s <- function(logisticmodel) {
-  deviance <- logisticmodel$deviance #extract model deviance
-  nulldeviance <- logisticmodel$null.deviance #extract baseline model deviance
-  modelN <- length(logisticmodel$fitted.values) #compute sample size
-  R.l <- 1 - deviance/nulldeviance  # Hosmer and Lemeshow's R2 is computed
-  R.cs <- 1- exp(-(nulldeviance-deviance)/modelN) # Cox and Snell R2
-  R.n <- R.cs / (1 - (exp(-(nulldeviance/modelN)))) # Nagelkerke R2
-  cat("Pseudo R2 for logistic regression\n")
-  cat("Hosmer & Lemeshow's R2    ", round(R.l,3), "\n")
-  cat("Cox and Snell's R2    ", round(R.cs,3), "\n")
-  cat("Nagelkerke's R2    ", round(R.n,3), "\n")
-}
-
-logisticpseudoR2s(model)
-
-exp(1.281+(8.326e-03)) 
-
-exp(-2.681e-05)
-
-round(inv.logit(1.281+(8.326e-03)),2) 
-round(inv.logit(8.326e-03),2) 
-
-
 ```
 

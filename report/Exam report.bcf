@@ -2795,18 +2795,22 @@
     <bcf:citekey order="1">krastevRealtimeDetectionGravitational2020</bcf:citekey>
     <bcf:citekey order="2">danmarksfrieforskningsfondAaretsOriginaleIde2019</bcf:citekey>
     <bcf:citekey order="3">deeplearning.aiC4W3L01ObjectLocalization2017</bcf:citekey>
-    <bcf:citekey order="4">bansalBlurImageDetection2016</bcf:citekey>
-    <bcf:citekey order="5">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
-    <bcf:citekey order="6">pythonsoftwarefoundationPython2020</bcf:citekey>
-    <bcf:citekey order="7">virtanenSciPyFundamentalAlgorithms2020</bcf:citekey>
-    <bcf:citekey order="8">yuImageComplexitySpatial2013</bcf:citekey>
-    <bcf:citekey order="9">rcoreteamLanguageEnvironmentStatistical2020</bcf:citekey>
-    <bcf:citekey order="10">olsenGroupdata22020</bcf:citekey>
-    <bcf:citekey order="11">olsenCvms2020</bcf:citekey>
-    <bcf:citekey order="12">fieldDiscoveringStatisticsUsing2012</bcf:citekey>
-    <bcf:citekey order="13">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
-    <bcf:citekey order="14">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
-    <bcf:citekey order="15">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="4">DryasIntegrifolia2020</bcf:citekey>
+    <bcf:citekey order="5">DryasIntegrifolia2020</bcf:citekey>
+    <bcf:citekey order="6">bansalBlurImageDetection2016</bcf:citekey>
+    <bcf:citekey order="7">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="8">pythonsoftwarefoundationPython2020</bcf:citekey>
+    <bcf:citekey order="9">virtanenSciPyFundamentalAlgorithms2020</bcf:citekey>
+    <bcf:citekey order="10">yuImageComplexitySpatial2013</bcf:citekey>
+    <bcf:citekey order="11">rcoreteamLanguageEnvironmentStatistical2020</bcf:citekey>
+    <bcf:citekey order="12">olsenGroupdata22020</bcf:citekey>
+    <bcf:citekey order="13">olsenCvms2020</bcf:citekey>
+    <bcf:citekey order="14">fieldDiscoveringStatisticsUsing2012</bcf:citekey>
+    <bcf:citekey order="15">editorsPhototropism2017</bcf:citekey>
+    <bcf:citekey order="16">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="17">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="18">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
+    <bcf:citekey order="19">zanetteQuantifyingComplexityBlackandwhite2018</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">

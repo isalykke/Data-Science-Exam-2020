@@ -9,13 +9,13 @@
 \usepackage{subcaption}
 \usepackage{rotating}
 %for tables
-\usepackage{booktabs}
+\usepackage{booktabs, threeparttable}
 %for math
 \usepackage{amsmath}
 %for links
 \usepackage{hyperref}
 %for citations
-\usepackage[backend=biber,citestyle=verbose-ibid,urldate=long,style=apa]{biblatex} 
+\usepackage[backend=biber,citestyle=verbose,urldate=long,style=apa]{biblatex} 
 \addbibresource{../bibliography.bib}
 %for footer/header set-up
 \usepackage{lastpage}
@@ -45,7 +45,15 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%% START DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \abstract{}
-This will soon be a paper about image classification ... I hope.
+
+In this paper we investigate systematic differences between true- and false positives from a MASK R-CNN detecting flowers of the species \textit{Dryas integrifolia} from time-lapse images. We implement novel measures of image complexity in python and combine them with other image features to see which of these are most useful for detecting false positives.
+
+Running large scale cross validations we are able to find a model which predicts 77\% of the the total variance in the data but which does not generalize well across locations. 
+
+We discuss considerations that should be taken into account when further investigating the data, including how to improve the model and suggestions for alternative methods of analysis. In addition, we comment on the usefulness of the complexity measures in combination with other image parameters and express optimism that these could be useful in classifying false positives from the MASK R-CNN in the future.
+
+Finally, we conclude that an intricate knowledge of the data is crucial in any modelling task and that future research should take such knowledge into account when designing solutions to distinguish between true- and false positives.
+
 \clearpage
 \tableofcontents
 \clearpage
@@ -57,7 +65,7 @@ Since 2018 researches at Universitetet i Tromsø (UiT) and Aarhus University (AU
 
 The project implements large scale video-surveillance of the plant-pollinator interaction by way of time-lapse images. For two years, time-lapse data was gathered from several cameras set up at various locations in the Arctic, collecting thousands of images for analysis. The idea then is to train a NN to automatically detect flowers and insects in the images. This creates the possibility for investigating changes in large areas and over long time periods with minimal amounts of equipment and manual labour.
 
-\subsection{Image Recognition}
+\paragraph{Image Recognition}
 Broadly speaking, image recognition tasks can be divided into three sub-categories (\cite{deeplearning.aiC4W3L01ObjectLocalization2017}):
 
 \begin{enumerate}
@@ -68,14 +76,21 @@ Broadly speaking, image recognition tasks can be divided into three sub-categori
 
 When searching an image for an object, X, \ref{itm:1} answers the simple question "is X present in the image?". \ref{itm:2} in addition provides information on where in the image X is located. The exact location of X is specified by a so-called \textit{bounding box}, which is parameterized by a vector containing the x,y coordinates for the midpoint of the box, as well as the height and width of the box. Finally, \ref{itm:3} allows for the localization of multiple objects from several classes within a single image. The output will be an array of bounding boxes each associated with a class and a probability for that class.
 
-\subsection{A Flower Detection Network}
-The images used in this paper were detections from a MASK R-CNN trained on data from four observation sites/periods (Narsarsuaq 2018, Narsarsuaq 2019, Thule 2018 and Ny Aalesund, Svalbard 2019). The network was trained on rectangular bounding boxes and obtained a precision of .84 and a recall of .92. 
+\paragraph{A Flower Detection Network}
+The images used in this paper were detections from a MASK R-CNN trained on data from four observation sites/periods namely,Narsarsuaq 2018, Narsarsuaq 2019, Thule 2018 and Ny Aalesund, Svalbard 2019. The network was trained to predict rectangular bounding boxes from images of the plant species \textit{Dryas integrifolia} (see Figure \ref{fig:dryas}) and obtained a precision of .84 and a recall of .92.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=2.5]{Dryas.jpeg}
+	\end{center}
+	\caption{\textit{Dryas integrifolia}. Image from (\cite{DryasIntegrifolia2020})}
+	\label{fig:dryas}
+\end{figure}
 
 Thus, to put it more precisely, the images used here were crops created from the bounding boxes predicted by the network. The purpose of this paper is to investigate whether structural differences exist between true- and false positive predictions from the network. Incorporating such knowledge into the network could potentially lead to an increase in the recall and precision.
 
-
 \section{Methods}
-All scripts used for analysis can be found on the Github repository \url{https://github.com/isalykke/Data-Science-Exam-2020}
+All scripts used for analysis can be found on the Github repository \url{https://github.com/isalykke/Data-Science-Exam-2020}. Code can also be viewed in Appendixes \ref{Apycode} and \ref{ARcode}.
 
 \subsection{Sorting Images}
 The first task consisted of manually sorting the images into true- and false positives. 
@@ -193,6 +208,8 @@ The 5 parameters included in the final model selection process were:
 	\item Q-complexity
 \end{itemize}
 
+The VIF statistics for the final model were also calculated and can be viewed in Table \ref{tab:vif}, Appendix \ref{Amulticol}.
+
 \subsection{Cross-Validation}
 To evaluate which model best predicted the data, we ran a series of cross-validations using the R packages groupdata2 (\cite{olsenGroupdata22020}) and cvms (\cite{olsenCvms2020}).
 Model formulas were determined with the function \textbf{combine\_predictors} which allows for unique combinations of all predictors. Due to computational restraints we allowed for a maximum of two-way interactions. We ran a 10-folds cross-validation on each of the 1.268 model combinations and extracted the best 100 models as ranked by a Balanced Accuracy measure. These were then run though a 10-folds 5-times-repeated cross-validation. The top ten models from this process along with their Balanced Accuracy scores can be seen in Table \ref{tab:CVtop10}. The model with the highest Balanced Accuracy score was expressed as:
@@ -265,13 +282,16 @@ Because our goal ultimately is to be able to classify images from various resear
 		Size:Ratio & -0.00009 & 0.000007 & \textless .001*** \\ 
 		\bottomrule
 	\end{tabular}
+	\begin{tablenotes}
+		Note $R^2$ = .32 (Hosmer-Lemeshow), .34 (Cox-Snell), .46 (Nagelkerke)
+	\end{tablenotes}
 	\end{center}
 	\label{tab:CVtopmodel}
 \end{table}
 
 \begin{table}[ht]
 	\centering
-	\caption{Model parameters for the best model trained on all data vs a subset of the data (see Section \ref{modeleval} for details)}
+	\caption{Model parameters for the highest scoring model trained on all data vs a subset of the data (see Section \ref{modeleval} for details)}
 	\begin{tabular}{lrrrr}
 	  \toprule
 	Data & Balanced Accuracy & AUC & Lower CI & Upper CI \\ 
@@ -285,49 +305,58 @@ Because our goal ultimately is to be able to classify images from various resear
 
 \clearpage
 \section{Discussion}
-\subsection{Interpreting Results}
-Table \ref{tab:CVtopmodel} displays the model coefficients for the model that best predicts the differences between true and false positives from the MASK R-CNN, as determined by the cross-validation process. We see that both Blurriness(-0.036), Q(99.61), Size(-0.0006), $IC_{LS50}$(100.50) and Ratio(5.03) were significant predictors of false positives. 
+\subsection{Interpreting Results}\label{interpretres}
+Table \ref{tab:CVtopmodel} displays the model coefficients for the model that best predicts the differences between true- and false positives from the MASK R-CNN, as determined by the cross-validation process. We see that both Blurriness(-0.036), Q(99.61), Size(-0.0006), $IC_{LS50}$(100.50) and Ratio(5.03) were significant predictors of false positives. 
 
 Similarly, the interaction terms blur:Q(0.12), blur:size(-0.000006), $IC_{LS50}$:Q(-160.7), $IC_{LS50}$:size(0.0004), Q:size(0.0006) and ratio:size(-0.00009) were all significant predictors of false positives. However, according to the literature, given the presence of significant interaction effects the interpretation of main effects is meaningless (\cite{fieldDiscoveringStatisticsUsing2012}).
 
-In Figures \ref{fig:interact_blur_Q} though \ref{fig:interact_size_ratio} in Appendix \ref{Ainteraction} the 6 different interaction effects of the model have been plotted. An interaction effect encodes a difference of differences for the effect of a predictor on an outcome. In other words, the significant interaction terms in our model suggest that these specific combinations of predictors differently affect the likelihood of an image being a false positive.
+To better interpret their meaning, in Figures \ref{fig:interact_blur_Q} though \ref{fig:interact_size_ratio} in Appendix \ref{Ainteraction} the 6 different interaction effects of the model have been plotted. Recall that an interaction effect encodes a difference of differences for the effect of a predictor on an outcome. In other words, the significant interaction terms in our model suggest that these specific combinations of predictors differently affect the likelihood of an image being a false positive.
 
-WRITE MORE ABOUT INTERACTIONS HERE
+Taking as an example Figure \ref{fig:interact_blur_size}, the interaction between the Blurriness and Size predictors, we see that for blurred images\footnote{e.i. those that have a lower value for Blurriness} false positives (blue line) are likely to be smaller than true positives (red line). For sharp images, this effect reverses, such that larger images are more likely to be false positives. 
+Another way to say this is that false positives are likely to be more blurred than true positives \textit{only if} the size of the image is lower than a certain threshold. As the image size surpasses that threshold, the effect reverses, and blurrier images are more likely to be true positives. We leave the interpretation of the remaining five interaction plots up to the reader.
 
-We also see that the best model (as predicted by the cross-validation) contains quite a lot of interaction terms, meaning that the effect of the predictors is not the same for true and false positives. In other words, there is a difference in differences between the predictive powers of the meta-data measures.
+What the model coefficients tell us is that all five predictors (or combinations of these) included in the model were valuable in distinguishing between true- false positives.\\
 
-Table \ref{tab:NarsvsThul} shows the predictive power of the model when it is fitted to all data and when it is fitted to a subset of the data. We see that all measures drop substantially when the model is fitted to data from a new location. In fact, the model that was fitted to the subset from Narsarsuaq was worse than chance when it came to predicting false positives from Thule (Balanced Accuracy = 35 \%). This suggests that our model is very prone to over-fitting to one specific location.
+Since we are working with machine learning, more than being able to explain the data we were also interested in the ability of our model to predict new data. Table \ref{tab:NarsvsThul} shows the predictive power of the model when it is fitted to all data and when it is fitted to a subset of the data. We see that all measures of model performance drop substantially when the model is fitted to data from a new location. In fact, the model that was fitted to the subset from Narsarsuaq was worse than chance when it came to predicting false positives from Thule (Balanced Accuracy = 35 \% as opposed to 77\% for the full dataset). This suggests that our model is very prone to over-fitting to one specific location. So while our model might be good at explaining variance in the data it seems it is not appropriate for predicting new instances of false positives.\\
 
-% Tending first to the single predictors, we see that with each unit increase of Blurriness\footnote{Which, rather counter-intuitively, refers to the image getting sharper} the odds of a picture being a false positive is \mytilde 1 ($e^{-0.036}$) times lower than the odds of it being a true positive, holding all other variables constant. Similarly, the model predicts that the odds of a picture being a false positive is greater as Q, $IC_{LS50}$ and Ratio increases, but lower as Size increases. In other words, the model predicts that images of false positives are smaller, more blurred, have greater complexity and a higher height/width ratio compared to images of true positives.
+Finally, as can be seen in Table \ref{tab:vif}, we note that despite our best efforts to exclude correlated variables prior to model selection, the model still suffers from multicollinearity. The results from it should therefore be interpreted with great caution, as we can not meaningfully distinguish the contributions of each of the different predictors.
 
-
-\subsection{Further Analysis of the Data}
+\subsection{Considerations for Future Investigations}
 Because of the exploratory nature of this study and due to time constraints much still remains to be said about these data. Below we go more in detail with some considerations for future investigations of the data.
 
-\paragraph{One Model to Predict Them All}
-In order to most effectively distinguish between true- and false positives we desire a model that is able to generalise across all locations, and not over-fit to one location as we saw in Table \ref{tab:NarsvsThul}. One way to solve this could be to include location as a random effect in the model, or to simply make sure that the model is trained on a more balanced dataset. As was the case here that almost all of the false positives from Thule consisted of variants of the same image seen in Figure \ref{fig:FPTHUL}, whereas the false positives from Narsarsuaq contained a much greater variety of images.
-Location independence is not the only desirable feature of a future model however. One could also imagine integrating features such as 
+\paragraph{Making a Better Model}
+First of all, the predictors investigated here are far from exhaustive. As is the case with any model, the one presented here is a simplification of reality and is only allowed to explore the model space provided via its predictors. There could be (and most likely are) other factors not included here which would be even better at explaining the differences between the two groups. With that in mind we comment on some predictors that might be useful include in order to to make the model better at explaining and/or predicting false positives.\\
 
-Other factors that would be interesting to include in future models could be metadata such as the time of day, which to a certain extent could code for 
-we should also look at light conditions, time of day/year (lightning) - baybe include as random predictors
-where is the sun (lengde breddegrader/position of camera)
-Taking factors into account about where you are when images are taken!
+As previously noted, in order to most effectively distinguish between true- and false positives we desire a model that is able to generalise across all locations, and not over-fit to one location as we saw in Table \ref{tab:NarsvsThul}. One way to solve this could be to include location as a random effect in a mixed effects model. Random effects are predictors we are "not interested in", meaning that they provide systematic variance in the data, that we want the parameters of the final model to be independent of. It might therefore be useful to include location as a random variable to let the model know that we want it to specify what distinguishes between the true- and false positives \textit{regardless} of the location.  
+In addition, to further improve upon the location predictor, one could imagine encoding the specific longitude and latitude of images, to make the measure more precise. This should be simple enough, as time-lapse cameras such GoPros have an inbuilt GPS system.
 
-First of all, the measures investigated here are far from being exhaustive. As is the case with any model, the models presented here are a simplification of reality and are only allowed to explore the model space provided via the predictors. There might be other factors not included here which are even better at explaining the differences in the network predictions. As we discovered in our model cross-validation 
+Furthermore, location independence is not the only desirable feature of a future model. Other features that might be included as random factors could be parameters such as weather conditions, as sun, wind and rain will greatly affect the images. This effect is not trivial to encode, however. \textit{Dryas integrifolia} have a large head and a long thin stem (see Figure \ref{fig:dryas}), which can cause them to shift easily in the wind, drastically changing the visual features of the flowers. 
+
+Similarly, the time of day/month might also be of importance. The position of the sun affects the position of the flower heads, due to a phenomenon known as \textit{phototropism}, which causes plants to rotate towards the sun in order to maximize their surface for photosynthesis (\cite{editorsPhototropism2017}). In many of the areas where the research takes place, the sun never sets during the flowering months, so a rotation around the head axis might be more likely, than opening and closing of the flower. All of this to say that the features that are fed into the initial NN greatly depend on local variables, which are useful to understand in order to model the variances in detections later on.\\
+
+Another important point to make, is that the model should be trained on a more balanced dataset. Here it was the case that almost all of the false positives from Thule consisted of variants of the same image seen in Figure \ref{fig:FPTHUL}, whereas the false positives from Narsarsuaq contained a much greater variety of images. This, combined with the fact that there were simply many more images from Narsarsuaq, lead to a model that greatly over-fitted to one location.\\
+
+From all of this we see that knowing the specifics of the data you are working with is very important when it comes to designing models to effectively distinguish between the true- and false positives.
 
 \paragraph{The Aspect of Time}
-During any test/train regime such as the cross-validation performed here it is important that the is no leakage of information between the training and testing sets. This is to make sure that the model is not trained on the same data it is evaluated against, as this would lead to over-fitting. The image data presented in this article could be argued to be serially correlated (so-called \textit{autocorrelation}), as it consists of images of the same flower over time. Therefore, in principle, it is important to make sure that images containing the same flower are kept in separate folds during cross-validation. However, due to the way the original images were encoded we did not have this information available, which unfortunately causes our results to be less robust. Future studies should strive to include time-sensitive measures in the analysis so as to avoid over-fitting and increase generalisability of the results. This could also be done by including time as a random effect in the linear model.
+During any test/train regime, such as the cross-validation performed here, it is important that the is no leakage of information between the training and testing sets. This is to make sure that the model is not trained on the same data it is evaluated against, as this would lead to over-fitting. The image data presented in this article could be argued to be serially correlated (so-called \textit{autocorrelation}), as it consists of images of the same flower over time. Therefore, in principle, it is important to make sure that images containing the same flower are kept in separate folds during cross-validation. However, due to the way the original images were encoded we did not have this information available, which unfortunately causes our results to be less robust. Autocorrelation might also be part of the reason why we have seen such a large amount of over-fitting. Future studies should strive to include time-sensitive measures in the analysis so as to avoid over-fitting and increase generalisability of the results.
+
+\paragraph{Evaluating Complexity Measures}
+A large part of this article was dedicated to the implementation of new complexity measures, in particular the Q complexity measure suggested by (\cite{zanetteQuantifyingComplexityBlackandwhite2018}). This to investigate whether the complexity of images differed systematically between true- and false positives, meaning that the measures could be used to effectively distinguish between them. However, given the considerations described in section \ref{interpretres} we cannot with certainty conclude that the measures were effective in predicting such a difference.
+
+In Figures \ref{fig:interact_Q_icls50} and \ref{fig:interact_Q_size} we also see that Q seems to suffer from a ceiling effect, where many of the images have been given a complexity score of zero. Theoretically speaking this would indicate that these images are either 100\% random or 100\% ordered, which, given our knowledge about the data, is highly unlikely. This effect is therefore more likely to be caused by errors in the calculation of Q. In future analysis, one might therefore consider excluding instances where Q is zero in order to not bias the outcome.
+
+Finally we will note that given the significant interactions of both Q and $IC_{LS50}$ with other model parameters (see Table \ref{tab:CVtopmodel}) we remain hopeful that the measures could be useful in future investigations of the data.
 
 \paragraph{Adding Anoter Layer}
-Another thing that might be interesting is to train a CNN to distinguish between the true and false positives. If a high enough accuracy was obtained, information from such an additional network could be added as an extra layer to the already existing MASK R-CNN to improve performance. However, all the considerations we have discussed here with regards to the input data still apply, and, one might argue, to an even greater extent, as the inner workings of a neural networks cannot be meaningfully investigated with methods currently available. It is therefore highly important that we gain a deeper understanding of the data which is fed into the network, in order to better understand the predictions made by the network.
-Some might argue that what exactly the network is doing is not important as long as it "works", meaning that it makes good predictions. However, we argue that it is ill-advised to blindly trust the (the field known as Explainable AI)
+As a final note, we suggest a different approach to effectively distinguish between true- and false positives predictions. Such an approach might be to simply train another CNN to differentiate between the two groups. If a high enough accuracy was obtained, information from such an additional network could be added as an extra layer to the already existing MASK R-CNN to improve performance. Importantly, all the considerations we have discussed so far with regards to the input data still apply, and, one might argue, now to an even greater extent. This is because the inner workings of a NN cannot be meaningfully investigated with methods currently available. Therefore, in order to to better understand the predictions it produces, it is highly important that we gain a deeper understanding of the data that we fed into the network.
 
 \section{Conclusion}
-In this paper we investigated systematic differences between true- and false positives from a MASK R-CNN detecting flowers from time-lapse images. We implemented novel measures of complexity in python and were able to replicate results from an original paper. Using both simple and complex image features we ran large scale cross validations in order to find the model parameters that best described the variance in our data. 
+In this paper we investigated systematic differences between true- and false positives from a MASK R-CNN detecting flowers of the species \textit{Dryas integrifolia} from time-lapse images. We implemented novel measures of complexity in python and were able to replicate results from an original paper. Using both simple and complex image features we ran large scale cross validations in order to find the model parameters that best described the variance in the data. 
 
-We found that neither of the complexity measures were very good at explaining the data alone, but that in combination with simpler image features such as size and ratio they contributed with valueable information.
+We found that our model was able to predict 77\% of the the variance in the data but that it did not generalize well across locations. We commented on considerations that should be taken into account when further investigating the data, including how to improve the model and suggestions for alternative methods of analysis. In addition, we commented on the usefulness of the complexity measures in combination with other image parameters and expressed our optimism that these could be useful in classifying false positives from the MASK R-CNN.
 
-We concluded that 
+Finally, we concluded that an intricate knowledge of the data is crucial in any modelling task and that future research should take such knowledge into considerations when designing solutions to distinguish between true- and false positives.
 
 
 \clearpage
@@ -408,7 +437,7 @@ In Figure \ref{fig:Qrecreated} we present two example variance profiles of the i
 \end{figure}
 
 \clearpage
-\section{Multicollinearity Check}\label{Amulticol}
+\section{Multicollinearity Checks}\label{Amulticol}
 
 \begin{sidewaysfigure}[h]
     \centering
@@ -421,7 +450,7 @@ In Figure \ref{fig:Qrecreated} we present two example variance profiles of the i
 
 \begin{table}[h]
 	\centering
-	\caption{VIF stats for the highest scoring model}
+	\caption{multicollinearity checks for predictors of the highest scoring model}
 	\begin{tabular}{lrr}
 	  \toprule
 	 & VIF & 1/VIF \\ 
@@ -441,6 +470,429 @@ In Figure \ref{fig:Qrecreated} we present two example variance profiles of the i
 	\end{tabular}
 	\label{tab:vif}
 \end{table}
+
+\clearpage
+\section{Python Code}\label{Apycode}
+
+\begin{verbatim}
+###############################################################
+########################## IMPORT PACKAGES ####################
+###############################################################
+
+from imutils import paths
+import cv2
+import numpy as np
+from keras.preprocessing.image import load_img, img_to_array
+from scipy.integrate import quad
+from jax import grad
+import pandas as pd
+import math
+import os
+import re
+from scipy.interpolate import BSpline
+from scipy import interpolate
+
+###############################################################
+########################## DEFINE FUNCTIONS ####################
+###############################################################
+
+def location_scout(filename):
+    if "NARS" in filename:
+        location = "NARS"
+    else:
+        location = "THUL"
+    return location
+
+def label_false_positives(path):
+    if "false" in path:
+        label = "1"
+    else:
+        label = "0"
+    return label
+
+def create_L_boxes(img, L):
+    #creates non-overlapping boxes of size LxL
+    L_boxes = []
+
+    #loop over pixels in image to create L-boxes:
+    for r in range(0, img.shape[0], L):
+        for c in range(0, img.shape[1], L):
+            L_box = img[r:r+L,c:c+L]
+            L_boxes.append(L_box)
+
+    return L_boxes
+
+def calcuate_box_variance(box, mean_gb):
+    gi_variance =[]
+
+    for gi in box.flat:
+
+        variance = (gi - mean_gb)**2
+
+        gi_variance.append(variance)
+
+    box_variance = np.sum(gi_variance)
+
+    return box_variance
+
+def resize_image(img, resize_scales, L):
+    resized_images = []
+
+    for scale in resize_scales:
+        resized_width = int(img.shape[1] * scale /100) 
+        resized_height = int(img.shape[0] * scale /100) 
+
+        #making sure the image can be devided into LxL boxes
+        if resized_width%L == 1:
+            resized_width += -1
+        if resized_height%L == 1:
+            resized_height += -1
+        
+        dims = (resized_width, resized_height) 
+
+        resized_image = cv2.resize(img, dims, cv2.INTER_NEAREST) 
+        
+        resized_images.append(resized_image) #add to list
+    
+    return resized_images
+
+def gray_level_mean_variance(normalized_gray, resize_scales, L):
+
+    V_of_S = []
+
+    resized_images = resize_image(normalized_gray, resize_scales, L)
+
+    #divide images into L_boxes and calculate mean variances
+    for i, img in enumerate(resized_images): 
+
+        L_boxes = create_L_boxes(img, L) 
+
+        Vbs = []
+
+        for box in L_boxes:
+
+            #calculate the mean grey level, mean_gb, of the box
+            box_sum = cv2.sumElems(box)
+            mean_gb = (1/L**2)*box_sum[0] #eq 2
+            #print(f"mean gb = {mean_gb}")
+
+            #calculate the sample variance of the gray level, Vb, of the box
+            box_variance = calcuate_box_variance(box, mean_gb)
+            #print(f"box var = {box_variance}")
+            Vb = (1/(L**2-1))*box_variance #eq 1
+            #print(f"Vb = {Vb}")
+            Vbs.append(Vb)
+
+        #calculate gray-level mean variance V, over all boxes:
+        V = ((L**2)/(img.shape[0]*img.shape[1]))*np.sum(Vbs) #eq 3
+
+        #print(f"V = {V}")
+
+        S = L*normalized_gray.shape[0]/img.shape[0] #eq 4
+
+        V_of_S.append((V,S, resize_scales[i])) 
+
+    return V_of_S
+
+def ramp(x):
+    return np.maximum(0, x)
+
+def Q_complexity(glmv):
+
+    #take log of V and S
+    v = [math.log(i[0]) for i in glmv]
+    s = [math.log(i[1]) for i in glmv]
+
+    #find limits for integral
+    Smax = max(s)
+    Smin = min(s)
+
+    #reverse to increasing order for Bspline()
+    v.reverse()
+    s.reverse() 
+
+    #convert to arrays for splrep
+    x = np.array(s)
+    y = np.array(v)
+
+    #find vector knots for Bspline
+    t, c, k = interpolate.splrep(x=x, y=y, s= 0, k=4)
+    spl = BSpline(t, c, k)
+    
+    dvds = BSpline.derivative(spl)
+
+    integral = quad(lambda s: ramp(1-(0.25*dvds(s)**2)), Smin, Smax)
+
+    Q = (1/(Smax-Smin))*integral[0] #eq5   
+
+    return Q
+
+def ICLS_complexity(img, path, compression):
+
+    uncomp_size = os.path.getsize(path)
+
+	temp_compressed = cv2.imwrite(f'temp_compres{compression}.jpg', \
+	img, [int(cv2.IMWRITE_JPEG_QUALITY), compression])
+
+    comp_size = os.path.getsize(f'temp_compres{compression}.jpg')
+
+    os.remove(f'temp_compres{compression}.jpg') #remove the temp image from disk
+
+    CR = uncomp_size/comp_size #eq1
+
+    ICLS = 1/CR #eq2
+
+    return ICLS
+
+def extract_meta_data(data_folder):
+
+    metadata = []
+
+    for dirpath, _, files in os.walk(data_folder):
+        for i,file in enumerate(files): 
+            if file.endswith(".jpg"):
+
+                path = os.path.join(dirpath,file)
+                #print(f"{dirpath} {i}/{len(files)}")
+                print(path)
+
+                filename = file #extract filename from path
+
+                img_no = re.findall('[\d]+(?=.JPG)',filename)[0] 
+
+                location = location_scout(filename)
+
+                label = label_false_positives(path)
+                
+                image = cv2.imread(path) #import image
+
+                shape = image.shape #height, width and number of dimensions
+
+                size =  shape[0] * shape[1] #height * width
+
+                ratio = shape[0] / shape[1] #height/width
+
+                gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+                blur = cv2.Laplacian(gray, cv2.CV_64F).var()
+
+				normalized_gray = cv2.normalize(gray, None, alpha=0, \
+				beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+
+                ICLS10 = ICLS_complexity(image, path, 10)
+
+                ICLS30 = ICLS_complexity(image, path, 30)
+
+                ICLS50 = ICLS_complexity(image, path, 50)
+
+				glmv = gray_level_mean_variance(normalized_gray, \
+				(3,4,5,7,10,12,15,17,20,25,30,40,50,60,70,80,90), 2)
+
+                Q = Q_complexity(glmv)
+
+				img_tupple = (filename, img_no, shape[0], shape[1], \
+				size, ratio, blur, location, label, ICLS10, ICLS30, ICLS50, Q)
+
+                metadata.append(img_tupple)
+    
+    return(metadata)
+
+###############################################################
+########################## RUN SCRIPT ######################
+###############################################################
+
+data_folder = "./data/"
+my_metadata = extract_meta_data(data_folder)
+
+#convert to csv file and save
+metadata = pd.DataFrame(my_metadata, columns = ["filename", \
+	"img_no", "height", "width", "size", "ratio", "blur", "location", \
+	"false_pos", "ICLS10", "ICLS30", "ICLS50", "Q"])
+metadata.to_csv('metadata.csv')
+\end{verbatim}
+
+
+\section{R Code}\label{ARcode}
+
+\begin{verbatim}
+	Load packages
+
+	setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis")
+	library(pacman)
+	p_load(tidyverse, cvms, groupdata2, knitr, 
+	doParallel, lmerTest, bbmle, car, GGally, xtable)
+	set.seed(1991)
+	```
+	
+	#Data wrangling
+
+	metadata <- read.csv("metadata.csv") 
+	
+	#find mean Q values for false and true positives
+	Q_data <- filter(metadata, Q != "NA") %>% 
+	  group_by(false_pos) %>% 
+	  summarise(Q_mean = mean(Q))
+	
+	#assign the means to the 73 imgs with missing Q values:
+	data <- metadata %>%
+	  mutate(Q = ifelse(is.na(Q) & false_pos ==1, Q_data$Q_mean[2], Q)) %>% 
+	  mutate(Q = ifelse(is.na(Q) & false_pos ==0, Q_data$Q_mean[1], Q)) 
+
+	
+	#Multicollinearity check
+
+	#look at multicollenearity btw variables
+	multicol <- data %>% 
+	  select(4:14, -c(location, false_pos))
+	
+	X<-multicol
+	ggpairs(X)
+
+
+	
+	#Cross validation 
+
+	#find all possible combinations of predictors
+	model_formulas = combine_predictors("false_pos", 
+	c("size", "ratio", "blur", "ICLS50", "Q"), max_interaction_size = 2)
+	#run CV in parallel
+	registerDoParallel(7)
+	
+	cv1data <- data
+	#create folds for cvms (only run once to find best models)
+	cv1data <- fold(data, k = 10, cat_col = 'false_pos', 
+				 id_col = 'X')
+	
+	CV <- cross_validate(cv1data, model_formulas,
+						 fold_cols = '.folds',
+						 family = 'binomial',
+						 REML = FALSE,
+						 parallel = TRUE)
+	
+	#write_csv(CV[1:15], "CV_size_ratio_blur_ICLS50_Q_2way.csv")
+	
+	
+	#arrange the models in order - best on top
+	arranged_BA = arrange(CV, desc(`Balanced Accuracy`))
+	
+	#show the whole model and only one metric
+	select_definitions(arranged_BA, additional_includes = "Balanced Accuracy")
+	
+	#extract the model formulas of the best 100 models
+	best_model_formulas = reconstruct_formulas(arranged_BA, topn = 100)
+
+	
+	#CV of best 100 models
+
+	cv2data <- data
+	
+	#create folds for repeated cvms
+	cv2data <- fold(cv2data, k = 10, cat_col = 'false_pos', 
+				 id_col = 'X', num_fold_cols = 5)
+	
+	#cross validate on the folds
+	CV2way <- cross_validate(cv2data, best_model_formulas,
+						 fold_cols = c('.folds_1', '.folds_2', '.folds_3', '.folds_4', '.folds_5'),
+						 family = 'binomial',
+						 REML = FALSE,
+						 parallel = TRUE)
+	
+	#inspect the models
+	arranged_BA = arrange(CV2way, desc(`Balanced Accuracy`))
+	top100 <- select_definitions(arranged_BA, 
+	additional_includes = c("Balanced Accuracy", "AUC"))
+	top_10 = reconstruct_formulas(arranged_BA, topn = 10)
+	
+	best_model <- as.data.frame(arranged_BA[1,2:9])
+	print(xtable(best_model, type = "latex"), file = "best model.tex")
+	
+
+	
+	#model evaluation
+
+	topmodel <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size 
+	+ Q * size + ratio * size, family = "binomial", data = data)
+	
+	anova(topmodel)
+	summary(topmodel)
+	
+	vif = as.data.frame(vif(topmodel))
+	column <- ('1/vif' = 1/vif[,1])
+	vif_stats <- cbind(vif, column)
+	print(xtable(vif_stats, type = "latex"), file = "vif_stats.tex")
+	
+	model_coefs <-summary.glm(topmodel)$coefficients
+	model_coefs <-as.data.frame(model_coefs) %>% 
+	  select(-'z value')
+	model_coefs$Estimate <- round(model_coefs$Estimate, 2)
+	round(model_coefs, 5)
+	
+	print(xtable(model_coefs, type = "latex"), file = "model_coefs.tex")
+	
+	logisticpseudoR2s <- function(logisticmodel) {
+	  deviance <- logisticmodel$deviance #extract model deviance
+	  nulldeviance <- logisticmodel$null.deviance #extract baseline model deviance
+	  modelN <- length(logisticmodel$fitted.values) #compute sample size
+	  R.l <- 1 - deviance/nulldeviance  # Hosmer and Lemeshow's R2 is computed
+	  R.cs <- 1- exp(-(nulldeviance-deviance)/modelN) # Cox and Snell R2
+	  R.n <- R.cs / (1 - (exp(-(nulldeviance/modelN)))) # Nagelkerke R2
+	  cat("Pseudo R2 for logistic regression\n")
+	  cat("Hosmer & Lemeshow's R2    ", round(R.l,3), "\n")
+	  cat("Cox and Snell's R2    ", round(R.cs,3), "\n")
+	  cat("Nagelkerke's R2    ", round(R.n,3), "\n")
+	}
+	
+	logisticpseudoR2s(topmodel)
+	sum(residuals(m10, type = "pearson")^2)
+	
+
+	
+	#Predictive checks across locations
+
+	
+	loc_0 <- data %>% dplyr::filter(location == "NARS")
+	loc_1 <- data %>% dplyr::filter(location == "THUL")
+	
+	# Best model from cross-validation
+	model <- glm(false_pos ~ blur * Q + blur * size + ICLS50 * Q + ICLS50 * size
+	+ Q * size + ratio * size, family = "binomial", data = loc_0)
+	
+	# Get predictions on the loc_0 data
+	predictions <- data.frame(
+	  "prediction" = predict(model, newdata = loc_1, type="response"),
+	  "target" = loc_1$false_pos
+	)
+	
+	
+	# Evaluate predictions
+	eval <- evaluate(predictions, 
+					 target_col="target", 
+					 prediction_cols="prediction",
+					 type="binomial")
+	
+	Nars_vs_Thul <- as.data.frame(eval[1:9])
+	print(xtable(Nars_vs_Thul, type = "latex"), file = "Nars_vs_Thul.tex")
+	
+	#Visualising interaction terms
+
+	data <- mutate(data, false_pos = as.factor(false_pos))
+	# Setting up the building blocks
+	basic_plot <- ggplot(data,
+		   aes(x = size,
+			   y = ratio,
+			   color = false_pos)) +
+	  theme_bw() +
+	  labs(x = "Size",
+		   y = "Ratio",
+		   color = "False Positive")
+	
+	# Colored scatterplot
+	basic_plot +
+	  geom_point(alpha = .3, 
+				 size = .9) +
+	  geom_smooth(method = "lm")
+
+\end{verbatim}
 
 \end{document}
 
