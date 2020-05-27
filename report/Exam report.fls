@@ -199,6 +199,7 @@ INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/D
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/Dryas.jpeg
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/Dryas.jpeg
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/true_pos_example.jpg
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/true_pos_example.jpg
@@ -207,7 +208,6 @@ INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/f
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/false_pos_example.jpg
 INPUT /Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/false_pos_example.jpg
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmex10.tfm

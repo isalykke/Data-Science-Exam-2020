@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  27 MAY 2020 15:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  27 MAY 2020 17:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -631,12 +631,17 @@ Overfull \hbox (1.56839pt too wide) in paragraph at lines 93--94
 []$\OT1/cmr/m/n/10.95 https : / / github . com / isalykke / Data-[]Science-[]Exam-[]2020$[]. Code can also
  []
 
-<./images/true_pos_example.jpg, id=172, 311.1625pt x 287.0725pt>
+
+Overfull \hbox (9.99754pt too wide) in paragraph at lines 93--94
+[]$\OT1/cmr/m/n/10.95 https : / / 1drv . ms / u / s ! Ar7cNsdeTQo[]ibRhifZl0sGDizAnmA ? e = OWvxF2$[]
+ []
+
+<./images/true_pos_example.jpg, id=174, 311.1625pt x 287.0725pt>
 File: ./images/true_pos_example.jpg Graphic file (type jpg)
 <use ./images/true_pos_example.jpg>
 Package pdftex.def Info: ./images/true_pos_example.jpg  used on input line 102.
 (pdftex.def)             Requested size: 175.49881pt x 161.91153pt.
-<./images/false_pos_example.jpg, id=173, 220.825pt x 231.86626pt>
+<./images/false_pos_example.jpg, id=175, 220.825pt x 231.86626pt>
 File: ./images/false_pos_example.jpg Graphic file (type jpg)
 <use ./images/false_pos_example.jpg>
 Package pdftex.def Info: ./images/false_pos_example.jpg  used on input line 104.
@@ -660,12 +665,12 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 170.
 
 [8] [9] [10] [11]
-<./images/FP_NARS.jpg, id=274, 172.645pt x 165.61874pt>
+<./images/FP_NARS.jpg, id=277, 172.645pt x 165.61874pt>
 File: ./images/FP_NARS.jpg Graphic file (type jpg)
 <use ./images/FP_NARS.jpg>
 Package pdftex.def Info: ./images/FP_NARS.jpg  used on input line 229.
 (pdftex.def)             Requested size: 175.49881pt x 168.35774pt.
-<./images/FP_THUL.jpg, id=275, 221.82875pt x 234.8775pt>
+<./images/FP_THUL.jpg, id=278, 221.82875pt x 234.8775pt>
 File: ./images/FP_THUL.jpg Graphic file (type jpg)
 <use ./images/FP_THUL.jpg>
 Package pdftex.def Info: ./images/FP_THUL.jpg  used on input line 231.
@@ -706,33 +711,42 @@ Underfull \hbox (badness 10000) in paragraph at lines 337--338
 [17] [18] [19]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 364.
- [20
 
-] [21]
-<./images/m_lisa_norm.png, id=376, 433.62pt x 289.08pt>
+
+Package biblatex Warning: Bibliography string 'typedirector' undefined
+(biblatex)                at entry 'danmarksfrieforskningsfondAaretsOriginaleIde2019' on input line 364.
+
+
+Package biblatex Warning: Bibliography string 'typedirector' undefined
+(biblatex)                at entry 'deeplearning.aiC4W3L01ObjectLocalization2017' on input line 364.
+
+[20
+
+] [21] [22]
+<./images/m_lisa_norm.png, id=395, 433.62pt x 289.08pt>
 File: ./images/m_lisa_norm.png Graphic file (type png)
 <use ./images/m_lisa_norm.png>
 Package pdftex.def Info: ./images/m_lisa_norm.png  used on input line 373.
 (pdftex.def)             Requested size: 195.0pt x 130.00098pt.
-<./images/v_gogh_norm.png, id=378, 433.62pt x 289.08pt>
+<./images/v_gogh_norm.png, id=397, 433.62pt x 289.08pt>
 File: ./images/v_gogh_norm.png Graphic file (type png)
 <use ./images/v_gogh_norm.png>
 Package pdftex.def Info: ./images/v_gogh_norm.png  used on input line 375.
 (pdftex.def)             Requested size: 195.0pt x 130.00098pt.
-<./images/mona_and_van.png, id=379, 907.39pt x 633.36626pt>
+<./images/mona_and_van.png, id=398, 907.39pt x 633.36626pt>
 File: ./images/mona_and_van.png Graphic file (type png)
 <use ./images/mona_and_van.png>
 Package pdftex.def Info: ./images/mona_and_van.png  used on input line 382.
 (pdftex.def)             Requested size: 217.77805pt x 152.011pt.
- [22
+ [23
 
  </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/m_lisa_norm.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/v_gogh_norm.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/mona_and_van.png>]
-<./images/interact_blur_Q.png, id=392, 793.96625pt x 438.63875pt>
+<./images/interact_blur_Q.png, id=412, 793.96625pt x 438.63875pt>
 File: ./images/interact_blur_Q.png Graphic file (type png)
 <use ./images/interact_blur_Q.png>
 Package pdftex.def Info: ./images/interact_blur_Q.png  used on input line 393.
 (pdftex.def)             Requested size: 389.04686pt x 214.93486pt.
-<./images/interact_blur_size.png, id=393, 793.96625pt x 438.63875pt>
+<./images/interact_blur_size.png, id=413, 793.96625pt x 438.63875pt>
 File: ./images/interact_blur_size.png Graphic file (type png)
 <use ./images/interact_blur_size.png>
 Package pdftex.def Info: ./images/interact_blur_size.png  used on input line 401.
@@ -741,7 +755,7 @@ Package pdftex.def Info: ./images/interact_blur_size.png  used on input line 401
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_Q_icls50.png, id=394, 793.96625pt x 438.63875pt>
+<./images/interact_Q_icls50.png, id=414, 793.96625pt x 438.63875pt>
 File: ./images/interact_Q_icls50.png Graphic file (type png)
 <use ./images/interact_Q_icls50.png>
 Package pdftex.def Info: ./images/interact_Q_icls50.png  used on input line 409.
@@ -749,7 +763,7 @@ Package pdftex.def Info: ./images/interact_Q_icls50.png  used on input line 409.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_size_icls50.png, id=395, 793.96625pt x 438.63875pt>
+<./images/interact_size_icls50.png, id=415, 793.96625pt x 438.63875pt>
 File: ./images/interact_size_icls50.png Graphic file (type png)
 <use ./images/interact_size_icls50.png>
 Package pdftex.def Info: ./images/interact_size_icls50.png  used on input line 417.
@@ -757,7 +771,7 @@ Package pdftex.def Info: ./images/interact_size_icls50.png  used on input line 4
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_Q_size.png, id=396, 793.96625pt x 438.63875pt>
+<./images/interact_Q_size.png, id=416, 793.96625pt x 438.63875pt>
 File: ./images/interact_Q_size.png Graphic file (type png)
 <use ./images/interact_Q_size.png>
 Package pdftex.def Info: ./images/interact_Q_size.png  used on input line 425.
@@ -765,7 +779,7 @@ Package pdftex.def Info: ./images/interact_Q_size.png  used on input line 425.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./images/interact_size_ratio.png, id=397, 793.96625pt x 438.63875pt>
+<./images/interact_size_ratio.png, id=417, 793.96625pt x 438.63875pt>
 File: ./images/interact_size_ratio.png Graphic file (type png)
 <use ./images/interact_size_ratio.png>
 Package pdftex.def Info: ./images/interact_size_ratio.png  used on input line 433.
@@ -773,10 +787,10 @@ Package pdftex.def Info: ./images/interact_size_ratio.png  used on input line 43
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[23
+[24
 
- </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_Q.png>] [24 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_size.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_icls50.png>] [25 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_icls50.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_size.png>] [26 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_ratio.png>]
-<./images/correlation_matrix.png, id=427, 1927.2pt x 1082.0425pt>
+ </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_Q.png>] [25 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_blur_size.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_icls50.png>] [26 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_icls50.png> </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_Q_size.png>] [27 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/interact_size_ratio.png>]
+<./images/correlation_matrix.png, id=446, 1927.2pt x 1082.0425pt>
 File: ./images/correlation_matrix.png Graphic file (type png)
 <use ./images/correlation_matrix.png>
 Package pdftex.def Info: ./images/correlation_matrix.png  used on input line 445.
@@ -785,9 +799,9 @@ Package pdftex.def Info: ./images/correlation_matrix.png  used on input line 445
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[27
+[28
 
-] [28 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/correlation_matrix.png>]
+] [29 </Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/./images/correlation_matrix.png>]
 Overfull \hbox (1.54202pt too wide) in paragraph at lines 712--712
  []\OT1/cmtt/m/n/10.95 ###############################################################[] 
  []
@@ -817,9 +831,9 @@ Overfull \hbox (1.54202pt too wide) in paragraph at lines 712--712
  []\OT1/cmtt/m/n/10.95 ###############################################################[] 
  []
 
-[29
+[30
 
-] [30]
+] [31]
 Overfull \hbox (7.29071pt too wide) in paragraph at lines 712--712
  []        \OT1/cmtt/m/n/10.95 resized_image = cv2.resize(img, dims, cv2.INTER_NEAREST)[] 
  []
@@ -834,7 +848,7 @@ Overfull \hbox (30.28546pt too wide) in paragraph at lines 712--712
  []    \OT1/cmtt/m/n/10.95 resized_images = resize_image(normalized_gray, resize_scales, L)[] 
  []
 
-[31]
+[32]
 Overfull \hbox (1.54202pt too wide) in paragraph at lines 712--712
  []            \OT1/cmtt/m/n/10.95 #calculate the mean grey level, mean_gb, of the box[] 
  []
@@ -849,7 +863,7 @@ Overfull \hbox (18.78809pt too wide) in paragraph at lines 712--712
  []        \OT1/cmtt/m/n/10.95 V = ((L**2)/(img.shape[0]*img.shape[1]))*np.sum(Vbs) #eq 3[] 
  []
 
-[32]
+[33]
 Overfull \hbox (30.28546pt too wide) in paragraph at lines 712--712
  []    \OT1/cmtt/m/n/10.95 integral = quad(lambda s: ramp(1-(0.25*dvds(s)**2)), Smin, Smax)[] 
  []
@@ -864,7 +878,7 @@ Overfull \hbox (13.0394pt too wide) in paragraph at lines 712--712
  []    \OT1/cmtt/m/n/10.95 comp_size = os.path.getsize(f'temp_compres{compression}.jpg')[] 
  []
 
-[33]
+[34]
 Overfull \hbox (99.26971pt too wide) in paragraph at lines 712--712
  []    \OT1/cmtt/m/n/10.95 os.remove(f'temp_compres{compression}.jpg') #remove the temp image from disk[] 
  []
@@ -879,12 +893,12 @@ Overfull \hbox (70.52628pt too wide) in paragraph at lines 712--712
  []                \OT1/cmtt/m/n/10.95 shape = image.shape #height, width and number of dimensions[] 
  []
 
-[34]
+[35]
 Overfull \hbox (1.54202pt too wide) in paragraph at lines 712--712
  []\OT1/cmtt/m/n/10.95 ###############################################################[] 
  []
 
-[35]
+[36]
 Overfull \hbox (1.54202pt too wide) in paragraph at lines 712--712
  []\OT1/cmtt/m/n/10.95 ###############################################################[] 
  []
@@ -899,7 +913,7 @@ Overfull \hbox (64.77759pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 setwd("/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/analysis")[] 
  []
 
-[36]
+[37]
 Overfull \hbox (47.53152pt too wide) in paragraph at lines 895--895
  []  \OT1/cmtt/m/n/10.95 mutate(Q = ifelse(is.na(Q) & false_pos ==1, Q_data$Q_mean[2], Q)) %>%[] 
  []
@@ -914,7 +928,7 @@ Overfull \hbox (30.28546pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 c("size", "ratio", "blur", "ICLS50", "Q"), max_interaction_size = 2)[] 
  []
 
-[37]
+[38]
 Overfull \hbox (64.77759pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 select_definitions(arranged_BA, additional_includes = "Balanced Accuracy")[] 
  []
@@ -929,7 +943,7 @@ Overfull \hbox (70.52628pt too wide) in paragraph at lines 895--895
  [] \OT1/cmtt/m/n/10.95 fold_cols = c('.folds_1', '.folds_2', '.folds_3', '.folds_4', '.folds_5'),[] 
  []
 
-[38]
+[39]
 Overfull \hbox (18.78809pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 print(xtable(best_model, type = "latex"), file = "best model.tex")[] 
  []
@@ -949,7 +963,7 @@ Overfull \hbox (30.28546pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 print(xtable(model_coefs, type = "latex"), file = "model_coefs.tex")[] 
  []
 
-[39]
+[40]
 Overfull \hbox (87.77234pt too wide) in paragraph at lines 895--895
  []  \OT1/cmtt/m/n/10.95 nulldeviance <- logisticmodel$null.deviance #extract baseline model deviance[] 
  []
@@ -984,14 +998,14 @@ Overfull \hbox (18.78809pt too wide) in paragraph at lines 895--895
  []  \OT1/cmtt/m/n/10.95 "prediction" = predict(model, newdata = loc_1, type="response"),[] 
  []
 
-[40]
+[41]
 Overfull \hbox (41.78284pt too wide) in paragraph at lines 895--895
  []\OT1/cmtt/m/n/10.95 print(xtable(Nars_vs_Thul, type = "latex"), file = "Nars_vs_Thul.tex")[] 
  []
 
 
 AED: lastpage setting LastPage
-[41]
+[42]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 897.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 897.
  (/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.aux)
@@ -1005,18 +1019,18 @@ Package logreq Info: Writing requests to '"Exam report".run.xml'.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 897.
  ) 
 Here is how much of TeX's memory you used:
- 15424 strings out of 480608
- 273890 string characters out of 5903631
- 1020811 words of memory out of 5000000
- 30974 multiletter control sequences out of 15000+600000
+ 15438 strings out of 480608
+ 274268 string characters out of 5903631
+ 1020819 words of memory out of 5000000
+ 30986 multiletter control sequences out of 15000+600000
  542869 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  47i,12n,69p,1864b,4720s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (42 pages, 1745813 bytes).
+Output written on "/Users/isalykkehansen/Desktop/Git/Data-Science-Exam-2020/report/Exam report.pdf" (43 pages, 1749581 bytes).
 PDF statistics:
- 608 PDF objects out of 1000 (max. 8388607)
- 508 compressed objects within 6 object streams
- 124 named destinations out of 1000 (max. 500000)
+ 628 PDF objects out of 1000 (max. 8388607)
+ 527 compressed objects within 6 object streams
+ 126 named destinations out of 1000 (max. 500000)
  236 words of extra memory for PDF output out of 10000 (max. 10000000)
 

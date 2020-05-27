@@ -12,9 +12,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.2}Extracting Meta Data}{5}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.1}The Q Complexity Measure}{6}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.1}The Q Complexity Measure}{7}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Notes on Implementation}{7}{section*.6}%
+\contentsline {paragraph}{Notes on Implementation}{8}{section*.6}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subparagraph}{.}{8}{section*.7}%
 \defcounter {refsection}{0}\relax 
@@ -56,12 +56,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5}Conclusion}{19}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A}The Q Complexity Measure}{22}{appendix.A}%
+\contentsline {section}{\numberline {A}The Q Complexity Measure}{23}{appendix.A}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B}Interaction Plots}{23}{appendix.B}%
+\contentsline {section}{\numberline {B}Interaction Plots}{24}{appendix.B}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C}Multicollinearity Checks}{27}{appendix.C}%
+\contentsline {section}{\numberline {C}Multicollinearity Checks}{28}{appendix.C}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D}Python Code}{29}{appendix.D}%
+\contentsline {section}{\numberline {D}Python Code}{30}{appendix.D}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {E}R Code}{36}{appendix.E}%
+\contentsline {section}{\numberline {E}R Code}{37}{appendix.E}%
